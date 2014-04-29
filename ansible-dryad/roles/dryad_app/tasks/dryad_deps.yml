@@ -8,5 +8,6 @@
     - ant
     - perl
     - tomcat6
+    - python-psycopg2
   tags:
     - packages

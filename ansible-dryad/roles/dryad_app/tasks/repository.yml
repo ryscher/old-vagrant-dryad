@@ -5,8 +5,11 @@
 #  tags:
 #    - apt
 #
+
 - name: Add Java6 repository
-  apt_repository: repo='{{ dryad.java.deb }}' state=present update_cache=yes
-  apt_repository: repo='{{ dryad.java.deb_src }}' state=present update_cache=yes
+  apt_repository: repo="ppa:webupd8team/java" state=present update_cache=yes
   tags:
     - apt
+
+- name: Automatically select the Oracle License
+  shell: echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections

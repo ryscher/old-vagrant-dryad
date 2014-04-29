@@ -3,9 +3,9 @@
 
 ---
 - name: Create Postgres user for dryad
-  postgresql_user: name={{ dryad.db.user }} role_attr_flags=CREATEDB password={{ dryad.db.password }} login_host={{ dryad.db.host }} port={{ dryad.db.port }}
+  postgresql_user: name={{ dryad.db.user }} role_attr_flags=CREATEDB password={{ dryad.db.password }}
   sudo: yes
   sudo_user: postgres
 
 - name: Create Postgres database for Dryad
-  postgresql_db: name={{ dryad.db_name }} login_user={{ dryad.db_user }} login_password={{ dryad.db_password }} encoding={{ postgresql.encoding }} lc_ctype='{{ postgresql.locale }}.{{ postgresql.encoding }}' lc_collate='{{ postgresql.locale }}.{{ postgresql.encoding }}'
+  postgresql_db: name={{ dryad.db.name }} login_user={{ dryad.db.user }} login_password={{ dryad.db.password }} login_host={{ dryad.db.host }} port={{ dryad.db.port }} encoding={{ postgresql.encoding }} lc_ctype='{{ postgresql.locale }}.{{ postgresql.encoding }}' lc_collate='{{ postgresql.locale }}.{{ postgresql.encoding }}'
