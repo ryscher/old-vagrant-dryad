@@ -33,6 +33,9 @@
   template: src=deploy_dryad.sh.j2 dest="/home/vagrant/bin/deploy_dryad.sh" mode=0755
   sudo: no
 
+- name: Copy carrot2-mini-3.1.0.jar for installation
+  copy: src=carrot2-mini-3.1.0.jar dest=/tmp/
+
 - name: Copy script to install missing poms
   copy: src=install_missing_poms.sh dest=/home/vagrant/bin/install_missing_poms.sh mode=0755
   sudo: no
