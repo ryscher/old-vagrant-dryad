@@ -3,4 +3,4 @@
 set -e
 cd {{ dryad.repo_path }}/dspace
 mvn clean package -P env-dev
-catalina stop -force
+sudo service tomcat6 stop -force
