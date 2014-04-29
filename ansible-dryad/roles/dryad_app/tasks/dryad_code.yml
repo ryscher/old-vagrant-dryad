@@ -5,8 +5,7 @@
   sudo: no
 
 - name: Make m2 directory
-  command: mkdir /home/vagrant/.m2 creates=/home/vagrant/.m2
-  sudo: no
+  file: path=/home/vagrant/.m2 state=directory owner=vagrant mode=0755
 
 - name: Copy settings.xml for maven profile
   template: src=settings.xml.j2 dest="/home/vagrant/.m2/settings.xml"
@@ -17,12 +16,17 @@
   sudo: yes
   sudo_user: root
 
+- name: Configure JAVA_HOME for tomcat6
+  lineinfile: dest=/etc/default/tomcat6 regexp=^JAVA_HOME= line="JAVA_HOME=\"/usr/lib/jvm/java-6-oracle\""
+
+- name: Configure JAVA_OPTS for tomcat6
+  lineinfile: dest=/etc/default/tomcat6 regexp=^JAVA_OPTS line="JAVA_OPTS=\"-Xmx4096m -XX:+CMSClassUnloadingEnabled -XX:PermSize=512M -XX:MaxPermSize=512M\""
+
 - name: Make bin directory
-  command: mkdir /home/vagrant/bin creates=/home/vagrant/bin
-  sudo: no
+  file: path=/home/vagrant/bin state=directory owner=vagrant mode=0755
 
 - name: install bash profile to update path
-  copy: src=.bash_profile dest="/home/vagrant/.bash_profile.j2" mode=0644
+  copy: src=.bash_profile dest="/home/vagrant/.bash_profile" mode=0644
   sudo: no
 
 - name: Install build script
@@ -43,3 +47,6 @@
 - name: Install missing poms
   command: /home/vagrant/bin/install_missing_poms.sh chdir={{ dryad.repo_path }}/dspace/etc/discoverySnapshot
   sudo: no
+
+- name: Make install directory
+  file: path={{ dryad.install_dir }} state=directory owner=vagrant mode=0755
