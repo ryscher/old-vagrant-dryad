@@ -1,0 +1,12 @@
+---
+- name: Install Dryad dependencies
+  apt: pkg={{ item }} state=installed update-cache=yes
+  with_items:
+    - oracle-java6-installer
+    - git
+    - maven2
+    - ant
+    - perl
+    - tomcat6
+  tags:
+    - packages

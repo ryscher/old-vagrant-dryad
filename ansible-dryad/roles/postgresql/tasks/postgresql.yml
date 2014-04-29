@@ -1,0 +1,20 @@
+---
+- name: Update locale
+  command: /usr/sbin/update-locale LANG={{ postgresql.locale }}.{{ postgresql.encoding }} LC_ALL={{ postgresql.locale }}.{{ postgresql.encoding }}
+
+- name: Install Postgresql server and client
+  apt: pkg={{ item }}-{{ postgresql.version }} state=installed update-cache=yes
+  register: postgresql_install
+  with_items:
+    - postgresql
+  tags:
+    - packages
+
+- name: Install development header files
+  apt: pkg={{ item }} state=installed update-cache=yes
+  when: postgresql.install_development_headers == true
+  with_items:
+    - libpq-dev
+  tags:
+    - packages
+

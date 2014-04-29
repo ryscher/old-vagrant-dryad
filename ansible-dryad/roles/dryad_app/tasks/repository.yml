@@ -1,0 +1,12 @@
+---
+# Needed for add-apt-repository
+- name: Add repository key
+  apt_key: keyserver=keyserver.ubuntu.com id=EEA14886 state=present
+  tags:
+    - apt
+
+- name: Add Java6 repository
+  apt_repository: repo='{{ dryad.java.deb }}' state=present
+  apt_repository: repo='{{ dryad.java.deb_src }}' state=present
+  tags:
+    - apt

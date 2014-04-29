@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+  <profiles>
+   <profile>
+      <id>env-dev</id>
+      <properties>
+        <default.dryad.home>{{ dryad.dryad_home }}</default.dryad.home>
+        <default.dspace.dir>{{ dryad.install_dir }}</default.dspace.dir>
+        <default.dspace.hostname>{{ dryad.hostname }}</default.dspace.hostname>
+        <default.dspace.port>{{ dryad.port }}</default.dspace.port>
+        <default.dspace.url>{{ dryad.url }}</default.dspace.url>
+        <default.db.url>jdbc:postgresql://{{ dryad.db.host }}:{{ dryad.db.port }}/{{ dryad.db.name }}</default.db.url>
+        <default.db.username>{{ dryad.db.user }}</default.db.username>
+        <default.db.password>{{ dryad.db.password }}</default.db.password>
+        <default.harvester.eperson>{{ dryad.admin_email }}</default.harvester.eperson>
+        <default.solr.search.server>{{ dryad.url }}/solr/search/</default.solr.search.server>
+        <default.solr.stats.server>{{ dryad.url }}/solr/statistics</default.solr.stats.server>
+        <default.solr.dryad.server>{{ dryad.url }}/solr/dryad</default.solr.dryad.server>
+        <default.solr.authority.server>{{ dryad.url }}/solr/authority</default.solr.authority.server>
+      	<default.solr.log.dataonemn.server>{{ dryad.url }}/solr/dataoneMNlog</default.solr.log.dataonemn.server>
+        <default.doi.username>{{ dryad.doi.username }}</default.doi.username>
+        <default.doi.password>{{ dryad.doi.password }}</default.doi.password>
+        <default.doi.prefix>10.5061</default.doi.prefix>
+        <default.doi.testprefix>10.5072</default.doi.testprefix>
+        <default.doi.localpart.testsuffix>FK2.5061.dryad.</default.doi.localpart.testsuffix>
+      	<default.doi.testmode>true</default.doi.testmode>
+        <default.dryad.localize>true</default.dryad.localize>
+        <default.doi.datacite.connected>false</default.doi.datacite.connected>
+        <default.doi.service>{{ dryad.url }}/doi</default.doi.service>
+        <default.mail.server>localhost</default.mail.server>
+   			<default.mail.server.username></default.mail.server.username>
+   			<default.mail.server.password></default.mail.server.password>
+        <default.mail.extraproperties>mail.smtp.socketFactory.port=1025</default.mail.extraproperties>
+				<default.mail.admin>{{ dryad.admin_email }}</default.mail.admin>
+				<default.mail.help>{{ dryad.admin_email }}</default.mail.help>
+      	<default.subscribe_mailinglist.recipient>{{ dryad.admin_email }}</default.subscribe_mailinglist.recipient>
+      	<default.membership.recipient>{{ dryad.admin_email }}</default.membership.recipient>
+				<default.harvester.eperson>{{ dryad.admin_email }}</default.harvester.eperson>
+        <default.bagit.executable>/home/dryad/bagit-3.4/bin/bag</default.bagit.executable>
+        <default.bagit.testing.mode>true</default.bagit.testing.mode>
+        <default.submit.journal.config>{{ dryad.install_dir }}/config/DryadJournalSubmission.testing.properties</default.submit.journal.config>
+        <!-- Payment System -->
+        <paypal.vendor>{{ dryad.paypal_vendor }}</paypal.vendor>
+        <paypal.user>{{ dryad.paypal.user }}</paypal.user>
+        <paypal.pwd>{{ dryad.paypal.password }}</paypal.pwd>
+        <paypal.payflow.link>https://pilot-payflowpro.paypal.com/</paypal.payflow.link>
+        <paypal.link>https://payflowlink.paypal.com</paypal.link>
+        <paypal.partner>PayPal</paypal.partner>
+        <paypal.verbosity>HIGH</paypal.verbosity>
+        <paypal.slienttran>TRUE</paypal.slienttran>
+        <paypal.mode>test</paypal.mode>
+        <!-- Response Logging -->
+        <default.solr.responselogging.server>{{ dryad.url }}/solr/responselogging</default.solr.responselogging.server>
+      </properties>
+ </profile>
+</profiles>
+</settings>

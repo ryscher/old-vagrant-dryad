@@ -1,0 +1,16 @@
+---
+- name: Clone Dryad repo
+  git: repo={{ dryad.repo }}
+       dest={{ dryad.repo_path }}
+  
+- name: Copy settings.xml for maven profile
+  template: src=settings.xml.j2 dest="/home/dryad/.m2/settings.xml"
+
+- name: Update tomcat server.xml
+
+- name: Run maven build
+
+- name: run ant install
+
+- name: start tomcat
+

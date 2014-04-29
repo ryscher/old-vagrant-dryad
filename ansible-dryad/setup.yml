@@ -1,0 +1,11 @@
+---
+- name: 'PostgreSQL Playbook'
+  hosts: postgresql_servers
+  roles:
+    - postgresql
+
+- name: 'Dryad Playbook'
+  hosts: dryad_servers
+  sudo: yes
+  roles:
+    - dryad_app

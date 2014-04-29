@@ -1,0 +1,47 @@
+postgresql:
+  version: 9.2
+  repo: 'deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main'
+  install_development_headers: true
+
+  user: postgres
+  group: postgres
+
+  locale: 'en_US'
+  encoding: 'UTF-8'
+
+  config:
+    shared_buffers: 24MB
+    work_mem: 1MB
+
+    checkpoint_segments: 3
+    checkpoint_completion_target: 0.5
+
+    effective_cache_size: 128MB
+
+dryad:
+  java:
+    deb: deb http://ppa.launchpad.net/webupd8team/java/ubuntu precise main
+    deb_src: deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu precise main
+  repo: https://github.com/datadryad/dryad-repo.git
+  repo_path: /home/vagrant/dryad-repo
+  password: dryadPassword
+  dryad_home: vagrant-dryad
+  install_dir: /opt/dryad
+  admin_email: root@localhost
+  hostname: localhost
+  port: 9999
+  url: http://localhost:9999
+  doi:
+    username: dryad
+    password: wrongPassword
+  db:
+    host: localhost
+    port: 5432
+    name: dryad_repo
+    user: dryad_app
+    password: dryadPasswordChangeMe
+  paypal:
+    vendor: ''
+    user: ''
+    password: ''
+  
