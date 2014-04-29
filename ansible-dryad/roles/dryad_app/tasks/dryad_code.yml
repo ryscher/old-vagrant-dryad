@@ -32,3 +32,11 @@
 - name: Install deploy script
   template: src=deploy_dryad.sh.j2 dest="/home/vagrant/bin/deploy_dryad.sh" mode=0755
   sudo: no
+
+- name: Copy script to install missing poms
+  copy: src=install_missing_poms.sh dest=/home/vagrant/bin/install_missing_poms.sh mode=0755
+  sudo: no
+
+- name: Install missing poms
+  command: /home/vagrant/bin/install_missing_poms.sh chdir={{ dryad.repo_path }}/dspace/etc/discoverySnapshot
+  sudo: no
