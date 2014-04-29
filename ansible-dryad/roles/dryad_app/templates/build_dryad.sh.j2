@@ -1,6 +1,6 @@
 #!/bin/sh
 
 set -e
-cd {{ dryad.repo_path}}/dspace
+cd {{ dryad.repo_path }}/dspace
 mvn clean package -P env-dev
 catalina stop -force

@@ -2,13 +2,33 @@
 - name: Clone Dryad repo
   git: repo={{ dryad.repo }}
        dest={{ dryad.repo_path }}
-  
+  sudo: no
+
+- name: Make m2 directory
+  command: mkdir /home/vagrant/.m2 creates=/home/vagrant/.m2
+  sudo: no
+
 - name: Copy settings.xml for maven profile
   template: src=settings.xml.j2 dest="/home/vagrant/.m2/settings.xml"
+  sudo: no
 
 - name: Update tomcat server.xml
-  debug: TODO
+  template: src=server.xml.j2 dest=/etc/tomcat6/server.xml backup=yes
+  sudo: yes
+  sudo_user: root
 
-- name: Install build scripts
-  template: src=build_dryad.sh.j2 dest="/home/vagrant/bin/build_dryad.sh"
-  template: src=deploy_dryad.sh.j2 dest="/home/vagrant/bin/deploy_dryad.sh"
+- name: Make bin directory
+  command: mkdir /home/vagrant/bin creates=/home/vagrant/bin
+  sudo: no
+
+- name: install bash profile to update path
+  copy: src=.bash_profile dest="/home/vagrant/.bash_profile.j2" mode=0644
+  sudo: no
+
+- name: Install build script
+  template: src=build_dryad.sh.j2 dest="/home/vagrant/bin/build_dryad.sh" mode=0755
+  sudo: no
+
+- name: Install deploy script
+  template: src=deploy_dryad.sh.j2 dest="/home/vagrant/bin/deploy_dryad.sh" mode=0755
+  sudo: no
