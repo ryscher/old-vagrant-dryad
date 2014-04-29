@@ -37,7 +37,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # View the documentation for the provider you're using for more
   # information on available options.
   config.vm.provision "ansible" do |ansible|
-    ansible.inventory_path = "vagrant_inventory"
+    ansible.inventory_path = "./vagrant_inventory"
+    ansible.limit = 'all'
     ansible.playbook = "./ansible-dryad/setup.yml"
     ansible.sudo = true
     ansible.host_key_checking = false

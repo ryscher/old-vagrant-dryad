@@ -1,5 +1,5 @@
 # Load the database dump for dryad
 ---
 - name: Copy sql file from files. Or clone it from private repo?
-  debug: msg="TODO: Load database data"
+  debug: msg="TODO Load database data"
   

@@ -4,13 +4,11 @@
        dest={{ dryad.repo_path }}
   
 - name: Copy settings.xml for maven profile
-  template: src=settings.xml.j2 dest="/home/dryad/.m2/settings.xml"
+  template: src=settings.xml.j2 dest="/home/vagrant/.m2/settings.xml"
 
 - name: Update tomcat server.xml
+  debug: TODO
 
-- name: Run maven build
-
-- name: run ant install
-
-- name: start tomcat
-
+- name: Install build scripts
+  template: src=build_dryad.sh.j2 dest="/home/vagrant/bin/build_dryad.sh"
+  template: src=deploy_dryad.sh.j2 dest="/home/vagrant/bin/deploy_dryad.sh"
