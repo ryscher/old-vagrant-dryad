@@ -11,19 +11,20 @@
   template: src=settings.xml.j2 dest="/home/vagrant/.m2/settings.xml"
   sudo: no
 
+- name: Make private tomcat instance
+  command: tomcat6-instance-create /home/vagrant/dryad-tomcat
+  sudo: no
+
 - name: Update tomcat server.xml
-  template: src=server.xml.j2 dest=/etc/tomcat6/server.xml backup=yes
-  sudo: yes
-  sudo_user: root
+  template: src=server.xml.j2 dest=/home/vagrant/dryad-tomcat/conf backup=yes
+  sudo: no
 
-- name: Configure JAVA_HOME for tomcat6
-  lineinfile: dest=/etc/default/tomcat6 regexp=^JAVA_HOME= line="JAVA_HOME=\"/usr/lib/jvm/java-6-oracle\""
-
-- name: Configure JAVA_OPTS for tomcat6
-  lineinfile: dest=/etc/default/tomcat6 regexp=^JAVA_OPTS line="JAVA_OPTS=\"-Xmx4096m -XX:+CMSClassUnloadingEnabled -XX:PermSize=512M -XX:MaxPermSize=512M\""
+- name: Place setenv.sh in tomcat
+  copy: src=setenv.sh dest=/home/vagrant/dryad-tomcat/bin/setenv.sh owner=vagrant mode=0755
 
 - name: Make bin directory
   file: path=/home/vagrant/bin state=directory owner=vagrant mode=0755
+  sudo: no
 
 - name: install bash profile to update path
   copy: src=.bash_profile dest="/home/vagrant/.bash_profile" mode=0644
