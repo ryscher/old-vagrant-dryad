@@ -3,6 +3,12 @@
 
 * Documentation https://github.com/datadryad/vagrant-dryad
 
+### Database
+
+If you have not yet loaded a database dump, you must do so before deploying Dryad, e.g.:
+
+$ pg_restore -d {{ dryad.db.name }} -U {{ dryad.db.user }} -h {{ dryad.db.host }} -p {{ dryad.db.port }} /vagrant/dryad-vagrant.sql
+
 ### Dryad paths:
 
 Dryad source (git):     {{ dryad.repo_path }}

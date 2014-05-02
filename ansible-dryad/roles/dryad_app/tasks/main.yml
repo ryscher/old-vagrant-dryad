@@ -2,5 +2,4 @@
 - include: repository.yml
 - include: dryad_deps.yml
 - include: dryad_setupdb.yml
-- include: dryad_loaddb.yml
 - include: dryad_code.yml
