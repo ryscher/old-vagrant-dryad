@@ -1,0 +1,20 @@
+
+### Welcome to Vagrant-dryad
+
+* Documentation https://github.com/datadryad/vagrant-dryad
+
+### Dryad paths:
+
+Dryad source (git):     {{ dryad.repo_path }}
+Dryad installation:     {{ dryad.install_dir }}
+Tomcat home:            {{ dryad.tomcat_home }}
+
+### Dryad scripts:
+
+Build script:           /home/vagrant/bin/build_dryad.sh
+Deploy script:          /home/vagrant/bin/deploy_dryad.sh
+Build indexes:          /home/vagrant/bin/build_indexes.sh
+Start tomcat:           {{ dryad.tomcat_home }}/bin/startup.sh
+Stop tomcat:            {{ dryad.tomcat_home }}/bin/shutdown.sh
+
+

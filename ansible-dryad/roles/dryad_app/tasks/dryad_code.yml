@@ -58,3 +58,9 @@
 
 - name: Make log directory
   file: path={{ dryad.install_dir }}/log state=directory owner=vagrant mode=0755
+
+- name: Place motd file
+  template: src=motd.tail.j2 dest=/etc/motd.tail mode=0644 owner=root
+
+- name: Regenerated motd for next login
+  shell: run-parts /etc/update-motd.d/ > /var/run/motd
