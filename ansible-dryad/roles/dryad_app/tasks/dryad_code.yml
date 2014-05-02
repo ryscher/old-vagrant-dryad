@@ -16,7 +16,7 @@
   sudo: no
 
 - name: Update tomcat server.xml
-  template: src=server.xml.j2 dest={{ dryad.tomcat_home }}/conf backup=yes
+  template: src=server.xml.j2 dest={{ dryad.tomcat_home }}/conf/server.xml backup=yes
   sudo: no
 
 - name: Place setenv.sh in tomcat
