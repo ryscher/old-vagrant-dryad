@@ -12,15 +12,15 @@
   sudo: no
 
 - name: Make private tomcat instance
-  command: tomcat6-instance-create /home/vagrant/dryad-tomcat
+  command: tomcat6-instance-create {{ dryad.tomcat_home }} creates={{ dryad.tomcat_home }}
   sudo: no
 
 - name: Update tomcat server.xml
-  template: src=server.xml.j2 dest=/home/vagrant/dryad-tomcat/conf backup=yes
+  template: src=server.xml.j2 dest={{ dryad.tomcat_home }}/conf backup=yes
   sudo: no
 
 - name: Place setenv.sh in tomcat
-  copy: src=setenv.sh dest=/home/vagrant/dryad-tomcat/bin/setenv.sh owner=vagrant mode=0755
+  copy: src=setenv.sh dest={{ dryad.tomcat_home }}/bin/setenv.sh owner=vagrant mode=0755
 
 - name: Make bin directory
   file: path=/home/vagrant/bin state=directory owner=vagrant mode=0755

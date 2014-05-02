@@ -24,6 +24,7 @@ dryad:
     deb_src: deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu precise main
   repo: https://github.com/datadryad/dryad-repo.git
   repo_path: /home/vagrant/dryad-repo
+  tomcat_home: /home/vagrant/dryad-tomcat
   password: dryadPassword
   dryad_home: vagrant-dryad
   install_dir: /opt/dryad
