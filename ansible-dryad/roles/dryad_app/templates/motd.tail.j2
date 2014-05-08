@@ -3,24 +3,16 @@
 
 * Documentation https://github.com/datadryad/vagrant-dryad
 
-### Database
-
-If you have not yet loaded a database dump, you must do so before deploying Dryad, e.g.:
-
-$ pg_restore -d {{ dryad.db.name }} -U {{ dryad.db.user }} -h {{ dryad.db.host }} -p {{ dryad.db.port }} /vagrant/dryad-vagrant.sql
-
 ### Dryad paths:
 
 Dryad source (git):     {{ dryad.repo_path }}
 Dryad installation:     {{ dryad.install_dir }}
 Tomcat home:            {{ dryad.tomcat_home }}
 
-### Dryad scripts:
+### Next steps:
 
-Build script:           /home/vagrant/bin/build_dryad.sh
-Deploy script:          /home/vagrant/bin/deploy_dryad.sh
-Build indexes:          /home/vagrant/bin/build_indexes.sh
-Start tomcat:           {{ dryad.tomcat_home }}/bin/startup.sh
-Stop tomcat:            {{ dryad.tomcat_home }}/bin/shutdown.sh
-
-
+1. Build dryad          /home/vagrant/bin/build_dryad.sh
+2. Deploy dryad         /home/vagrant/bin/deploy_dryad.sh
+3. Install database     /home/vagrant/bin/install_dryad_database.sh
+4. Start tomcat         {{ dryad.tomcat_home }}/bin/startup.sh
+5. Rebuild SOLR indexes /home/vagrant/bin/build_indexes.sh
