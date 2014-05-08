@@ -87,7 +87,7 @@ If you'd like to use an external tool that supports JPDA debugging (e.g. NetBean
 
 ## Communication with the VM
 
-In addition to port forwarding, the contents of this directory (The one containing the Vagrantfile) are synchronized from your host computer to the virtual machine's `/vagrant` directory. Additional synchronized directories can be added to the Vagrantfile.
+In addition to port forwarding, the contents of this directory (The one containing the Vagrantfile) are synchronized from your host computer to the virtual machine's `/vagrant` directory. Additional synchronized directories can be added to the Vagrantfile. For example, the `dryad-bootstrap.sql` file that installs necessary content into the database is stored here, and used by the VM during installation.
 
 ## Hacking on this repo
 
