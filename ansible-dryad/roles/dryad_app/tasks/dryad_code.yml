@@ -23,7 +23,20 @@
   lineinfile: dest={{ dryad.tomcat_home }}/bin/setenv.sh regexp='^JDK_DIRS=' line='JDK_DIRS="/usr/lib/jvm/java-6-oracle"'
 
 - name: Update setenv.sh JAVA_OPTS
-  lineinfile: dest={{ dryad.tomcat_home}}/bin/setenv.sh regexp=^'\s+JAVA_OPTS=' line='    JAVA_OPTS="-Xmx4096m -XX:+CMSClassUnloadingEnabled -XX:PermSize=512M -XX:MaxPermSize=512M"'
+  lineinfile: dest={{ dryad.tomcat_home }}/bin/setenv.sh regexp=^'\s+JAVA_OPTS=' line='    JAVA_OPTS="-Xmx4096m -XX:+CMSClassUnloadingEnabled -XX:PermSize=512M -XX:MaxPermSize=512M"'
+
+- name: Make global startup-debug.sh script
+  command: cp /usr/share/tomcat6/bin/startup.sh /usr/share/tomcat6/bin/startup-debug.sh creates=/usr/share/tomcat6/bin/startup-debug.sh
+
+- name: Update global startup-debug.sh script
+  lineinfile: dest=/usr/share/tomcat6/bin/startup-debug.sh regexp='^exec ' line='exec "$PRGDIR"/"$EXECUTABLE" jpda start "$@"'
+
+- name: Make dryad startup-debug.sh script
+  shell: cp {{ dryad.tomcat_home }}/bin/startup.sh {{ dryad.tomcat_home }}/bin/startup-debug.sh creates={{ dryad.tomcat_home }}/bin/startup-debug.sh
+  sudo: no
+
+- name: Update startup-debug.sh script
+  lineinfile: dest={{ dryad.tomcat_home }}/bin/startup-debug.sh regexp='/usr/share/tomcat6/bin/startup' line='/usr/share/tomcat6/bin/startup-debug.sh'
 
 - name: Make bin directory
   file: path=/home/vagrant/bin state=directory owner=vagrant mode=0755
