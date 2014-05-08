@@ -61,5 +61,26 @@ INSERT INTO handle VALUES (2171, '10255/dryad.2171', 3, 5);
 INSERT INTO handle VALUES (7871, '10255/dryad.7871', 3, 6);
 INSERT INTO handle VALUES (7872, '10255/dryad.7872', 3, 7);
 
+
+-- Submission fails if community2collection is not set up
+
+--
+-- community table
+--
+
+INSERT INTO community VALUES (1, 'Main', '', NULL, NULL, NULL, NULL, NULL);
+
+--
+-- community2collection
+--
+
+INSERT INTO community2collection VALUES (1, 1, 1);
+INSERT INTO community2collection VALUES (2, 1, 2);
+INSERT INTO community2collection VALUES (3, 1, 3);
+INSERT INTO community2collection VALUES (4, 1, 4);
+INSERT INTO community2collection VALUES (5, 1, 5);
+INSERT INTO community2collection VALUES (6, 1, 6);
+INSERT INTO community2collection VALUES (7, 1, 7);
+
 -- Should update sequences after this, since these PK values are hard-coded.
 
