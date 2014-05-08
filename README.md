@@ -81,6 +81,8 @@ When you log in with ssh, the VM will show some information about file locations
 5. Rebuild SOLR indexes /home/vagrant/bin/build_indexes.sh
 ```
 
+After the first build/install process, you'll only need to run build, deploy, and startup.
+
 ## Debugging
 
 If you'd like to use an external tool that supports JPDA debugging (e.g. NetBeans, Eclipse), the default JPDA port (8000) is already configured for forwarding. To start tomcat with debugging enabled, use the `/home/vagrant/dryad-tomcat/bin/startup-debug.sh` script
