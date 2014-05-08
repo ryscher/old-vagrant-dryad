@@ -19,8 +19,11 @@
   template: src=server.xml.j2 dest={{ dryad.tomcat_home }}/conf/server.xml backup=yes
   sudo: no
 
-- name: Place setenv.sh in tomcat
-  copy: src=setenv.sh dest={{ dryad.tomcat_home }}/bin/setenv.sh owner=vagrant mode=0755
+- name: Update setenv.sh JDK_DIRS
+  lineinfile: dest={{ dryad.tomcat_home }}/bin/setenv.sh regexp='^JDK_DIRS=' line='JDK_DIRS="/usr/lib/jvm/java-6-oracle"'
+
+- name: Update setenv.sh JAVA_OPTS
+  lineinfile: dest={{ dryad.tomcat_home}}/bin/setenv.sh regexp=^'\s+JAVA_OPTS=' line='    JAVA_OPTS="-Xmx4096m -XX:+CMSClassUnloadingEnabled -XX:PermSize=512M -XX:MaxPermSize=512M"'
 
 - name: Make bin directory
   file: path=/home/vagrant/bin state=directory owner=vagrant mode=0755
