@@ -42,6 +42,9 @@
   template: src=build_indexes.sh.j2 dest="/home/vagrant/bin/build_indexes.sh" mode=0755
   sudo: no
 
+- name: Install database script
+  template: src=install_dryad_database.sh.j2 dest="/home/vagrant/bin/install_dryad_database.sh" mode=0755
+
 - name: Copy carrot2-mini-3.1.0.jar for installation
   copy: src=carrot2-mini-3.1.0.jar dest=/tmp/
 
