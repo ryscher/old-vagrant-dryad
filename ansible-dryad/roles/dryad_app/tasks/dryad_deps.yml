@@ -10,5 +10,6 @@
     - tomcat6
     - tomcat6-user
     - python-psycopg2
+    - screen
   tags:
     - packages
