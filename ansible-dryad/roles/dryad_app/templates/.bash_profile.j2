@@ -1,0 +1,7 @@
+export PATH="~/bin:{{ dryad.tomcat_home }}/bin:$PATH"
+
+# Requires .pgpass
+export PGHOST={{ dryad.db.host }}
+export PGPORT={{ dryad.db.port }}
+export PGUSER={{ dryad.db.user }}
+export PGDATABASE={{ dryad.db.name }}
