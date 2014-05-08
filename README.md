@@ -5,6 +5,8 @@ Vagrant and Ansible config for building a Dryad VM
 
 Uses Ubuntu 12.04 64-bit, Ansible, Postgres, Java6, Tomcat6
 
+See [How to install Dryad](http://wiki.datadryad.org/How_To_Install_Dryad#Building_a_Virtual_Machine_with_Vagrant) for background/details
+
 ## Requirements
 
 These applications must be installed on your host machine.  They will be used to build and run a virtual machine containing Dryad.
