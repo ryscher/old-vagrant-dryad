@@ -34,6 +34,11 @@ INSERT INTO epersongroup VALUES (19, 'COLLECTION_7_WORKFLOW_ROLE_curator');
 INSERT INTO epersongroup VALUES (20, 'COLLECTION_7_WORKFLOW_ROLE_editors');
 
 --
+-- Adding administrator to Curators group
+-- Submissions do not go into curation unless there is a user in the curators group.
+--
+INSERT INTO epersongroup2eperson (id,eperson_group_id, eperson_id) VALUES (nextval('epersongroup2eperson_seq'),8,(SELECT eperson_id FROM epersongroup2eperson WHERE eperson_group_id = 1));
+--
 -- collection table
 -- 
 -- Last two columns are submitter and admin, so these must be present
