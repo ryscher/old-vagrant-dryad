@@ -72,6 +72,35 @@ INSERT INTO group2group VALUES (34, 18, 8);
 INSERT INTO group2group VALUES (35, 19, 8);
 INSERT INTO group2group VALUES (36, 20, 8);
 
+INSERT INTO group2groupcache VALUES (9, 6, 1);
+INSERT INTO group2groupcache VALUES (10, 6, 8);
+INSERT INTO group2groupcache VALUES (11, 7, 1);
+INSERT INTO group2groupcache VALUES (12, 7, 8);
+INSERT INTO group2groupcache VALUES (13, 9, 8);
+INSERT INTO group2groupcache VALUES (14, 9, 1);
+INSERT INTO group2groupcache VALUES (15, 2, 0);
+INSERT INTO group2groupcache VALUES (16, 2, 1);
+INSERT INTO group2groupcache VALUES (17, 2, 8);
+INSERT INTO group2groupcache VALUES (18, 4, 0);
+INSERT INTO group2groupcache VALUES (19, 4, 1);
+INSERT INTO group2groupcache VALUES (20, 4, 8);
+INSERT INTO group2groupcache VALUES (21, 3, 1);
+INSERT INTO group2groupcache VALUES (22, 3, 8);
+INSERT INTO group2groupcache VALUES (23, 5, 1);
+INSERT INTO group2groupcache VALUES (24, 5, 8);
+INSERT INTO group2groupcache VALUES (25, 10, 8);
+INSERT INTO group2groupcache VALUES (26, 10, 1);
+INSERT INTO group2groupcache VALUES (27, 11, 8);
+INSERT INTO group2groupcache VALUES (29, 13, 8);
+INSERT INTO group2groupcache VALUES (28, 12, 8);
+INSERT INTO group2groupcache VALUES (30, 14, 8);
+INSERT INTO group2groupcache VALUES (31, 15, 8);
+INSERT INTO group2groupcache VALUES (32, 16, 8);
+INSERT INTO group2groupcache VALUES (33, 17, 8);
+INSERT INTO group2groupcache VALUES (34, 18, 8);
+INSERT INTO group2groupcache VALUES (35, 19, 8);
+INSERT INTO group2groupcache VALUES (36, 20, 8);
+
 --
 -- collection table
 -- 
