@@ -38,6 +38,40 @@ INSERT INTO epersongroup VALUES (20, 'COLLECTION_7_WORKFLOW_ROLE_editors');
 -- Submissions do not go into curation unless there is a user in the curators group.
 --
 INSERT INTO epersongroup2eperson (id,eperson_group_id, eperson_id) VALUES (nextval('epersongroup2eperson_seq'),8,(SELECT eperson_id FROM epersongroup2eperson WHERE eperson_group_id = 1));
+
+--
+-- Adding Groups to other groups.
+--
+
+INSERT INTO group2group VALUES (9, 6, 1);
+INSERT INTO group2group VALUES (10, 6, 8);
+INSERT INTO group2group VALUES (11, 7, 1);
+INSERT INTO group2group VALUES (12, 7, 8);
+INSERT INTO group2group VALUES (13, 9, 8);
+INSERT INTO group2group VALUES (14, 9, 1);
+INSERT INTO group2group VALUES (15, 2, 0);
+INSERT INTO group2group VALUES (16, 2, 1);
+INSERT INTO group2group VALUES (17, 2, 8);
+INSERT INTO group2group VALUES (18, 4, 0);
+INSERT INTO group2group VALUES (19, 4, 1);
+INSERT INTO group2group VALUES (20, 4, 8);
+INSERT INTO group2group VALUES (21, 3, 1);
+INSERT INTO group2group VALUES (22, 3, 8);
+INSERT INTO group2group VALUES (23, 5, 1);
+INSERT INTO group2group VALUES (24, 5, 8);
+INSERT INTO group2group VALUES (25, 10, 8);
+INSERT INTO group2group VALUES (26, 10, 1);
+INSERT INTO group2group VALUES (27, 11, 8);
+INSERT INTO group2group VALUES (29, 13, 8);
+INSERT INTO group2group VALUES (28, 12, 8);
+INSERT INTO group2group VALUES (30, 14, 8);
+INSERT INTO group2group VALUES (31, 15, 8);
+INSERT INTO group2group VALUES (32, 16, 8);
+INSERT INTO group2group VALUES (33, 17, 8);
+INSERT INTO group2group VALUES (34, 18, 8);
+INSERT INTO group2group VALUES (35, 19, 8);
+INSERT INTO group2group VALUES (36, 20, 8);
+
 --
 -- collection table
 -- 
@@ -51,6 +85,18 @@ INSERT INTO collection VALUES (4, 'KNB', NULL, NULL, NULL, NULL, NULL, NULL, NUL
 INSERT INTO collection VALUES (5, 'TreeBASE', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO collection VALUES (6, 'DryadLab Packages', 'Educational Packages in DryadLab', '', NULL, NULL, '', '', '', '', NULL, NULL, NULL, 14, 13);
 INSERT INTO collection VALUES (7, 'DryadLab Activities', 'Educational Activities in DryadLab', '', NULL, NULL, '', '', '', '', NULL, NULL, NULL, 18, 17);
+
+--
+-- Collection roles. Required for submission.
+-- Workflow actions are based on roles.
+--
+
+INSERT INTO collectionrole VALUES (1, 'curator', 2, 11);
+INSERT INTO collectionrole VALUES (3, 'curator', 6, 15);
+INSERT INTO collectionrole VALUES (2, 'editors', 2, 12);
+INSERT INTO collectionrole VALUES (4, 'editors', 6, 16);
+INSERT INTO collectionrole VALUES (5, 'curator', 7, 19);
+INSERT INTO collectionrole VALUES (6, 'editors', 7, 20);
 
 --
 -- handle table
