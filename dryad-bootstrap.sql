@@ -82,5 +82,55 @@ INSERT INTO community2collection VALUES (5, 1, 5);
 INSERT INTO community2collection VALUES (6, 1, 6);
 INSERT INTO community2collection VALUES (7, 1, 7);
 
+-- resource policies for collections
+
+INSERT INTO resourcepolicy (policy_id, resource_type_id, resource_id, action_id, epersongroup_id) VALUES (nextval('resourcepolicy_seq'),3,1,0,0);
+INSERT INTO resourcepolicy (policy_id, resource_type_id, resource_id, action_id, epersongroup_id) VALUES (nextval('resourcepolicy_seq'),3,1,10,0);
+INSERT INTO resourcepolicy (policy_id, resource_type_id, resource_id, action_id, epersongroup_id) VALUES (nextval('resourcepolicy_seq'),3,1,9,0);
+INSERT INTO resourcepolicy (policy_id, resource_type_id, resource_id, action_id, epersongroup_id) VALUES (nextval('resourcepolicy_seq'),3,1,3,2);
+INSERT INTO resourcepolicy (policy_id, resource_type_id, resource_id, action_id, epersongroup_id) VALUES (nextval('resourcepolicy_seq'),3,1,3,3);
+INSERT INTO resourcepolicy (policy_id, resource_type_id, resource_id, action_id, epersongroup_id) VALUES (nextval('resourcepolicy_seq'),3,2,0,0);
+INSERT INTO resourcepolicy (policy_id, resource_type_id, resource_id, action_id, epersongroup_id) VALUES (nextval('resourcepolicy_seq'),3,2,10,0);
+INSERT INTO resourcepolicy (policy_id, resource_type_id, resource_id, action_id, epersongroup_id) VALUES (nextval('resourcepolicy_seq'),3,2,9,0);
+INSERT INTO resourcepolicy (policy_id, resource_type_id, resource_id, action_id, epersongroup_id) VALUES (nextval('resourcepolicy_seq'),3,2,3,4);
+INSERT INTO resourcepolicy (policy_id, resource_type_id, resource_id, action_id, epersongroup_id) VALUES (nextval('resourcepolicy_seq'),3,2,3,5);
+INSERT INTO resourcepolicy (policy_id, resource_type_id, resource_id, action_id, epersongroup_id) VALUES (nextval('resourcepolicy_seq'),3,1,11,6);
+INSERT INTO resourcepolicy (policy_id, resource_type_id, resource_id, action_id, epersongroup_id) VALUES (nextval('resourcepolicy_seq'),3,2,11,7);
+INSERT INTO resourcepolicy (policy_id, resource_type_id, resource_id, action_id, epersongroup_id) VALUES (nextval('resourcepolicy_seq'),3,3,0,0);
+INSERT INTO resourcepolicy (policy_id, resource_type_id, resource_id, action_id, epersongroup_id) VALUES (nextval('resourcepolicy_seq'),3,3,10,0);
+INSERT INTO resourcepolicy (policy_id, resource_type_id, resource_id, action_id, epersongroup_id) VALUES (nextval('resourcepolicy_seq'),3,3,9,0);
+INSERT INTO resourcepolicy (policy_id, resource_type_id, resource_id, action_id, epersongroup_id) VALUES (nextval('resourcepolicy_seq'),3,3,3,9);
+INSERT INTO resourcepolicy (policy_id, resource_type_id, resource_id, action_id, epersongroup_id) VALUES (nextval('resourcepolicy_seq'),3,3,11,10);
+INSERT INTO resourcepolicy (policy_id, resource_type_id, resource_id, action_id, epersongroup_id) VALUES (nextval('resourcepolicy_seq'),3,2,1,7);
+INSERT INTO resourcepolicy (policy_id, resource_type_id, resource_id, action_id, epersongroup_id) VALUES (nextval('resourcepolicy_seq'),3,2,4,7);
+INSERT INTO resourcepolicy (policy_id, resource_type_id, resource_id, action_id, epersongroup_id) VALUES (nextval('resourcepolicy_seq'),3,1,1,6);
+INSERT INTO resourcepolicy (policy_id, resource_type_id, resource_id, action_id, epersongroup_id) VALUES (nextval('resourcepolicy_seq'),3,1,3,6);
+INSERT INTO resourcepolicy (policy_id, resource_type_id, resource_id, action_id, epersongroup_id) VALUES (nextval('resourcepolicy_seq'),3,1,4,6);
+INSERT INTO resourcepolicy (policy_id, resource_type_id, resource_id, action_id, epersongroup_id) VALUES (nextval('resourcepolicy_seq'),3,3,1,6);
+INSERT INTO resourcepolicy (policy_id, resource_type_id, resource_id, action_id, epersongroup_id) VALUES (nextval('resourcepolicy_seq'),3,3,3,6);
+INSERT INTO resourcepolicy (policy_id, resource_type_id, resource_id, action_id, epersongroup_id) VALUES (nextval('resourcepolicy_seq'),3,3,4,6);
+INSERT INTO resourcepolicy (policy_id, resource_type_id, resource_id, action_id, epersongroup_id) VALUES (nextval('resourcepolicy_seq'),3,4,0,0);
+INSERT INTO resourcepolicy (policy_id, resource_type_id, resource_id, action_id, epersongroup_id) VALUES (nextval('resourcepolicy_seq'),3,4,10,0);
+INSERT INTO resourcepolicy (policy_id, resource_type_id, resource_id, action_id, epersongroup_id) VALUES (nextval('resourcepolicy_seq'),3,4,9,0);
+INSERT INTO resourcepolicy (policy_id, resource_type_id, resource_id, action_id, epersongroup_id) VALUES (nextval('resourcepolicy_seq'),3,5,0,0);
+INSERT INTO resourcepolicy (policy_id, resource_type_id, resource_id, action_id, epersongroup_id) VALUES (nextval('resourcepolicy_seq'),3,5,10,0);
+INSERT INTO resourcepolicy (policy_id, resource_type_id, resource_id, action_id, epersongroup_id) VALUES (nextval('resourcepolicy_seq'),3,5,9,0);
+INSERT INTO resourcepolicy (policy_id, resource_type_id, resource_id, action_id, epersongroup_id) VALUES (nextval('resourcepolicy_seq'),3,2,3,11);
+INSERT INTO resourcepolicy (policy_id, resource_type_id, resource_id, action_id, epersongroup_id) VALUES (nextval('resourcepolicy_seq'),3,2,3,12);
+INSERT INTO resourcepolicy (policy_id, resource_type_id, resource_id, action_id, epersongroup_id) VALUES (nextval('resourcepolicy_seq'),3,6,0,0);
+INSERT INTO resourcepolicy (policy_id, resource_type_id, resource_id, action_id, epersongroup_id) VALUES (nextval('resourcepolicy_seq'),3,6,10,0);
+INSERT INTO resourcepolicy (policy_id, resource_type_id, resource_id, action_id, epersongroup_id) VALUES (nextval('resourcepolicy_seq'),3,6,9,0);
+INSERT INTO resourcepolicy (policy_id, resource_type_id, resource_id, action_id, epersongroup_id) VALUES (nextval('resourcepolicy_seq'),3,6,11,13);
+INSERT INTO resourcepolicy (policy_id, resource_type_id, resource_id, action_id, epersongroup_id) VALUES (nextval('resourcepolicy_seq'),3,6,3,14);
+INSERT INTO resourcepolicy (policy_id, resource_type_id, resource_id, action_id, epersongroup_id) VALUES (nextval('resourcepolicy_seq'),3,6,3,15);
+INSERT INTO resourcepolicy (policy_id, resource_type_id, resource_id, action_id, epersongroup_id) VALUES (nextval('resourcepolicy_seq'),3,6,3,16);
+INSERT INTO resourcepolicy (policy_id, resource_type_id, resource_id, action_id, epersongroup_id) VALUES (nextval('resourcepolicy_seq'),3,7,0,0);
+INSERT INTO resourcepolicy (policy_id, resource_type_id, resource_id, action_id, epersongroup_id) VALUES (nextval('resourcepolicy_seq'),3,7,10,0);
+INSERT INTO resourcepolicy (policy_id, resource_type_id, resource_id, action_id, epersongroup_id) VALUES (nextval('resourcepolicy_seq'),3,7,9,0);
+INSERT INTO resourcepolicy (policy_id, resource_type_id, resource_id, action_id, epersongroup_id) VALUES (nextval('resourcepolicy_seq'),3,7,11,17);
+INSERT INTO resourcepolicy (policy_id, resource_type_id, resource_id, action_id, epersongroup_id) VALUES (nextval('resourcepolicy_seq'),3,7,3,18);
+INSERT INTO resourcepolicy (policy_id, resource_type_id, resource_id, action_id, epersongroup_id) VALUES (nextval('resourcepolicy_seq'),3,7,3,19);
+INSERT INTO resourcepolicy (policy_id, resource_type_id, resource_id, action_id, epersongroup_id) VALUES (nextval('resourcepolicy_seq'),3,7,3,20);
+
 -- Should update sequences after this, since these PK values are hard-coded.
 
