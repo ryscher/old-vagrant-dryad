@@ -15,7 +15,7 @@ These applications must be installed on your host machine.  They will be used to
 2. [Ansible](http://ansible.com)
 3. [VirtualBox](http://virtualbox.org)
 
-Vagrant and VirtualBox installation packages can be downloaded from their respective websites.  Ansible is a Python package with [many ways to install](http://docs.ansible.com/intro_installation.html).  I use [Homebrew](http://brew.sh) and simply `brew install ansible`.
+Vagrant and VirtualBox installation packages can be downloaded from their respective websites.  Ansible is a Python package with [many ways to install](http://docs.ansible.com/intro_installation.html).  I use [Homebrew](http://brew.sh) (which, in turn, requires ruby) and simply `brew install ansible`.
 
 These packages are available on many platforms, but I've only tested this on Mac OS X 10.9.
 
