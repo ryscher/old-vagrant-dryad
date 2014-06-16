@@ -42,7 +42,7 @@ When vagrant builds your Dryad VM, it uses the values in this file to setup the 
 
 You must also provide the location of the Dryad source code. This is done by entering a git URL on the `repo` line. We recommended forking the master [datadryad/dryad-repo](https://github.com/datadryad/dryad-repo) to your personal GitHub account and using the URL of your fork.
 
-    repo: ## DRYAD_REPO FORK or https://github.com/datadryad/dryad-repo.git ##
+    repo: ## DRYAD-REPO GIT URL or https://github.com/datadryad/dryad-repo.git ##
 
 ## Building the VM
 
