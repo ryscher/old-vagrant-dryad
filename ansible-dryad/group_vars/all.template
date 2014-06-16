@@ -39,7 +39,7 @@ dryad:
     port: 5432
     name: dryad_repo
     user: dryad_app
-    password: # Generate a database password
+    password: ## DB PASSWORD ##
   paypal:
     vendor: ''
     user: ''
