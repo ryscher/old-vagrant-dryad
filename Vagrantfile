@@ -11,16 +11,26 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     abort "\n### Error building vagrant-dryad: Unable to find #{GROUP_VARS_FILE}\n\n  See the 'Getting Started' section of the README.md file\n\n"
   end
 
+  group_vars = YAML::load(File.open(GROUP_VARS_FILE))
   # Make sure user has customized the template file.
   # Use ruby exception handling to catch errors
   begin
-    group_vars = YAML::load(File.open(GROUP_VARS_FILE))
     db_password = group_vars['dryad']['db']['password']
     if db_password.length < 1
       raise 'The dryad db password has not been set'
     end
   rescue
     abort "\n### Error building vagrant-dryad: The #{GROUP_VARS_FILE} exists but no db password has been set.\n\n  See the 'Getting Started' section of the README.md file\n\n"
+  end
+
+  # Now make sure user has entered a git repo
+  begin
+    repo = group_vars['dryad']['repo']
+    if repo.length < 1
+      raise 'The dryad repo address has not been set'
+    end
+  rescue
+    abort "\n### Error building vagrant-dryad: The #{GROUP_VARS_FILE} exists but no repo address has been set.\n\n  See the 'Getting Started' section of the README.md file\n\n"
   end
 
   config.vm.box = "precise64-10g"

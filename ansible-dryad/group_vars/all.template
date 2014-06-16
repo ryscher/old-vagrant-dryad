@@ -22,7 +22,7 @@ dryad:
   java:
     deb: deb http://ppa.launchpad.net/webupd8team/java/ubuntu precise main
     deb_src: deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu precise main
-  repo: # your fork or https://github.com/datadryad/dryad-repo.git
+  repo: ## DRYAD-REPO GIT URL or https://github.com/datadryad/dryad-repo.git ##
   repo_path: /home/vagrant/dryad-repo
   tomcat_home: /home/vagrant/dryad-tomcat
   dryad_home: vagrant-dryad
