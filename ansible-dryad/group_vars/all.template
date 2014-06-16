@@ -22,10 +22,9 @@ dryad:
   java:
     deb: deb http://ppa.launchpad.net/webupd8team/java/ubuntu precise main
     deb_src: deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu precise main
-  repo: https://github.com/datadryad/dryad-repo.git
+  repo: # your fork or https://github.com/datadryad/dryad-repo.git
   repo_path: /home/vagrant/dryad-repo
   tomcat_home: /home/vagrant/dryad-tomcat
-  password: dryadPassword
   dryad_home: vagrant-dryad
   install_dir: /opt/dryad
   admin_email: root@localhost
@@ -34,13 +33,13 @@ dryad:
   url: http://localhost:9999
   doi:
     username: dryad
-    password: wrongPassword
+    password: 
   db:
     host: 127.0.0.1
     port: 5432
     name: dryad_repo
     user: dryad_app
-    password: dryadPasswordChangeMe
+    password: # Generate a database password
   paypal:
     vendor: ''
     user: ''
