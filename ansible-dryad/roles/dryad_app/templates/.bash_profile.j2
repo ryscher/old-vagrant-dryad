@@ -5,3 +5,12 @@ export PGHOST={{ dryad.db.host }}
 export PGPORT={{ dryad.db.port }}
 export PGUSER={{ dryad.db.user }}
 export PGDATABASE={{ dryad.db.name }}
+
+if [ ! -f $HOME/.gitconfig ]; then
+  echo
+  echo "Please configure your git name and email:"
+  echo
+  echo "git config --global user.name \"John Doe\""
+  echo "git config --global user.email johndoe@example.com"
+  echo
+fi
