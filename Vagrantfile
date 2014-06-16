@@ -1,14 +1,26 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
-
+require 'yaml'
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
 GROUP_VARS_FILE = "./ansible-dryad/group_vars/all"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  # Make sure user has customized the GROUP_VARS_FILE for vagrant-dryad
+  # Make sure user has copied the template file
   if not File.exists? GROUP_VARS_FILE
     abort "\n### Error building vagrant-dryad: Unable to find #{GROUP_VARS_FILE}\n\n  See the 'Getting Started' section of the README.md file\n\n"
+  end
+
+  # Make sure user has customized the template file.
+  # Use ruby exception handling to catch errors
+  begin
+    group_vars = YAML::load(File.open(GROUP_VARS_FILE))
+    db_password = group_vars['dryad']['db']['password']
+    if db_password.length < 1
+      raise 'The dryad db password has not been set'
+    end
+  rescue
+    abort "\n### Error building vagrant-dryad: The #{GROUP_VARS_FILE} exists but no db password has been set.\n\n  See the 'Getting Started' section of the README.md file\n\n"
   end
 
   config.vm.box = "precise64-10g"
