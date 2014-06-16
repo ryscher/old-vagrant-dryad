@@ -3,8 +3,14 @@
 
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
+GROUP_VARS_FILE = "./ansible-dryad/group_vars/all"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  # Make sure user has customized the GROUP_VARS_FILE for vagrant-dryad
+  if not File.exists? GROUP_VARS_FILE
+    abort "\n### Error building vagrant-dryad: Unable to find #{GROUP_VARS_FILE}\n\n  See the 'Getting Started' section of the README.md file\n\n"
+  end
+
   config.vm.box = "precise64-10g"
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
