@@ -26,19 +26,23 @@ First, You will need to clone the repository:
     git clone git@github.com:datadryad/vagrant-dryad.git
     cd vagrant-dryad
 
-## Customizing
+Second, you will need to copy the `ansible-dryad/group-vars/all.template` to `ansible-dryad/group-vars/all` and set a database password and repository location.
 
-### Vagrantfile (Port forwarding)
+    cp ansible-dryad/group_vars/all.template ansible-dryad/group_vars/all
+    edit ansible-dryad/group_vars/all
 
-There are two files to examine before continuing. The Vagrantfile controls VM parameters such as IP addresses and ports.
+When vagrant builds your Dryad VM, it uses the values in this file to setup the database.  You must replace the `## DB PASSWORD ##` with a new password. The password can be anything you like. It will only be used on the database within your VM.
 
-Ports 8000 and 9999 are configured by default.  8000 is for JPDA debugging if you wish to connect a remote debugger.  9999 is the default port for Dryad development hosts. You can change 9999 from the default, or forward a different host port, but you'll also need to change the corresponding port in the `ansible-dryad/group_vars/all` file. Unless you know what you're doing with Dryad's internal and external ports, it's best to leave this at 9999.
+    db:
+      host: 127.0.0.1
+      port: 5432
+      name: dryad_repo
+      user: dryad_app
+      password: ## DB PASSWORD ##
 
-### Ansible Vars
+You must also provide the location of the Dryad source code. This is done by entering a git URL on the `repo` line. We recommended forking the master [datadryad/dryad-repo](https://github.com/datadryad/dryad-repo) to your personal GitHub account and using the URL of your fork.
 
-Software versions, passwords, file paths, __Git Repo addresses__, Administrator email addresses, and more are configured in `ansible-dryad/group_vars/all`.  This is a YAML file that specifies configuration for your VM that you may change.
-
-__Do not proceed without generating a new db password__
+    repo: ## DRYAD-REPO GIT URL or https://github.com/datadryad/dryad-repo.git ##
 
 ## Building the VM
 
@@ -86,6 +90,20 @@ After the first build/install process, you'll only need to run build, deploy, an
 ## Debugging
 
 If you'd like to use an external tool that supports JPDA debugging (e.g. NetBeans, Eclipse), the default JPDA port (8000) is already configured for forwarding. To start tomcat with debugging enabled, use the `/home/vagrant/dryad-tomcat/bin/startup-debug.sh` script
+
+## Customizing the Vagrant-built VM
+
+Beyond the above required changes, you can further customize the development environment. If you wish to customize further, it's a good idea to familiarize yourself with Vagrant's [command-line interface](http://docs.vagrantup.com/v2/cli/).
+
+### Vagrantfile (Port forwarding)
+
+The Vagrantfile controls VM parameters such as IP addresses and ports.
+
+Ports 8000 and 9999 are configured by default.  8000 is for JPDA debugging if you wish to connect a remote debugger.  9999 is the default port for Dryad development hosts. You can change 9999 from the default, or forward a different host port, but you'll also need to change the corresponding port in the `ansible-dryad/group_vars/all` file. Unless you know what you're doing with Dryad's internal and external ports, it's best to leave this at 9999.
+
+### Ansible Vars
+
+In addition to passwords and Git repo addresses, software versions, file paths, Administrator email addresses, and more are configured in your `ansible-dryad/group_vars/all` file.  This is a YAML file that specifies configuration for your VM that you may change.
 
 ## Communication with the VM
 
