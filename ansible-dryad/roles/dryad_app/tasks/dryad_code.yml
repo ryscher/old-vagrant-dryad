@@ -8,7 +8,7 @@
   file: path={{ dryad.user_home }}/.m2 state=directory owner={{ dryad.user }} mode=0755
 
 - name: Copy settings.xml for maven profile
-  template: src=settings.xml.j2 dest="{{ dryad.home_dir }}/.m2/settings.xml"
+  template: src=settings.xml.j2 dest="{{ dryad.user_home }}/.m2/settings.xml"
   sudo: no
 
 - name: Make private tomcat instance
