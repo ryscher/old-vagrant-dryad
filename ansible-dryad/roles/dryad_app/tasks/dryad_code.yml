@@ -69,7 +69,7 @@
   sudo: no
 
 - name: Install missing poms
-  command: {{ dryad.user_home }}/bin/install_missing_poms.sh chdir={{ dryad.repo_path }}/dspace/etc/discoverySnapshot
+  command: "{{ dryad.user_home }}/bin/install_missing_poms.sh chdir={{ dryad.repo_path }}/dspace/etc/discoverySnapshot"
   sudo: no
 
 - name: Place dummy mailserver script
