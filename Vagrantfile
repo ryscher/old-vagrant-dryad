@@ -81,7 +81,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # View the documentation for the provider you're using for more
   # information on available options.
   config.vm.provision "ansible" do |ansible|
-    ansible.inventory_path = "./vagrant_inventory"
+    ansible.groups = {
+      "postgresql_servers" => ["vagrant-dryad"],
+      "dryad_servers" => ["vagrant-dryad"]
+    }
     ansible.limit = 'all'
     ansible.playbook = "./ansible-dryad/setup.yml"
     ansible.sudo = true
