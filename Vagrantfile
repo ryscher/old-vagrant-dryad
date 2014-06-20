@@ -32,12 +32,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   rescue
     abort "\n### Error building vagrant-dryad: The #{GROUP_VARS_FILE} exists but no repo address has been set.\n\n  See the 'Getting Started' section of the README.md file\n\n"
   end
-
-  config.vm.box = "precise64-10g"
-  # The url from where the 'config.vm.box' box will be fetched if it
-  # doesn't already exist on the user's system.
-  config.vm.box_url = "http://datadryad.org/downloads/precise64-10g.box"
-
   # Set the name
   config.vm.define "vagrant-dryad"
 
@@ -62,10 +56,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Example for VirtualBox:
   #
   config.vm.provider "virtualbox" do |vb|
+
+    config.vm.box = "precise64-10g"
+    # The url from where the 'config.vm.box' box will be fetched if it
+    # doesn't already exist on the user's system.
+    config.vm.box_url = "http://datadryad.org/downloads/precise64-10g.box"
+
     # Use VBoxManage to customize the VM. For example to change memory:
     vb.customize ["modifyvm", :id, "--memory", "4096"]
   end
   config.vm.provider :aws do |aws, override|
+    config.vm.box = "dummy"
     aws.access_key_id = ENV["DRYAD_AWS_ACCESS_KEY_ID"]
     aws.secret_access_key = ENV["DRYAD_AWS_SECRET_ACCESS_KEY"]
     aws.keypair_name = ENV["DRYAD_AWS_KEYPAIR_NAME"]
