@@ -10,8 +10,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   if not File.exists? GROUP_VARS_FILE
     abort "\n### Error building vagrant-dryad: Unable to find #{GROUP_VARS_FILE}\n\n  See the 'Getting Started' section of the README.md file\n\n"
   end
-
-  group_vars = YAML::load(File.open(GROUP_VARS_FILE))
+  begin
+    group_vars = YAML::load(File.open(GROUP_VARS_FILE))
+  rescue
+    abort "\nError reading #{GROUP_VARS_FILE}, make sure it is valid YAML\n\n"
+  end
   # Make sure user has customized the template file.
   # Use ruby exception handling to catch errors
   begin
@@ -32,6 +35,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   rescue
     abort "\n### Error building vagrant-dryad: The #{GROUP_VARS_FILE} exists but no repo address has been set.\n\n  See the 'Getting Started' section of the README.md file\n\n"
   end
+
+  config.vm.box = "precise64-10g"
+  # The url from where the 'config.vm.box' box will be fetched if it
+  # doesn't already exist on the user's system.
+  config.vm.box_url = "http://datadryad.org/downloads/precise64-10g.box"
+
   # Set the name
   config.vm.define "vagrant-dryad"
 
@@ -55,18 +64,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # backing providers for Vagrant. These expose provider-specific options.
   # Example for VirtualBox:
   #
-  config.vm.provider "virtualbox" do |vb|
-
-    config.vm.box = "precise64-10g"
-    # The url from where the 'config.vm.box' box will be fetched if it
-    # doesn't already exist on the user's system.
-    config.vm.box_url = "http://datadryad.org/downloads/precise64-10g.box"
-
+  config.vm.provider "virtualbox" do |vb, override|
     # Use VBoxManage to customize the VM. For example to change memory:
-    vb.customize ["modifyvm", :id, "--memory", "4096"]
+    vb.customize ["modifyvm", :id, "--memory", "2048"]
   end
   config.vm.provider :aws do |aws, override|
-    config.vm.box = "dummy"
+    override.vm.box = "dummy"
     aws.access_key_id = ENV["DRYAD_AWS_ACCESS_KEY_ID"]
     aws.secret_access_key = ENV["DRYAD_AWS_SECRET_ACCESS_KEY"]
     aws.keypair_name = ENV["DRYAD_AWS_KEYPAIR_NAME"]
