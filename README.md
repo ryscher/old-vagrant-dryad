@@ -87,6 +87,20 @@ When you log in with ssh, the VM will show some information about file locations
 
 After the first build/install process, you'll only need to run build, deploy, and startup.
 
+## Emails from Dryad
+
+Dryad sends email notifications for many reasons, including workflow changes and user registrations. By default, `localhost` is used for the mail server. If you'd like to use a real mail server, you can reconfigure this. See `settings.xml` in [How to install Dryad](http://wiki.datadryad.org/How_To_Install_Dryad). Within the vagrant virtual machine you can simply run `run_mailserver.sh`. This script runs a "dummy" mailserver that accepts any incoming mail and displays it on the screen.
+
+    vagrant@precise64:~$ run_mailserver.sh
+    =================================================
+    Starting SMTP server on localhost:25
+    All email sent to this host will be printed below
+
+    Press Control+C to exit
+
+    Waiting for email...
+    =================================================
+
 ## Debugging
 
 If you'd like to use an external tool that supports JPDA debugging (e.g. NetBeans, Eclipse), the default JPDA port (8000) is already configured for forwarding. To start tomcat with debugging enabled, use the `/home/vagrant/dryad-tomcat/bin/startup-debug.sh` script

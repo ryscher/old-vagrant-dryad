@@ -72,6 +72,9 @@
   command: /home/vagrant/bin/install_missing_poms.sh chdir={{ dryad.repo_path }}/dspace/etc/discoverySnapshot
   sudo: no
 
+- name: Place dummy mailserver script
+  copy: src=run_mailserver.sh dest="/home/vagrant/bin/run_mailserver.sh" mode=0755
+
 - name: Make install directory
   file: path={{ dryad.install_dir }} state=directory owner=vagrant mode=0755
 
