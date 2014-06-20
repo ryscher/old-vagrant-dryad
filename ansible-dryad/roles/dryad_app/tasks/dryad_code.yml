@@ -5,10 +5,10 @@
   sudo: no
 
 - name: Make m2 directory
-  file: path=/home/vagrant/.m2 state=directory owner=vagrant mode=0755
+  file: path={{ dryad.user_home }}/.m2 state=directory owner=vagrant mode=0755
 
 - name: Copy settings.xml for maven profile
-  template: src=settings.xml.j2 dest="/home/vagrant/.m2/settings.xml"
+  template: src=settings.xml.j2 dest="{{ dryad.home_dir }}/.m2/settings.xml"
   sudo: no
 
 - name: Make private tomcat instance
@@ -39,41 +39,41 @@
   lineinfile: dest={{ dryad.tomcat_home }}/bin/startup-debug.sh regexp='/usr/share/tomcat6/bin/startup' line='/usr/share/tomcat6/bin/startup-debug.sh'
 
 - name: Make bin directory
-  file: path=/home/vagrant/bin state=directory owner=vagrant mode=0755
+  file: path={{ dryad.user_home }}/bin state=directory owner=vagrant mode=0755
   sudo: no
 
 - name: install bash profile for path and database variables
-  template: src=.bash_profile.j2 dest="/home/vagrant/.bash_profile" mode=0644
+  template: src=.bash_profile.j2 dest="{{ dryad.user_home }}/.bash_profile" mode=0644
   sudo: no
 
 - name: Install build script
-  template: src=build_dryad.sh.j2 dest="/home/vagrant/bin/build_dryad.sh" mode=0755
+  template: src=build_dryad.sh.j2 dest="{{ dryad.user_home }}/bin/build_dryad.sh" mode=0755
   sudo: no
 
 - name: Install deploy script
-  template: src=deploy_dryad.sh.j2 dest="/home/vagrant/bin/deploy_dryad.sh" mode=0755
+  template: src=deploy_dryad.sh.j2 dest="{{ dryad.user_home }}/bin/deploy_dryad.sh" mode=0755
   sudo: no
 
 - name: Install build indexes script
-  template: src=build_indexes.sh.j2 dest="/home/vagrant/bin/build_indexes.sh" mode=0755
+  template: src=build_indexes.sh.j2 dest="{{ dryad.user_home }}/bin/build_indexes.sh" mode=0755
   sudo: no
 
 - name: Install database script
-  template: src=install_dryad_database.sh.j2 dest="/home/vagrant/bin/install_dryad_database.sh" mode=0755
+  template: src=install_dryad_database.sh.j2 dest="{{ dryad.user_home }}/bin/install_dryad_database.sh" mode=0755
 
 - name: Copy carrot2-mini-3.1.0.jar for installation
   copy: src=carrot2-mini-3.1.0.jar dest=/tmp/
 
 - name: Copy script to install missing poms
-  copy: src=install_missing_poms.sh dest=/home/vagrant/bin/install_missing_poms.sh mode=0755
+  copy: src=install_missing_poms.sh dest={{ dryad.user_home }}/bin/install_missing_poms.sh mode=0755
   sudo: no
 
 - name: Install missing poms
-  command: /home/vagrant/bin/install_missing_poms.sh chdir={{ dryad.repo_path }}/dspace/etc/discoverySnapshot
+  command: {{ dryad.user_home }}/bin/install_missing_poms.sh chdir={{ dryad.repo_path }}/dspace/etc/discoverySnapshot
   sudo: no
 
 - name: Place dummy mailserver script
-  copy: src=run_mailserver.sh dest="/home/vagrant/bin/run_mailserver.sh" mode=0755
+  copy: src=run_mailserver.sh dest="{{ dryad.user_home }}/bin/run_mailserver.sh" mode=0755
 
 - name: Make install directory
   file: path={{ dryad.install_dir }} state=directory owner=vagrant mode=0755
