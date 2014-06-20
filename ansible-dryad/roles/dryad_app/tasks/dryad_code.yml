@@ -5,7 +5,7 @@
   sudo: no
 
 - name: Make m2 directory
-  file: path={{ dryad.user_home }}/.m2 state=directory owner=vagrant mode=0755
+  file: path={{ dryad.user_home }}/.m2 state=directory owner={{ dryad.user }} mode=0755
 
 - name: Copy settings.xml for maven profile
   template: src=settings.xml.j2 dest="{{ dryad.home_dir }}/.m2/settings.xml"
@@ -39,7 +39,7 @@
   lineinfile: dest={{ dryad.tomcat_home }}/bin/startup-debug.sh regexp='/usr/share/tomcat6/bin/startup' line='/usr/share/tomcat6/bin/startup-debug.sh'
 
 - name: Make bin directory
-  file: path={{ dryad.user_home }}/bin state=directory owner=vagrant mode=0755
+  file: path={{ dryad.user_home }}/bin state=directory owner={{ dryad.user }} mode=0755
   sudo: no
 
 - name: install bash profile for path and database variables
@@ -76,10 +76,10 @@
   copy: src=run_mailserver.sh dest="{{ dryad.user_home }}/bin/run_mailserver.sh" mode=0755
 
 - name: Make install directory
-  file: path={{ dryad.install_dir }} state=directory owner=vagrant mode=0755
+  file: path={{ dryad.install_dir }} state=directory owner={{ dryad.user }} mode=0755
 
 - name: Make log directory
-  file: path={{ dryad.install_dir }}/log state=directory owner=vagrant mode=0755
+  file: path={{ dryad.install_dir }}/log state=directory owner={{ dryad.user }} mode=0755
 
 - name: Place motd file
   template: src=motd.tail.j2 dest=/etc/motd.tail mode=0644 owner=root
