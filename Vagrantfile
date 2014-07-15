@@ -10,6 +10,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   if not File.exists? GROUP_VARS_FILE
     abort "\n### Error building vagrant-dryad: Unable to find #{GROUP_VARS_FILE}\n\n  See the 'Getting Started' section of the README.md file\n\n"
   end
+  
   begin
     group_vars = YAML::load(File.open(GROUP_VARS_FILE))
   rescue
@@ -38,6 +39,24 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   rescue
     abort "\n### Error building vagrant-dryad: The #{GROUP_VARS_FILE} exists but no repo address has been set.\n\n  See the 'Getting Started' section of the README.md file\n\n"
+  end
+  
+  # Check if dryad.user and dryad.user_home are set
+  begin
+    dryad_user = group_vars['dryad']['user']
+    if dryad_user.length < 1
+      raise 'The dryad user has not been set'
+    end
+  rescue
+    abort "\n### Error building vagrant-dryad: The #{GROUP_VARS_FILE} exists but is missing an entry for dryad.user.\n\n  Update your #{GROUP_VARS_FILE} to include a value for dryad.user (e.g. vagrant).\n\n  Refer to 'Getting Started' section of the README.md file and all.template\n\n"
+  end
+  begin
+    dryad_home = group_vars['dryad']['user_home']
+    if dryad_home.length < 1
+      raise 'The dryad user_home has not been set'
+    end
+  rescue
+    abort "\n### Error building vagrant-dryad: The #{GROUP_VARS_FILE} exists but is missing an entry for dryad.user_home.\n\n  Update your #{GROUP_VARS_FILE} to include a value for dryad.user_home (e.g. /home/vagrant).\n\n  Refer to 'Getting Started' section of the README.md file and all.template\n\n"
   end
 
   config.vm.box = "precise64-10g"
