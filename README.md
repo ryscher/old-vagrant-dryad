@@ -31,7 +31,7 @@ Second, you will need to copy the `ansible-dryad/group-vars/all.template` to `an
     cp ansible-dryad/group_vars/all.template ansible-dryad/group_vars/all
     edit ansible-dryad/group_vars/all
 
-When vagrant builds your Dryad VM, it uses the values in this file to setup the database.  You must replace the `## DB PASSWORD ##` with a new password. The password can be anything you like. It will only be used on the database within your VM.
+When vagrant builds your Dryad VM, it uses the values in this file to setup the database.  You must replace the `## DB PASSWORD ##` and `## TEST DB PASSWORD ##` with new passwords. The passwords can be anything you like. It will only be used on the database within your VM.
 
     db:
       host: 127.0.0.1
@@ -39,6 +39,12 @@ When vagrant builds your Dryad VM, it uses the values in this file to setup the 
       name: dryad_repo
       user: dryad_app
       password: ## DB PASSWORD ##
+    testdb:
+      host: 127.0.0.1
+      port: 5432
+      name: dryad_test_db
+      user: dryad_test_user
+      password: ## TEST DB PASSWORD ##
 
 You must also provide the location of the Dryad source code. This is done by entering a git URL on the `repo` line. We recommended forking the master [datadryad/dryad-repo](https://github.com/datadryad/dryad-repo) to your personal GitHub account and using the URL of your fork.
 
@@ -71,7 +77,7 @@ If you wish to destroy the virtual machine
     vagrant destroy
 
 
-## Developing, Building, Deploying
+## Developing, Building, Testing, Deploying
 
 By default, the Dryad repo is checked out to `/home/vagrant/dryad-repo`. This and other defaults can be changed before provisioning by editing the `ansible-dryad/group_vars/all` file.
 
@@ -86,6 +92,10 @@ When you log in with ssh, the VM will show some information about file locations
 ```
 
 After the first build/install process, you'll only need to run build, deploy, and startup.
+
+### Running tests
+
+To run tests, use the `test_dryad.sh` script in `/home/vagrant/bin/`.  This script will make sure a test environment exists (dspace directory and database, via `install_dryad_test_database.sh`).  To clear out the test database before running tests, use `test_dryad.sh -c`.
 
 ## Emails from Dryad
 
@@ -122,6 +132,10 @@ In addition to passwords and Git repo addresses, software versions, file paths, 
 ## Communication with the VM
 
 In addition to port forwarding, the contents of this directory (The one containing the Vagrantfile) are synchronized from your host computer to the virtual machine's `/vagrant` directory. Additional synchronized directories can be added to the Vagrantfile. For example, the `dryad-bootstrap.sql` file that installs necessary content into the database is stored here, and used by the VM during installation.
+
+## Upgrading your VM
+
+As improvements are added to the vagrant/ansible configurations, you can incorporate the changes by merging in the latest changes from this repo, and running `vagrant provision`. Provisioning will bring your VM up to date without removing existing data or files. You may have to add new values to your `ansible-dryad/group_vars/all` file if they are required by newer versions of the ansible playbook, but the Vagrantfile will usually check for these important changes.
 
 ## Hacking on this repo
 
