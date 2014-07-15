@@ -9,6 +9,9 @@ export PGDATABASE={{ dryad.testdb.name }}
 DRYAD_CODE_DIR={{ dryad.repo_path }}
 
 # Drop the dryad_test database
+# dropdb/createdb require PGPASSWORD
+export PGPASSWORD=`grep $PGUSER $HOME/.pgpass | awk -F ':' '{print $5}'`
+
 dropdb $PGDATABASE
 createdb $PGDATABASE
 
@@ -35,7 +38,6 @@ cp -r "${DRYAD_CODE_DIR}/test" "${DRYAD_TEST_DIR}"
 # Update the testing version of dspace.cfg with database credentials
 # Ansible provisioning installs password into .pgpass, so fish it out of there
 
-PGPASSWORD=`grep $PGUSER $HOME/.pgpass | awk -F ':' '{print $5}'`
 sed -i "s/db.password =.*/db.password = ${PGPASSWORD}/g" "${DRYAD_TEST_DIR}/config/dspace.cfg"
 sed -i "s/db.username =.*/db.username = ${PGUSER}/g"
 sed -i "s/db.url =.*/db.url = jdbc:postgresql://${PGHOST}:${PGPORT}/${PGDATABASE}/g"
