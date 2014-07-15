@@ -38,7 +38,7 @@ cp -r "${DRYAD_CODE_DIR}/test" "${DRYAD_TEST_DIR}"
 # Update the testing version of dspace.cfg with database credentials
 # Ansible provisioning installs password into .pgpass, so fish it out of there
 
-sed -i "s/db.password =.*/db.password = ${PGPASSWORD}/g" "${DRYAD_TEST_DIR}/config/dspace.cfg"
-sed -i "s/db.username =.*/db.username = ${PGUSER}/g" "${DRYAD_TEST_DIR}/config/dspace.cfg"
-sed -i "s/db.url =.*/db.url = jdbc:postgresql:\/\/${PGHOST}:${PGPORT}\/${PGDATABASE}/g" "${DRYAD_TEST_DIR}/config/dspace.cfg"
-sed -i "s/dspace.dir = .*/dspace.dir = ${DRYAD_TEST_DIR}/g" "${DRYAD_TEST_DIR}/config/dspace.cfg"
+sed -i "s|db.password =.*|db.password = ${PGPASSWORD}|g" "${DRYAD_TEST_DIR}/config/dspace.cfg"
+sed -i "s|db.username =.*|db.username = ${PGUSER}|g" "${DRYAD_TEST_DIR}/config/dspace.cfg"
+sed -i "s|db.url =.*|db.url = jdbc:postgresql://${PGHOST}:${PGPORT}/${PGDATABASE}|g" "${DRYAD_TEST_DIR}/config/dspace.cfg"
+sed -i "s|dspace.dir = .*|dspace.dir = ${DRYAD_TEST_DIR}|g" "${DRYAD_TEST_DIR}/config/dspace.cfg"
