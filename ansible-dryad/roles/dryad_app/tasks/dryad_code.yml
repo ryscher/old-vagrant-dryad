@@ -76,7 +76,7 @@
   copy: src=run_mailserver.sh dest="{{ dryad.user_home }}/bin/run_mailserver.sh" mode=0755
 
 - name: Install test database script
-  template: src=install_dryad_test_database.sh.j2.sh dest="{{ dryad.user_home }}/bin/install_dryad_test_database.sh" mode=0755
+  template: src=install_dryad_test_database.sh.j2 dest="{{ dryad.user_home }}/bin/install_dryad_test_database.sh" mode=0755
 
 - name: Place test dryad script
   template: src=test_dryad.sh.j2 dest="{{ dryad.user_home }}/bin/test_dryad.sh" mode=0755
