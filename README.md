@@ -31,7 +31,7 @@ Second, you will need to copy the `ansible-dryad/group-vars/all.template` to `an
     cp ansible-dryad/group_vars/all.template ansible-dryad/group_vars/all
     edit ansible-dryad/group_vars/all
 
-When vagrant builds your Dryad VM, it uses the values in this file to setup the database.  You must replace the `## DB PASSWORD ##` and `## TEST DB PASSWORD ##` with new passwords. The passwords can be anything you like. It will only be used on the database within your VM.
+When vagrant builds your Dryad VM, it uses the values in this file to setup the database.  You must replace the `## DB PASSWORD ##` and `## TEST DB PASSWORD ##` with new passwords. The passwords can be anything you like. They will only be used within the VM.
 
     db:
       host: 127.0.0.1
@@ -95,7 +95,11 @@ After the first build/install process, you'll only need to run build, deploy, an
 
 ### Running tests
 
-To run tests, use the `test_dryad.sh` script in `/home/vagrant/bin/`.  This script will make sure a test environment exists (dspace directory and database, via `install_dryad_test_database.sh`).  To clear out the test database before running tests, use `test_dryad.sh -c`.
+To run tests, use the `test_dryad.sh` script in `/home/vagrant/bin/`.  This script will 
+1. Ensure a test database and dspace directory exist
+2. Run tests with `mvn package -DskipTests=false -Ddefault.dspace.dir=...`
+
+You can use `test_dryad -c` to clean the test environment or manually reset the test database with `install_dryad_test_database.sh`.
 
 ## Emails from Dryad
 
