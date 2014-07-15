@@ -2,8 +2,6 @@
 
 set -e
 
-echo "Running dryad tests. Use -c to clean test database"
-
 TEST_DIR="{{ dryad.install_dir }}/test"
 
 # Create test environment if it does not exist
@@ -13,9 +11,13 @@ if [ ! -d $TEST_DIR ]; then
   {{ dryad.user_home }}/bin/install_dryad_test_database.sh
 fi
 
+echo "Running dryad tests..."
+
 # Create test environment if -c specified
-if (( $# > 1 )) && [ $1 == '-c' ]; then
+if (( $# > 0 )) && [ $1 = "-c" ]; then
   {{ dryad.user_home }}/bin/install_dryad_test_database.sh
+else
+  echo "Use -c to clean test database"
 fi
 
 cd {{ dryad.repo_path }}
