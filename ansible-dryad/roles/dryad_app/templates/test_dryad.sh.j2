@@ -1,0 +1,23 @@
+#!/bin/bash
+
+set -e
+
+echo "Running dryad tests. Use -c to clean test database"
+
+TEST_DIR="{{ dryad.install_dir }}/test"
+
+# Create test environment if it does not exist
+
+if [ ! -d $TEST_DIR ]; then
+  echo "$TEST_DIR does not exist, creating test environment"
+  $HOME/bin/prepare_test_environment.sh
+fi
+
+# Create test environment if -c specified
+if (( $# > 1 )) && [ $1 == '-c' ]; then
+  $HOME/bin/prepare_test_environment.sh
+fi
+
+cd {{ dryad.repo_path }}
+mvn package -DskipTests=false -Ddefault.dspace.dir="$TEST_DIR"
+
