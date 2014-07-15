@@ -22,8 +22,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     if db_password.length < 1
       raise 'The dryad db password has not been set'
     end
+    test_db_password = group_vars['dryad']['testdb']['password']
+    if test_db_password.length < 1
+      raise 'The dryad testdb password has not been set'
+    end
   rescue
-    abort "\n### Error building vagrant-dryad: The #{GROUP_VARS_FILE} exists but no db password has been set.\n\n  See the 'Getting Started' section of the README.md file\n\n"
+    abort "\n### Error building vagrant-dryad: The #{GROUP_VARS_FILE} exists but database passwords have not been set.\n\n  See the 'Getting Started' section of the README.md file\n\n"
   end
 
   # Now make sure user has entered a git repo
