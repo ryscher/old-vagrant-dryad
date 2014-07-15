@@ -83,7 +83,7 @@
 - name: Place test dryad script
   template: src=test_dryad.sh.j2 dest="{{ dryad.user_home }}/bin/test_dryad.sh" mode=0755
   sudo: no
-  
+
 - name: Make install directory
   file: path={{ dryad.install_dir }} state=directory owner={{ dryad.user }} mode=0755
 
