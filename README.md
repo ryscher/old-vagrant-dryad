@@ -93,6 +93,13 @@ When you log in with ssh, the VM will show some information about file locations
 
 After the first build/install process, you'll only need to run build, deploy, and startup.
 
+To create an administrative user for the local Dryad instance, run the following command after
+Dryad has been deployed:
+
+```
+$ /opt/dryad/bin/dspace create-administrator
+```
+
 ### Running tests
 
 To run tests, use the `test_dryad.sh` script in `/home/vagrant/bin/`.  This script will 
