@@ -27,6 +27,7 @@ psql < {{ dryad.install_dir }}/etc/postgres/database_create_doi_table.sql
 psql < {{ dryad.install_dir }}/etc/postgres/database_terms_and_condition.sql
 psql < {{ dryad.install_dir }}/etc/collection-workflow-changes.sql
 psql < {{ dryad.install_dir }}/etc/atmire-versioning-changes.sql
+psql < {{ dryad.install_dir }}/etc/postgres/dryad-rest-webapp.sql
 
 echo "Creating administrative user"
 {{ dryad.install_dir }}/bin/create-administrator
