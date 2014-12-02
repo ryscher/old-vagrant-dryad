@@ -35,7 +35,7 @@ if [ -d $DRYAD_TEST_DIR ]; then
   rm -rf "${DRYAD_TEST_DIR}"
 fi
 
-cp -r "${DRYAD_CODE_DIR}/test" "${DRYAD_TEST_DIR}"
+cp -L -r "${DRYAD_CODE_DIR}/test" "${DRYAD_TEST_DIR}"
 
 # Update the testing version of dspace.cfg with database credentials
 # Ansible provisioning installs password into .pgpass, so fish it out of there
