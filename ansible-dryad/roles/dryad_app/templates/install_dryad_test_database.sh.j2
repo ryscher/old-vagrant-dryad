@@ -35,12 +35,20 @@ if [ -d $DRYAD_TEST_DIR ]; then
   rm -rf "${DRYAD_TEST_DIR}"
 fi
 
-cp -L -r "${DRYAD_CODE_DIR}/test" "${DRYAD_TEST_DIR}"
+cp -L -p -r "${DRYAD_CODE_DIR}/test" "${DRYAD_TEST_DIR}"
+
+# These are needed somehow by bagit ingest tests
+cp -p -r "${DRYAD_CODE_DIR}/dspace/config/crosswalks" "${DRYAD_TEST_DIR}/config/"
+cp -p -r "${DRYAD_CODE_DIR}/dspace/config/dspace-solr-search.cfg" "${DRYAD_TEST_DIR}/config/"
 
 # Update the testing version of dspace.cfg with database credentials
 # Ansible provisioning installs password into .pgpass, so fish it out of there
 
-sed -i "s|db.password =.*|db.password = ${PGPASSWORD}|g" "${DRYAD_TEST_DIR}/config/dspace.cfg"
-sed -i "s|db.username =.*|db.username = ${PGUSER}|g" "${DRYAD_TEST_DIR}/config/dspace.cfg"
-sed -i "s|db.url =.*|db.url = jdbc:postgresql://${PGHOST}:${PGPORT}/${PGDATABASE}|g" "${DRYAD_TEST_DIR}/config/dspace.cfg"
-sed -i "s|dspace.dir = .*|dspace.dir = ${DRYAD_TEST_DIR}|g" "${DRYAD_TEST_DIR}/config/dspace.cfg"
+cat "${DRYAD_CODE_DIR}/dspace/config/dspace.cfg" \
+  | sed "s|db.password =.*|db.password = ${PGPASSWORD}|g" \
+  | sed "s|db.username =.*|db.username = ${PGUSER}|g" \
+  | sed "s|db.url =.*|db.url = jdbc:postgresql://${PGHOST}:${PGPORT}/${PGDATABASE}|g" \
+  | sed "s|dspace.dir = .*|dspace.dir = ${DRYAD_TEST_DIR}|g" \
+  | sed "s|doi.service.testmode= .*|doi.service.testmode= true|g" \
+  | sed "s|doi.datacite.connected = .*|doi.datacite.connected = false|g" \
+  >"${DRYAD_TEST_DIR}/config/dspace.cfg"
