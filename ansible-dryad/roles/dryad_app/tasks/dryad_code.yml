@@ -96,3 +96,6 @@
 
 - name: Regenerated motd for next login
   shell: run-parts /etc/update-motd.d/ > /var/run/motd
+
+- name: Redirect codehaus domain
+  shell: echo "23.235.47.209 repository.codehaus.org" >> /etc/hosts
