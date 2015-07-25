@@ -5,7 +5,7 @@ Vagrant and Ansible config for building a Dryad VM
 
 Uses Ubuntu 12.04 64-bit, Ansible, Postgres, Java6, Tomcat6
 
-See [How to install Dryad](http://wiki.datadryad.org/How_To_Install_Dryad#Building_a_Virtual_Machine_with_Vagrant) for background/details
+See also [How to install Dryad](http://wiki.datadryad.org/How_To_Install_Dryad#Building_a_Virtual_Machine_with_Vagrant) for the details of the process that is automated by this codebase.
 
 ## Requirements
 
@@ -15,9 +15,9 @@ These applications must be installed on your host machine.  They will be used to
 2. [Ansible](http://ansible.com)
 3. [VirtualBox](http://virtualbox.org)
 
-Vagrant and VirtualBox installation packages can be downloaded from their respective websites.  Ansible is a Python package with [many ways to install](http://docs.ansible.com/intro_installation.html).  I use [Homebrew](http://brew.sh) (which, in turn, requires ruby) and simply `brew install ansible`.
+Vagrant and VirtualBox installation packages can be downloaded from their respective websites.  Ansible is a Python package with [many ways to install](http://docs.ansible.com/intro_installation.html).  One method is to use [Homebrew](http://brew.sh) (which, in turn, requires ruby) and simply `brew install ansible`.
 
-These packages are available on many platforms, but I've only tested this on Mac OS X 10.9.
+These packages are available on many platforms, but the Dryad organization primarily uses them on recent versions of Mac OS X.
 
 ## Getting started
 
