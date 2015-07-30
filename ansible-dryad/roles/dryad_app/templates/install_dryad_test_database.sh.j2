@@ -27,6 +27,7 @@ psql < ${DRYAD_CODE_DIR}/dspace/etc/postgres/database_dryad_registries.sql
 psql < ${DRYAD_CODE_DIR}/dspace/etc/postgres/dryad-rest-webapp.sql
 psql < ${DRYAD_CODE_DIR}/test/etc/postgres/test-system-curator.sql
 psql < ${DRYAD_CODE_DIR}/dspace/etc/postgres/update-sequences.sql
+psql < ${DRYAD_CODE_DIR}/test/etc/postgres/test-journal-landing.sql
 
 # Copy test directory to local filesystem, outside of source repo, and owned by dryad user
 DRYAD_TEST_DIR="{{ dryad.install_dir }}/test"
