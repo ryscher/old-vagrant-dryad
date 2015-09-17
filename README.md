@@ -91,7 +91,7 @@ When you log in with ssh, the VM will show some information about file locations
 5. Rebuild SOLR indexes /home/vagrant/bin/build_indexes.sh
 ```
 
-After the first build/install process, you'll only need to run build, deploy, and startup.
+After the first build/install process, you'll only need to run redeploy_dryad.sh
 
 To create an administrative user for the local Dryad instance, run the following command after
 Dryad has been deployed:
