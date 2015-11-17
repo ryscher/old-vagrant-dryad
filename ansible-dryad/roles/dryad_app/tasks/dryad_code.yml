@@ -55,6 +55,18 @@
   template: src=deploy_dryad.sh.j2 dest="{{ dryad.user_home }}/bin/deploy_dryad.sh" mode=0755
   sudo: no
 
+- name: Install redeploy script
+  template: src=redeploy_dryad.sh.j2 dest="{{ dryad.user_home }}/bin/redeploy_dryad.sh" mode=0755
+  sudo: no
+
+- name: Install tomcat start script
+  template: src=tomcat_start.sh.j2 dest="{{ dryad.user_home }}/bin/tomcat_start.sh" mode=0755
+  sudo: no
+
+- name: Install tomcat stop script
+  template: src=tomcat_stop.sh.j2 dest="{{ dryad.user_home }}/bin/tomcat_stop.sh" mode=0755
+  sudo: no
+
 - name: Install build indexes script
   template: src=build_indexes.sh.j2 dest="{{ dryad.user_home }}/bin/build_indexes.sh" mode=0755
   sudo: no
