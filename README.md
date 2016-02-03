@@ -60,6 +60,12 @@ This command takes a while - it's downloading a base virtual machine, installing
 
 Sometimes provisioning fails with `fatal: [x.x.x.x] => SSH encountered an unknown error during the connection.`.  In this case simply retry with `vagrant provision`
 
+### Alternative base image
+
+An alternative to using the default image indicated in the Vagrantfile (precise64-10g.box) is to build an image locally. See the README.md file in the directory 'packer-templates' for steps to build and use a locally built image.
+
+Note that the default (precise64-10g) image is unable to support storage of over 10Gb, which is exceeded during import of the production database. Replacing the default image, by building an alternative locally or using another base URL, is required in that case.
+
 ## Accessing the Virtual Machine
 
 After the machine has been created/provisioned successfully, you can log in with
