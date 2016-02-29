@@ -26,6 +26,9 @@
 - name: Update setenv.sh JAVA_OPTS
   lineinfile: dest={{ dryad.tomcat_home }}/bin/setenv.sh regexp=^'\s+JAVA_OPTS=' line='    JAVA_OPTS="-Xmx4096m -XX:+CMSClassUnloadingEnabled -XX:PermSize=512M -XX:MaxPermSize=512M"'
 
+- name: Update setenv.sh JMX opts
+  lineinfile: dest={{dryad.tomcat_home}}/bin/setenv.sh regexp=EOF line='JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=$JMXPORT -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Djava.rmi.server.hostname=$JMXHOST"'
+
 - name: Make global startup-debug.sh script
   command: cp /usr/share/tomcat6/bin/startup.sh /usr/share/tomcat6/bin/startup-debug.sh creates=/usr/share/tomcat6/bin/startup-debug.sh
 
@@ -73,6 +76,9 @@
 
 - name: Install database script
   template: src=install_dryad_database.sh.j2 dest="{{ dryad.user_home }}/bin/install_dryad_database.sh" mode=0755
+
+- name: Import database script
+  template: src=import_pg_dump.sh.j2 dest="{{ dryad.user_home }}/bin/import_pg_dump.sh" mode=0755
 
 - name: Copy carrot2-mini-3.1.0.jar for installation
   copy: src=carrot2-mini-3.1.0.jar dest=/tmp/
