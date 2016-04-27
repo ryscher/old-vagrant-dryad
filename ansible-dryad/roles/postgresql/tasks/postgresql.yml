@@ -1,4 +1,7 @@
 ---
+- name: Add postgres repository key
+  apt_key: url=http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc state=present
+
 - name: Update locale
   command: /usr/sbin/update-locale LANG={{ postgresql.locale }}.{{ postgresql.encoding }} LC_ALL={{ postgresql.locale }}.{{ postgresql.encoding }}
 

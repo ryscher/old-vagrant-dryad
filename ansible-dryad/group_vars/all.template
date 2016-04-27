@@ -1,5 +1,5 @@
 postgresql:
-  version: 9.2
+  version: 9.5
   repo: 'deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main'
   install_development_headers: true
 
@@ -30,9 +30,12 @@ dryad:
   dryad_home: vagrant-dryad
   install_dir: /opt/dryad
   admin_email: root@localhost
+  host: 192.168.111.223
   hostname: localhost
   port: 9999
   url: http://localhost:9999
+  jmx:
+    port: 6969
   doi:
     username: dryad
     password: 
@@ -52,4 +55,4 @@ dryad:
     vendor: ''
     user: ''
     password: ''
-  
+
