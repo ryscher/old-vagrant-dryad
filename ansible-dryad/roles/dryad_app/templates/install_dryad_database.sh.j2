@@ -39,7 +39,8 @@ echo "Installing metadata schemas"
 {{ dryad.install_dir }}/bin/dsrun org.dspace.administer.MetadataImporter -f {{ dryad.install_dir }}/config/registries/dryad-types.xml
 {{ dryad.install_dir }}/bin/dsrun org.dspace.administer.MetadataImporter -f {{ dryad.install_dir }}/config/registries/workflow-types.xml
 {{ dryad.install_dir }}/bin/dsrun org.dspace.administer.MetadataImporter -f {{ dryad.install_dir }}/config/registries/internal-types.xml
-{{ dryad.install_dir }}/bin/dsrun org.dspace.administer.MetadataImporter -f {{ dryad.install_dir }}/config/registries//prism-types.xml
+{{ dryad.install_dir }}/bin/dsrun org.dspace.administer.MetadataImporter -f {{ dryad.install_dir }}/config/registries/prism-types.xml
+{{ dryad.install_dir }}/bin/dsrun org.dspace.administer.MetadataImporter -f {{ dryad.install_dir }}/config/registries/journal-types.xml
 
 echo "Updating sequences"
 psql < {{ dryad.install_dir }}/etc/postgres/update-sequences.sql
