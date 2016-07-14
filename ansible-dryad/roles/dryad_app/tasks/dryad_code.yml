@@ -80,6 +80,9 @@
 - name: Import database script
   template: src=import_pg_dump.sh.j2 dest="{{ dryad.user_home }}/bin/import_pg_dump.sh" mode=0755
 
+- name: Update schemas script
+  template: src=update_schemas.sh.j2 dest="{{ dryad.user_home }}/bin/update_schemas.sh" mode=0755
+
 - name: Copy carrot2-mini-3.1.0.jar for installation
   copy: src=carrot2-mini-3.1.0.jar dest=/tmp/
 
