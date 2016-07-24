@@ -8,3 +8,6 @@ mvn install:install-file -Dfile=discovery-xmlui-block-0.9.4-SNAPSHOT.jar  -Dgrou
 # Carrot2 is missing, discovered on fresh ubuntu install
 cd /tmp
 mvn install:install-file -DgroupId=org.carrot2 -DartifactId=carrot2-mini -Dversion=3.1.0 -Dpackaging=jar -Dfile=carrot2-mini-3.1.0.jar
+
+# Ensure presence of correct postgres driver
+mvn install:install-file -DgroupId=postgresql -DartifactId=postgresql -Dversion=9.4-1206-jdbc4 -Dpackaging=jar -Dfile=/home/vagrant/dryad-repo/dspace/etc/postgres/postgresql-9.4-1206-jdbc4.jar
