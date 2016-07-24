@@ -74,6 +74,10 @@
   template: src=build_indexes.sh.j2 dest="{{ dryad.user_home }}/bin/build_indexes.sh" mode=0755
   sudo: no
 
+- name: Install script to update the theme without a full redeploy
+  template: src=update_theme.sh.j2 dest="{{ dryad.user_home }}/bin/update_theme.sh" mode=0755
+  sudo: no
+
 - name: Install database script
   template: src=install_dryad_database.sh.j2 dest="{{ dryad.user_home }}/bin/install_dryad_database.sh" mode=0755
 
