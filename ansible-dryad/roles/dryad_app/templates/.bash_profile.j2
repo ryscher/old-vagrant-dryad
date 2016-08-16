@@ -18,3 +18,8 @@ if [ ! -f $HOME/.gitconfig ]; then
   echo "git config --global core.editor vi"
   echo
 fi
+
+# Tomcat JMX settings
+export JMXPORT={{dryad.jmx.port}}
+export JMXHOST={{dryad.host}}
+

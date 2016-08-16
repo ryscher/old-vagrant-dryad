@@ -76,6 +76,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Java JPDA debugging on port 8000
   config.vm.network "forwarded_port", guest: 8000, host: 8000
+
+  # Java JMX management on port 6969
+  config.vm.network "forwarded_port", guest: 6969, host: 6969
+
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
   config.vm.network "private_network", ip: "192.168.111.223"
@@ -88,8 +92,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Example for VirtualBox:
   #
   config.vm.provider "virtualbox" do |vb, override|
-    # Use VBoxManage to customize the VM. For example to change memory:
-    vb.customize ["modifyvm", :id, "--memory", "1024"]
+    # Use VBoxManage to customize the VM. For example to change memory and available cpus:
+    vb.memory = "1024"
+    vb.cpus = "1"
   end
   config.vm.provider :aws do |aws, override|
     override.vm.box = "dummy"
