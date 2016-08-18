@@ -59,7 +59,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     abort "\n### Error building vagrant-dryad: The #{GROUP_VARS_FILE} exists but is missing an entry for dryad.user_home.\n\n  Update your #{GROUP_VARS_FILE} to include a value for dryad.user_home (e.g. /home/vagrant).\n\n  Refer to 'Getting Started' section of the README.md file and all.template\n\n"
   end
 
-  config.vm.box = "precise64-10g"
+#   config.vm.box = "precise64-10g"
+  config.vm.box = "dryad-ubuntu-12-04"
+
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
   config.vm.box_url = "http://datadryad.org/downloads/precise64-10g.box"
