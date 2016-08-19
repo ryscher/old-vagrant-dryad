@@ -66,13 +66,29 @@ With Virtualbox, vagrant, and ansible installed, building the virtual machine is
 
 This command takes a while - it's downloading a base virtual machine, installing software packages, and loading Dryad.
 
-Sometimes provisioning fails with `fatal: [x.x.x.x] => SSH encountered an unknown error during the connection.`.  In this case simply retry with `vagrant provision`
+Sometimes provisioning fails with `fatal: [x.x.x.x] => SSH encountered an unknown error during the connection.`.  In this case simply retry with `vagrant provision`.
 
-### Alternative base image
+## Building a VM with Amazon EC2
 
-An alternative to using the default image indicated in the Vagrantfile (precise64-10g.box) is to build an image locally. See the README.md file in the directory 'packer-templates' for steps to build and use a locally built image.
+You will need to have an access key ID and a secret access key for AWS. If you do not have one, ask Ryan to get you one.
 
-Note that the default (precise64-10g) image is unable to support storage of over 10Gb, which is exceeded during import of the production database. Replacing the default image, by building an alternative locally or using another base URL, is required in that case.
+Then, you'll need to create a keypair for yourself. Log in to the aws.amazon.com console, then go to the EC2 dashboard. Click on "Key Pairs" on the left sidebar under "Network and Security." Then create a new key pair for yourself. The private key file `xxx.pem.txt` should automatically download. Save this file somewhere safe on your machine, and note the path.
+
+Now you'll need to set the environment variables that the Vagrantfile needs. In your `.bash_profile` (or wherever you set your environment variables), add the following values:
+
+```
+# Amazon credentials
+export DRYAD_AWS_ACCESS_KEY_ID=<your access key ID, in single quotes>
+export DRYAD_AWS_SECRET_ACCESS_KEY=<your secret access key, in single quotes>
+export DRYAD_AWS_KEYPAIR_NAME=<the name of your keypair, in single quotes>
+export DRYAD_AWS_PRIVATEKEY_PATH=<the full path to your .pem.txt file, in single quotes>
+```
+
+Reload your settings when you're done: `source ~/.bash_profile`.
+
+Now run `vagrant up --provider=aws` to create a vagrant VM at Amazon. You should be able to find the public IP and public DNS settings for your instance in the EC2 dashboard: find your instance by clicking on Instances in the left sidebar and selecting your instance.
+
+*DO NOT FORGET TO HALT YOUR MACHINE WHEN YOU ARE DONE.*
 
 ## Accessing the Virtual Machine
 
