@@ -50,7 +50,15 @@ You must also provide the location of the Dryad source code. This is done by ent
 
     repo: ## DRYAD-REPO GIT URL or https://github.com/datadryad/dryad-repo.git ##
 
-## Building the VM
+### Creating a base image
+
+While there is a small base box available online (and commented out), it is recommended that you create a local, larger base box. The default (precise64-10g) image is unable to support storage of over 10Gb, which is exceeded during import of the production database. 
+
+To build a base box that is large enough to handle the production database, see the README.md file in the directory 'packer-templates'. The tl;dr version: remove any existing vagrant boxes, then run `vagrant-box-dryad.sh` from within its directory of `packer-templates/ubuntu-12.04`.
+
+Alternatively, if you have access to AWS, you can use that provider to spin up a VM on EC2.
+
+## Building a local VM
 
 With Virtualbox, vagrant, and ansible installed, building the virtual machine is done with
 
