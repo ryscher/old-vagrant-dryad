@@ -89,6 +89,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Default value: false
   config.ssh.forward_agent = true
 
+  # Configure the settings to use the username specified in the group vars 
+  config.ssh.username = dryad_user
+  config.ssh.private_key_path = "packer-templates/ubuntu-12.04/ubuntu"
+  config.ssh.insert_key = false
+
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
   # Example for VirtualBox:
@@ -109,7 +114,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     aws.ami = "ami-a69665ce"
     aws.instance_type = "t2.small"
     aws.block_device_mapping = [{ 'DeviceName' => '/dev/sda1', 'Ebs.VolumeSize' => 50 }]
-    override.ssh.username = "ubuntu"
+    override.ssh.username = dryad_user
     override.ssh.private_key_path = ENV["DRYAD_AWS_PRIVATEKEY_PATH"]
   end
   config.vm.synced_folder ".", "/ubuntu", type: "rsync",
