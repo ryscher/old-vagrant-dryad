@@ -2,7 +2,7 @@
   "provisioners": [
     {
       "type": "shell",
-      "execute_command": "echo 'vagrant'|sudo -S sh '{{.Path}}'",
+      "execute_command": "echo 'ubuntu'|sudo -S sh '{{.Path}}'",
       "override": {
         "virtualbox-iso": {
           "scripts": [
@@ -70,11 +70,11 @@
       "iso_url": "http://releases.ubuntu.com/12.04/ubuntu-12.04.5-server-amd64.iso",
       "iso_checksum": "af224223de99e2a730b67d7785b657f549be0d63221188e105445f75fb8305c9",
       "iso_checksum_type": "sha256",
-      "ssh_username": "vagrant",
-      "ssh_password": "vagrant",
+      "ssh_username": "ubuntu",
+      "ssh_password": "ubuntu",
       "ssh_port": 22,
       "ssh_wait_timeout": "10000s",
-      "shutdown_command": "echo 'shutdown -P now' > /tmp/shutdown.sh; echo 'vagrant'|sudo -S sh '/tmp/shutdown.sh'",
+      "shutdown_command": "echo 'shutdown -P now' > /tmp/shutdown.sh; echo 'ubuntu'|sudo -S sh '/tmp/shutdown.sh'",
       "vboxmanage": [
         [ "modifyvm", "{{.Name}}", "--memory", "512" ],
         [ "modifyvm", "{{.Name}}", "--cpus", "1" ]
@@ -112,11 +112,11 @@
       "iso_url": "http://releases.ubuntu.com/12.04/ubuntu-12.04.5-server-amd64.iso",
       "iso_checksum": "af224223de99e2a730b67d7785b657f549be0d63221188e105445f75fb8305c9",
       "iso_checksum_type": "sha256",
-      "ssh_username": "vagrant",
-      "ssh_password": "vagrant",
+      "ssh_username": "ubuntu",
+      "ssh_password": "ubuntu",
       "ssh_port": 22,
       "ssh_wait_timeout": "10000s",
-      "shutdown_command": "echo 'shutdown -P now' > /tmp/shutdown.sh; echo 'vagrant'|sudo -S sh '/tmp/shutdown.sh'",
+      "shutdown_command": "echo 'shutdown -P now' > /tmp/shutdown.sh; echo 'ubuntu'|sudo -S sh '/tmp/shutdown.sh'",
       "vmx_data": {
         "memsize": "512",
         "numvcpus": "1",

@@ -59,11 +59,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     abort "\n### Error building vagrant-dryad: The #{GROUP_VARS_FILE} exists but is missing an entry for dryad.user_home.\n\n  Update your #{GROUP_VARS_FILE} to include a value for dryad.user_home (e.g. /home/vagrant).\n\n  Refer to 'Getting Started' section of the README.md file and all.template\n\n"
   end
 
-  config.vm.box = "precise64-10g"
+#   (the old vagrant box is deprecated; please create a new one using packer-templates/ubuntu-12.04/vagrant-box-dryad.sh)
+#   config.vm.box = "precise64-10g"
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
-  config.vm.box_url = "http://datadryad.org/downloads/precise64-10g.box"
+#   config.vm.box_url = "http://datadryad.org/downloads/precise64-10g.box"
 
+  config.vm.box = "dryad-ubuntu-12-04"
   # Set the name
   config.vm.define "vagrant-dryad"
 
@@ -87,6 +89,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Default value: false
   config.ssh.forward_agent = true
 
+  # Configure the settings to use the username specified in the group vars 
+  config.ssh.username = dryad_user
+  config.ssh.private_key_path = "packer-templates/ubuntu-12.04/ubuntu"
+  config.ssh.insert_key = false
+
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
   # Example for VirtualBox:
@@ -104,10 +111,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     # From http://cloud-images.ubuntu.com/locator/ec2/
     # us-east-1	precise	12.04 LTS	amd64	ebs	20140606	ami-a49665cc	aki-919dcaf8
-    aws.ami = "ami-a49665cc"
-    override.ssh.username = "ubuntu"
+    aws.ami = "ami-a69665ce"
+    aws.instance_type = "t2.small"
+    aws.block_device_mapping = [{ 'DeviceName' => '/dev/sda1', 'Ebs.VolumeSize' => 50 }]
+    override.ssh.username = dryad_user
     override.ssh.private_key_path = ENV["DRYAD_AWS_PRIVATEKEY_PATH"]
   end
+  config.vm.synced_folder ".", "/ubuntu", type: "rsync",
+    rsync__exclude: [".git/","packer-templates/"]
+
   #
   # View the documentation for the provider you're using for more
   # information on available options.
@@ -120,5 +132,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     ansible.playbook = "./ansible-dryad/setup.yml"
     ansible.sudo = true
     ansible.host_key_checking = false
+    #ansible.verbose = '-vvvv'
   end
 end
