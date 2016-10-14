@@ -1,6 +1,5 @@
 .vagrant
 dryad-vagrant.sql
 ansible-dryad/group_vars/all
-transfer
+sync/
 
-*.box
