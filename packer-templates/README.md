@@ -16,7 +16,7 @@ vagrant box remove precise64-10g
 vagrant box remove dryad-ubuntu-12-04
 ```
 
-Then run the `vagrant-box-dryad.sh` script from inside its directory.
+Then run the `vagrant-box-dryad.sh` script from inside its directory. This script takes a while; be patient for it, and don't type anything when the terminal window opens, just wait for the build process to happen.
 
 The new box can be used to replace the default Vagrant box in the Vagrantfile: 
 
