@@ -4,7 +4,7 @@
   async: 60
   poll: 60
   with_items:
-    - oracle-java6-installer
+    - oracle-java8-installer
     - git
     - maven2
     - ant
