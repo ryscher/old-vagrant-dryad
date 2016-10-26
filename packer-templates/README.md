@@ -7,6 +7,17 @@ disk larger than 10g is needed.
 The script `./ubuntu-12.04/vagrant-box-dryad.sh` will build a 64-bit Ubuntu
 12.04 Vagrant box and install it to the local machine as `dryad-ubuntu-12-04`.
 
+NOTE: if you already have a local virtual machine running, you should destroy it 
+and remove it before creating a new box:
+
+```
+vagrant destroy
+vagrant box remove precise64-10g
+vagrant box remove dryad-ubuntu-12-04
+```
+
+Then run the `vagrant-box-dryad.sh` script from inside its directory. This script takes a while; be patient for it, and don't type anything when the terminal window opens, just wait for the build process to happen.
+
 The new box can be used to replace the default Vagrant box in the Vagrantfile: 
 
 ```

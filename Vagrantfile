@@ -59,11 +59,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     abort "\n### Error building vagrant-dryad: The #{GROUP_VARS_FILE} exists but is missing an entry for dryad.user_home.\n\n  Update your #{GROUP_VARS_FILE} to include a value for dryad.user_home (e.g. /home/vagrant).\n\n  Refer to 'Getting Started' section of the README.md file and all.template\n\n"
   end
 
-  config.vm.box = "precise64-10g"
+#   (the old vagrant box is deprecated; please create a new one using packer-templates/ubuntu-12.04/vagrant-box-dryad.sh)
+#   config.vm.box = "precise64-10g"
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
-  config.vm.box_url = "http://datadryad.org/downloads/precise64-10g.box"
+#   config.vm.box_url = "http://datadryad.org/downloads/precise64-10g.box"
 
+  config.vm.box = "dryad-ubuntu-12-04"
   # Set the name
   config.vm.define "vagrant-dryad"
 
@@ -87,14 +89,28 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Default value: false
   config.ssh.forward_agent = true
 
+  # Configure the settings to use the username specified in the group vars 
+  config.ssh.username = dryad_user
+  config.ssh.private_key_path = "packer-templates/ubuntu-12.04/ubuntu"
+  config.ssh.insert_key = false
+
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
   # Example for VirtualBox:
   #
   config.vm.provider "virtualbox" do |vb, override|
-    # Use VBoxManage to customize the VM. For example to change memory and available cpus:
-    vb.memory = "1024"
-    vb.cpus = "1"
+    # Use VBoxManage to customize the VM. For example to change memory:
+    vb.memory = 1024
+    vb.cpus = 2
+    # sync VM guest directories with the local ./sync directory
+    # NOTE: the synced_folder configuration done here is meant to support 
+    # dryad development with a local VM hosting the dryad codebase and running
+    # the applicaiton. It is not done for the AWS provider because
+    # that provider type shares guest -> host only (not bidirectionally), which is 
+    # not useful for the expected development scenario.
+    # See https://github.com/mitchellh/vagrant-aws/blob/master/README.md#synced-folders
+    override.vm.synced_folder "sync/opt/dryad",  "/opt/dryad",  create: true
+    override.vm.synced_folder "sync/home/vagrant/dryad-repo",  "/home/vagrant/dryad-repo",  create: true
   end
   config.vm.provider :aws do |aws, override|
     override.vm.box = "dummy"
@@ -104,10 +120,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     # From http://cloud-images.ubuntu.com/locator/ec2/
     # us-east-1	precise	12.04 LTS	amd64	ebs	20140606	ami-a49665cc	aki-919dcaf8
-    aws.ami = "ami-a49665cc"
-    override.ssh.username = "ubuntu"
+    aws.ami = "ami-a69665ce"
+    aws.instance_type = "t2.small"
+    aws.block_device_mapping = [{ 'DeviceName' => '/dev/sda1', 'Ebs.VolumeSize' => 50 }]
+    override.ssh.username = dryad_user
     override.ssh.private_key_path = ENV["DRYAD_AWS_PRIVATEKEY_PATH"]
   end
+  config.vm.synced_folder ".", "/ubuntu", type: "rsync",
+    rsync__exclude: [".git/","packer-templates/"]
+
   #
   # View the documentation for the provider you're using for more
   # information on available options.
@@ -120,5 +141,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     ansible.playbook = "./ansible-dryad/setup.yml"
     ansible.sudo = true
     ansible.host_key_checking = false
+    #ansible.verbose = '-vvvv'
   end
 end

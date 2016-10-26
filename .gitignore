@@ -1,4 +1,6 @@
 .vagrant
 dryad-vagrant.sql
 ansible-dryad/group_vars/all
-transfer
+sync/
+packer-templates/ubuntu-12.04/packer_cache
+packer-templates/ubuntu-12.04/ubuntu-12-04-x64-virtualbox.box
