@@ -71,6 +71,8 @@ It is likely that the initial provisioning will fail, because the VM does not ha
 - create an ssh keypair (`ssh-keygen`)
 - view the public key (`cat .ssh/id_rsa.pub`)
 - copy and paste the public key into to your settings on GitHub.
+- log out of the VM (`exit`)
+- re-start the provisioning (`vagrant provision`)
 
 Sometimes provisioning fails with `fatal: [x.x.x.x] => SSH encountered an unknown error during the connection.`.  In this case simply retry with `vagrant provision`.
 
