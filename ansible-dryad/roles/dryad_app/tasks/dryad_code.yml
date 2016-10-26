@@ -87,6 +87,10 @@
 - name: Update schemas script
   template: src=update_schemas.sh.j2 dest="{{ dryad.user_home }}/bin/update_schemas.sh" mode=0755
 
+- name: Install database client script
+  template: src=postgres_client.sh.j2 dest="{{ dryad.user_home }}/bin/postgres_client.sh" mode=0755
+  sudo: no
+
 - name: Copy carrot2-mini-3.1.0.jar for installation
   copy: src=carrot2-mini-3.1.0.jar dest=/tmp/
 
