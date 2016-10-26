@@ -66,6 +66,12 @@ With Virtualbox, vagrant, and ansible installed, building the virtual machine is
 
 This command takes a while - it's downloading a base virtual machine, installing software packages, and loading Dryad.
 
+It is likely that the initial provisioning will fail, because the VM does not have permission to login to your chosen git repository. In that case,
+- login to the VM (`vagrant ssh`) 
+- create an ssh keypair (`ssh-keygen`)
+- view the public key (`cat .ssh/id_rsa.pub`)
+- copy and paste the public key into to your settings on GitHub.
+
 Sometimes provisioning fails with `fatal: [x.x.x.x] => SSH encountered an unknown error during the connection.`.  In this case simply retry with `vagrant provision`.
 
 ## Building a VM with Amazon EC2
@@ -173,6 +179,8 @@ In addition to passwords and Git repo addresses, software versions, file paths, 
 ## Communication with the VM
 
 In addition to port forwarding, the contents of this directory (The one containing the Vagrantfile) are synchronized from your host computer to the virtual machine's `/ubuntu` directory. Additional synchronized directories can be added to the Vagrantfile. For example, the `dryad-bootstrap.sql` file that installs necessary content into the database is stored here, and used by the VM during installation.
+
+When VirtualBox is used as the VM provider, vagrant is configured to sync the guest system's "/opt/dryad" and "/home/vagrant/dryad-repo" directories to subdirectories of this directory's "sync/" subdirectory.
 
 ## Upgrading your VM
 
