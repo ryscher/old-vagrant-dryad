@@ -21,7 +21,7 @@
   sudo: no
 
 - name: Update setenv.sh JDK_DIRS
-  lineinfile: dest={{ dryad.tomcat_home }}/bin/setenv.sh regexp='^JDK_DIRS=' line='JDK_DIRS="/usr/lib/jvm/java-6-oracle"'
+  lineinfile: dest={{ dryad.tomcat_home }}/bin/setenv.sh regexp='^JDK_DIRS=' line='JDK_DIRS="/usr/lib/jvm/java-8-openjdk-amd64"'
 
 - name: Update setenv.sh JAVA_OPTS
   lineinfile: dest={{ dryad.tomcat_home }}/bin/setenv.sh regexp=^'\s+JAVA_OPTS=' line='    JAVA_OPTS="-Xmx4096m -XX:+CMSClassUnloadingEnabled -XX:PermSize=512M -XX:MaxPermSize=512M"'
