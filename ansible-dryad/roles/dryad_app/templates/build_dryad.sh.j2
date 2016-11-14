@@ -1,6 +1,9 @@
 #!/bin/sh
 
 set -e
+cd {{ dryad.user_home }}/dspace-services
+mvn install
+
 cd {{ dryad.repo_path }}/dspace
 mvn clean package -P env-dev
 ~/dryad-tomcat/bin/shutdown.sh -force
