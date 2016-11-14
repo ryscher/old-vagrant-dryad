@@ -94,6 +94,13 @@
 - name: Copy carrot2-mini-3.1.0.jar for installation
   copy: src=carrot2-mini-3.1.0.jar dest=/tmp/
 
+- name: Copy dspace-services-api-2.0.5-SNAPSHOT.jar for installation
+  copy: src=dspace-services-api-2.0.5-SNAPSHOT.jar dest=/tmp/
+- name: Copy dspace-services-impl-2.0.5-SNAPSHOT.jar for installation
+  copy: src=dspace-services-impl-2.0.5-SNAPSHOT.jar dest=/tmp/
+- name: Copy dspace-services-utils-2.0.5-SNAPSHOT.jar for installation
+  copy: src=dspace-services-utils-2.0.5-SNAPSHOT.jar dest=/tmp/
+
 - name: Copy script to install missing poms
   copy: src=install_missing_poms.sh dest={{ dryad.user_home }}/bin/install_missing_poms.sh mode=0755
   sudo: no
