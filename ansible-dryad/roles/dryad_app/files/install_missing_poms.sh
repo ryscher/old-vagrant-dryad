@@ -9,9 +9,5 @@ mvn install:install-file -Dfile=discovery-xmlui-block-0.9.4-SNAPSHOT.jar  -Dgrou
 cd /tmp
 mvn install:install-file -DgroupId=org.carrot2 -DartifactId=carrot2-mini -Dversion=3.1.0 -Dpackaging=jar -Dfile=carrot2-mini-3.1.0.jar
 
-mvn install:install-file -DgroupId=org.dspace -DartifactId=dspace-services-api -Dversion=2.0.5-SNAPSHOT -Dpackaging=jar -Dfile=dspace-services-api-2.0.5-SNAPSHOT.jar
-mvn install:install-file -DgroupId=org.dspace -DartifactId=dspace-services-impl -Dversion=2.0.5-SNAPSHOT -Dpackaging=jar -Dfile=dspace-services-impl-2.0.5-SNAPSHOT.jar
-mvn install:install-file -DgroupId=org.dspace -DartifactId=dspace-services-utils -Dversion=2.0.5-SNAPSHOT -Dpackaging=jar -Dfile=dspace-services-utils-2.0.5-SNAPSHOT.jar
-
 # Ensure presence of correct postgres driver
 mvn install:install-file -DgroupId=postgresql -DartifactId=postgresql -Dversion=9.4-1206-jdbc4 -Dpackaging=jar -Dfile=/home/ubuntu/dryad-repo/dspace/etc/postgres/postgresql-9.4-1206-jdbc4.jar
