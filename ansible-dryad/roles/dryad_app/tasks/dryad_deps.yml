@@ -1,10 +1,10 @@
 ---
 - name: Install Dryad dependencies
   apt: pkg={{ item }} state=installed update-cache=yes
-  async: 60
-  poll: 60
+#  async: 60
+#  poll: 60
   with_items:
-    - oracle-java8-installer
+    - openjdk-8-jdk
     - git
     - maven2
     - ant
