@@ -1,7 +1,12 @@
 #!/bin/bash
 
-set -e
 {{ dryad.user_home }}/bin/tomcat_stop.sh
+
+# Stop if there is an error (so we can see the error message)
+# But there isn't a need to stop if the tomcat_stop fails, because that
+# means that tomcat wasn't running in the first place.
+set -e
+
 {{ dryad.user_home }}/bin/build_dryad.sh
 {{ dryad.user_home }}/bin/deploy_dryad.sh
 {{ dryad.user_home }}/bin/tomcat_start.sh
