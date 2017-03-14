@@ -25,3 +25,8 @@ export JMXHOST={{dryad.host}}
 
 # Maven PermGen settings
 export MAVEN_OPTS="-Xmx512m -XX:MaxPermSize=128m"
+
+# If there is a local .bashrc, load it
+if [ -f ~/.bashrc ]; then
+   source ~/.bashrc
+fi
