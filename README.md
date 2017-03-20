@@ -78,6 +78,10 @@ Sometimes provisioning fails with `fatal: [x.x.x.x] => SSH encountered an unknow
 
 ## Building a VM with Amazon EC2
 
+Install the Vagrant-aws plugin: `vagrant plugin install vagrant-aws`
+
+Then download the base box: `vagrant box add dummy https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box`
+
 You will need to have an access key ID and a secret access key for AWS. If you do not have one, ask Ryan to get you one.
 
 Then, you'll need to create a keypair for yourself. Log in to the aws.amazon.com console, then go to the EC2 dashboard. Click on "Key Pairs" on the left sidebar under "Network and Security." Then create a new key pair for yourself. The private key file `xxx.pem.txt` should automatically download. Save this file somewhere safe on your machine, and note the path.
@@ -89,10 +93,12 @@ Now you'll need to set the environment variables that the Vagrantfile needs. In 
 export DRYAD_AWS_ACCESS_KEY_ID=<your access key ID, in single quotes>
 export DRYAD_AWS_SECRET_ACCESS_KEY=<your secret access key, in single quotes>
 export DRYAD_AWS_KEYPAIR_NAME=<the name of your keypair, in single quotes>
-export DRYAD_AWS_PRIVATEKEY_PATH=<the full path to your .pem.txt file, in single quotes>
+export DRYAD_AWS_PRIVATEKEY_PATH=<the full path to your .pem.txt file, (e.g. ~/.ssh/user.pem.txt) in single quotes>
 ```
 
 Reload your settings when you're done: `source ~/.bash_profile`.
+
+Verify that you have the correct path specified: `more $DRYAD_AWS_PRIVATEKEY_PATH` should give you a cryptic key starting with `-----BEGIN RSA PRIVATE KEY-----`. If not, double-check your path in your .bash_profile and source it again.
 
 Now run `vagrant up --provider=aws` to create a vagrant VM at Amazon. You should be able to find the public IP and public DNS settings for your instance in the EC2 dashboard: find your instance by clicking on Instances in the left sidebar and selecting your instance.
 
