@@ -31,7 +31,17 @@ Second, you will need to copy the `ansible-dryad/group_vars/all.template` to `an
     cp ansible-dryad/group_vars/all.template ansible-dryad/group_vars/all
     edit ansible-dryad/group_vars/all
 
-When vagrant builds your Dryad VM, it uses the values in this file to setup the database.  You must replace the `## DB PASSWORD ##` and `## TEST DB PASSWORD ##` with new passwords. The passwords can be anything you like. They will only be used within the VM.
+When vagrant builds your Dryad VM, it uses the values in this file to setup the database.  You must replace the all entries in the file that are surrounded by double hash marks (`##`)
+- `repo` is the GitHub repository that will be used to download the Dryad codebase. We recommended forking the master [datadryad/dryad-repo](https://github.com/datadryad/dryad-repo) to your personal GitHub account and using the URL of your fork. 
+- IF you are doing a VirtualBox install
+  - `db.password` and `testdb.password` can be anything you like. They will only be used within the VM.
+  - `assetstoreIncoming` should be set to `0`
+- IF you are doing an AWS install
+  - `aws.accessKey` and `aws.secretKey` are the credentials that the AWS machine will use to connect with other AWS services. In most cases, these can be your personal AWS credentials.
+  - `aws.regionName` is the region that the AWS machines will be created in. 
+  - `aws.bucketName` is the name of the S3 bucket that will be used for the assetstore.
+  - `assetstoreIncoming` should be set to `1`
+
 
     db:
       host: 127.0.0.1
@@ -45,10 +55,6 @@ When vagrant builds your Dryad VM, it uses the values in this file to setup the 
       name: dryad_test_db
       user: dryad_test_user
       password: ## TEST DB PASSWORD ##
-
-You must also provide the location of the Dryad source code. This is done by entering a git URL on the `repo` line. We recommended forking the master [datadryad/dryad-repo](https://github.com/datadryad/dryad-repo) to your personal GitHub account and using the URL of your fork.
-
-    repo: ## DRYAD-REPO GIT URL or https://github.com/datadryad/dryad-repo.git ##
 
 ### Creating a base image
 
