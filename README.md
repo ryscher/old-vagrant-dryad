@@ -13,7 +13,7 @@ These applications must be installed on your host machine.  They will be used to
 
 1. [Vagrant](http://vagrantup.com)
 2. [Ansible](http://ansible.com)
-3. [VirtualBox](http://virtualbox.org)
+3. [VirtualBox](http://virtualbox.org) (not required if you will be hosting the VM on the Amazon AWS cloud)
 
 Vagrant and VirtualBox installation packages can be downloaded from their respective websites.  Ansible is a Python package with [many ways to install](http://docs.ansible.com/intro_installation.html).  One method is to use [Homebrew](http://brew.sh) (which, in turn, requires ruby) and simply `brew install ansible`.
 
@@ -56,6 +56,8 @@ When vagrant builds your Dryad VM, it uses the values in this file to setup the 
       user: dryad_test_user
       password: ## TEST DB PASSWORD ##
 
+## Building a local VM with VirtualBox
+
 ### Creating a base image
 
 While there is a small base box available online (and commented out), it is recommended that you create a local, larger base box. The default (precise64-10g) image is unable to support storage of over 10Gb, which is exceeded during import of the production database. 
@@ -64,9 +66,9 @@ To build a base box that is large enough to handle the production database, see 
 
 Alternatively, if you have access to AWS, you can use that provider to spin up a VM on EC2.
 
-## Building a local VM
+### Bringing up the VirtualBox
 
-With Virtualbox, vagrant, and ansible installed, building the virtual machine is done with
+With VirtualBox, vagrant, and ansible installed, building the virtual machine is done with
 
     vagrant up
 
@@ -82,15 +84,15 @@ It is likely that the initial provisioning will fail, because the VM does not ha
 
 Sometimes provisioning fails with `fatal: [x.x.x.x] => SSH encountered an unknown error during the connection.`.  In this case simply retry with `vagrant provision`.
 
-## Building a VM with Amazon EC2
+## Building a cloud VM with Amazon AWS
 
 Install the Vagrant-aws plugin: `vagrant plugin install vagrant-aws`
 
 Then download the base box: `vagrant box add dummy https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box`
 
-You will need to have an access key ID and a secret access key for AWS. If you do not have one, ask Ryan to get you one.
+You will need to have an access key ID and a secret access key for AWS. This is used to give your local machine permission to create VMs on the AWS infrastructure.
 
-Then, you'll need to create a keypair for yourself. Log in to the aws.amazon.com console, then go to the EC2 dashboard. Click on "Key Pairs" on the left sidebar under "Network and Security." Then create a new key pair for yourself. The private key file `xxx.pem.txt` should automatically download. Save this file somewhere safe on your machine, and note the path.
+Then, you'll need to create a keypair for yourself. This will be used by vagrant to log in to the VMs that you create, so only you will have access to these VMs unless you explicitly grant access to others. To create the keypair, log in to the aws.amazon.com console, then go to the EC2 dashboard. Click on "Key Pairs" on the left sidebar under "Network and Security." Then create a new key pair for yourself. The private key file `xxx.pem` should automatically download. Save this file somewhere safe on your machine, and note the path.
 
 Now you'll need to set the environment variables that the Vagrantfile needs. In your `.bash_profile` (or wherever you set your environment variables), add the following values:
 
@@ -106,9 +108,11 @@ Reload your settings when you're done: `source ~/.bash_profile`.
 
 Verify that you have the correct path specified: `more $DRYAD_AWS_PRIVATEKEY_PATH` should give you a cryptic key starting with `-----BEGIN RSA PRIVATE KEY-----`. If not, double-check your path in your .bash_profile and source it again.
 
+Finally, it is good practice to provide a descriptive name for the VM to distinguish it from other VMs on the AWS system. Edit the `Vagrantfile`, and change the name within the `aws.tags` section.
+
 Now run `vagrant up --provider=aws` to create a vagrant VM at Amazon. You should be able to find the public IP and public DNS settings for your instance in the EC2 dashboard: find your instance by clicking on Instances in the left sidebar and selecting your instance.
 
-*DO NOT FORGET TO HALT YOUR MACHINE WHEN YOU ARE DONE.*
+*DO NOT FORGET TO HALT YOUR MACHINE WHEN YOU ARE DONE. (`vagrant halt`)*
 
 ## Accessing the Virtual Machine
 
@@ -127,7 +131,7 @@ If you wish to destroy the virtual machine
     vagrant destroy
 
 
-## Developing, Building, Testing, Deploying
+## Developing, Building, Testing, Deploying the Dryad code
 
 By default, the Dryad repo is checked out to `/home/ubuntu/dryad-repo`. This and other defaults can be changed before provisioning by editing the `ansible-dryad/group_vars/all` file.
 
