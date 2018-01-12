@@ -56,7 +56,6 @@ dryad:
     secretKey: ## REPLACE ##
     regionName: ## REPLACE ##
     bucketName: ## REPLACE ##
-    subfolder: 
   assetstoreIncoming: ## 0 for local disk, 1 for AWS S3 ##
   paypal:
     vendor: ''
