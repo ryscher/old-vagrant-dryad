@@ -118,12 +118,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     aws.secret_access_key = ENV["DRYAD_AWS_SECRET_ACCESS_KEY"]
     aws.keypair_name = ENV["DRYAD_AWS_KEYPAIR_NAME"]
 
+    aws.tags = {
+	   'Name' => 'dryad-test-vm'
+    }	   
     # From http://cloud-images.ubuntu.com/locator/ec2/
     # us-east-1	precise	12.04 LTS	amd64	ebs	20140606	ami-a49665cc	aki-919dcaf8
     aws.ami = "ami-a69665ce"
     aws.instance_type = "t2.small"
+    aws.security_groups = ['AWS-OpsWorks-Default-Server', 'default']
     aws.block_device_mapping = [{ 'DeviceName' => '/dev/sda1', 'Ebs.VolumeSize' => 50 }]
-    override.ssh.username = dryad_user
+    override.ssh.username = "ubuntu"
     override.ssh.private_key_path = ENV["DRYAD_AWS_PRIVATEKEY_PATH"]
   end
   config.vm.synced_folder ".", "/ubuntu", type: "rsync",
