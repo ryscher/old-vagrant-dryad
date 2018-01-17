@@ -6,11 +6,11 @@
   with_items:
     - openjdk-8-jdk
     - git
-    - maven2
+    - maven
     - ant
     - perl
-    - tomcat6
-    - tomcat6-user
+    - tomcat8
+    - tomcat8-user
     - python-psycopg2
     - screen
     - xvfb

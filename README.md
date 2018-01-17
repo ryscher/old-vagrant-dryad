@@ -11,8 +11,8 @@ See also [How to install Dryad](http://wiki.datadryad.org/How_To_Install_Dryad#B
 
 These applications must be installed on your host machine.  They will be used to build and run a virtual machine containing Dryad.
 
-1. [Vagrant](http://vagrantup.com)
-2. [Ansible](http://ansible.com)
+1. [Vagrant](http://vagrantup.com) (version 2.0 or higher)
+2. [Ansible](http://ansible.com) (version 2.0 or higher)
 3. [VirtualBox](http://virtualbox.org) (not required if you will be hosting the VM on the Amazon AWS cloud)
 
 Vagrant and VirtualBox installation packages can be downloaded from their respective websites.  Ansible is a Python package with [many ways to install](http://docs.ansible.com/intro_installation.html).  One method is to use [Homebrew](http://brew.sh) (which, in turn, requires ruby) and simply `brew install ansible`.

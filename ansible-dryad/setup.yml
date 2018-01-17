@@ -1,11 +1,16 @@
 ---
 - name: 'PostgreSQL Playbook'
   hosts: postgresql_servers
+  gather_facts: False
+  pre_tasks:
+  - name: Install python 2 for Ansible
+    raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+    changed_when: False
+  - setup: # aka gather_facts
   roles:
     - postgresql
-
 - name: 'Dryad Playbook'
   hosts: dryad_servers
-  sudo: yes
+  become: yes
   roles:
     - dryad_app

@@ -4,9 +4,6 @@
 #  async: 60
 #  poll: 60
   with_items:
-    - emacs23
+    - emacs24
     - ack-grep
 
-- name: Correct name of ack
-  shell: dpkg-divert --local --divert /usr/bin/ack --rename --add /usr/bin/ack-grep
-  sudo: yes
