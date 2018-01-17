@@ -2,10 +2,14 @@
 # via https://github.com/ansible/ansible-examples/blob/master/language_features/postgresql.yml
 
 ---
+- name: Ensure Postgres is running
+  shell: /etc/init.d/postgresql restart
+  become: yes
+
 - name: Create Postgres user for dryad
   postgresql_user: name={{ dryad.db.user }} role_attr_flags=CREATEDB password={{ dryad.db.password }}
   become: yes
-  #become_user: postgres
+  become_user: postgres
 
 - name: Create Postgres database for dryad
   postgresql_db: owner={{ dryad.db.user }} name={{ dryad.db.name }} login_user={{ dryad.db.user }} login_password={{ dryad.db.password }} login_host={{ dryad.db.host }} port={{ dryad.db.port }} encoding={{ postgresql.encoding }} lc_ctype='{{ postgresql.locale }}.{{ postgresql.encoding }}' lc_collate='{{ postgresql.locale }}.{{ postgresql.encoding }}'
@@ -13,7 +17,7 @@
 - name: Create Postgres user for dryad test
   postgresql_user: name={{ dryad.testdb.user }} role_attr_flags=CREATEDB password={{ dryad.testdb.password }}
   become: yes
-  #become_user: postgres
+  become_user: postgres
 
 - name: Create Postgres database for dryad test
   postgresql_db: owner={{ dryad.testdb.user }} name={{ dryad.testdb.name }} login_user={{ dryad.testdb.user }} login_password={{ dryad.testdb.password }} login_host={{ dryad.testdb.host }} port={{ dryad.testdb.port }} encoding={{ postgresql.encoding }} lc_ctype='{{ postgresql.locale }}.{{ postgresql.encoding }}' lc_collate='{{ postgresql.locale }}.{{ postgresql.encoding }}'
