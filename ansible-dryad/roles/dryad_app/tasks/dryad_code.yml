@@ -12,20 +12,16 @@
   template: src=settings.xml.j2 dest="{{ dryad.user_home }}/.m2/settings.xml"
   become: no
 
-#- name: Add temporary newline file to approve tomcat creation
-#  template: src=newline_file.txt.j2 dest="{{ dryad.user_home }}/newline_file.txt"
-#  become: no
+- name: Add temporary newline file to approve tomcat creation
+  template: src=newline_file.txt.j2 dest="{{ dryad.user_home }}/newline_file.txt"
+  become: no
 
-#- name: Make private tomcat instance
-#  shell: tomcat6-instance-create {{ dryad.tomcat_home }} <{{ dryad.user_home }}/newline_file.txt creates={{ dryad.tomcat_home }}
-#  become: no
+- name: Make private tomcat instance
+  shell: tomcat8-instance-create {{ dryad.tomcat_home }} <{{ dryad.user_home }}/newline_file.txt creates={{ dryad.tomcat_home }}
+  become: no
 
-#- name: Remove temporary newline file
-#  shell: rm {{ dryad.user_home }}/newline_file.txt
-#  become: no
-
-- name: Make tomcat symlink
-  shell: ln -s /var/lib/tomcat8 {{ dryad.tomcat_home }} creates={{ dryad.tomcat_home }}
+- name: Remove temporary newline file
+  shell: rm {{ dryad.user_home }}/newline_file.txt
   become: no
 
 - name: Update tomcat server.xml
@@ -42,17 +38,17 @@
   lineinfile: dest={{dryad.tomcat_home}}/bin/setenv.sh regexp=EOF line='JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=$JMXPORT -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Djava.rmi.server.hostname=$JMXHOST"'
 
 - name: Make global startup-debug.sh script
-  command: cp /usr/share/tomcat6/bin/startup.sh /usr/share/tomcat6/bin/startup-debug.sh creates=/usr/share/tomcat6/bin/startup-debug.sh
+  command: cp /usr/share/tomcat8/bin/startup.sh /usr/share/tomcat8/bin/startup-debug.sh creates=/usr/share/tomcat8/bin/startup-debug.sh
 
 - name: Update global startup-debug.sh script
-  lineinfile: dest=/usr/share/tomcat6/bin/startup-debug.sh regexp='^exec ' line='exec "$PRGDIR"/"$EXECUTABLE" jpda start "$@"'
+  lineinfile: dest=/usr/share/tomcat8/bin/startup-debug.sh regexp='^exec ' line='exec "$PRGDIR"/"$EXECUTABLE" jpda start "$@"'
 
 - name: Make dryad startup-debug.sh script
   shell: cp {{ dryad.tomcat_home }}/bin/startup.sh {{ dryad.tomcat_home }}/bin/startup-debug.sh creates={{ dryad.tomcat_home }}/bin/startup-debug.sh
   become: no
 
 - name: Update startup-debug.sh script
-  lineinfile: dest={{ dryad.tomcat_home }}/bin/startup-debug.sh regexp='/usr/share/tomcat6/bin/startup' line='/usr/share/tomcat6/bin/startup-debug.sh'
+  lineinfile: dest={{ dryad.tomcat_home }}/bin/startup-debug.sh regexp='/usr/share/tomcat8/bin/startup' line='/usr/share/tomcat8/bin/startup-debug.sh'
 
 - name: Make bin directory
   file: path={{ dryad.user_home }}/bin state=directory owner={{ dryad.user }} mode=0755
