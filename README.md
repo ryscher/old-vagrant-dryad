@@ -102,6 +102,7 @@ export DRYAD_AWS_ACCESS_KEY_ID=<your access key ID, in single quotes>
 export DRYAD_AWS_SECRET_ACCESS_KEY=<your secret access key, in single quotes>
 export DRYAD_AWS_KEYPAIR_NAME=<the name of your keypair, in single quotes>
 export DRYAD_AWS_PRIVATEKEY_PATH=<the full path to your .pem.txt file, (e.g. ~/.ssh/user.pem.txt) in single quotes>
+export DRYAD_AWS_VM_NAME=<the name you want the VM to have in the EC2 console>
 ```
 
 Reload your settings when you're done: `source ~/.bash_profile`.
