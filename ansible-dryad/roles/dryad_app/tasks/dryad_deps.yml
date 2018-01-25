@@ -9,11 +9,12 @@
     - maven
     - ant
     - perl
-    - tomcat8
-    - tomcat8-user
+    - tomcat7
+    - tomcat7-user
     - python-psycopg2
     - screen
     - xvfb
     - firefox
+    - awscli
   tags:
     - packages
