@@ -21,12 +21,22 @@ These packages are available on many platforms, but the Dryad organization prima
 
 ## Getting started
 
-First, You will need to clone the repository:
+You will need to clone the repository that contains the Vagrant/Ansible settings:
 
     git clone git@github.com:datadryad/vagrant-dryad.git
     cd vagrant-dryad
 
-Second, you will need to copy the `ansible-dryad/group_vars/all.template` to `ansible-dryad/group_vars/all` and set a database password and repository location.
+## Creating a database
+
+An external machine with a database is required for installation on AWS. On postgres, a local database will be created, but you are welcome to use an external database instead. 
+
+To create a database using Amazon RDS, login to an existing Dryad machine, and run the utility script to create a new database:
+
+    dryad-utils/aws-tools/db-create-new.sh <db-hostname> <db-password>
+
+## Configuring Dryad's database and assetstore
+
+Copy the `ansible-dryad/group_vars/all.template` to `ansible-dryad/group_vars/all` and set a database password and repository location.
 
     cp ansible-dryad/group_vars/all.template ansible-dryad/group_vars/all
     edit ansible-dryad/group_vars/all
@@ -42,20 +52,6 @@ When vagrant builds your Dryad VM, it uses the values in this file to setup the 
   - `aws.bucketName` is the name of the S3 bucket that will be used for the assetstore.
   - `assetstoreIncoming` should be set to `1`
   - `db.host` should be set to the address of an Amazon RDS database that contains Dryad data
-
-
-    db:
-      host: 127.0.0.1
-      port: 5432
-      name: dryad_repo
-      user: dryad_app
-      password: ## DB PASSWORD ##
-    testdb:
-      host: 127.0.0.1
-      port: 5432
-      name: dryad_test_db
-      user: dryad_test_user
-      password: ## TEST DB PASSWORD ##
 
 ## Building a local VM with VirtualBox
 
