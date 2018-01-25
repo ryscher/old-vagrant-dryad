@@ -41,6 +41,7 @@ When vagrant builds your Dryad VM, it uses the values in this file to setup the 
   - `aws.regionName` is the region that the AWS machines will be created in. 
   - `aws.bucketName` is the name of the S3 bucket that will be used for the assetstore.
   - `assetstoreIncoming` should be set to `1`
+  - `db.host` should be set to the address of an Amazon RDS database that contains Dryad data
 
 
     db:
@@ -141,7 +142,7 @@ When you log in with ssh, the VM will show some information about file locations
 ```
 1. Build dryad          /home/ubuntu/bin/build_dryad.sh
 2. Deploy dryad         /home/ubuntu/bin/deploy_dryad.sh
-3. Install database     /home/ubuntu/bin/install_dryad_database.sh
+3. Install database (only for VirtualBox install)     /home/ubuntu/bin/install_dryad_database.sh
 4. Start tomcat         /home/ubuntu/dryad-tomcat/bin/startup.sh
 5. Rebuild SOLR indexes /home/ubuntu/bin/build_indexes.sh
 ```
