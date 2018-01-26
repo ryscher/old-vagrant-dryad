@@ -11,9 +11,9 @@ See also [How to install Dryad](http://wiki.datadryad.org/How_To_Install_Dryad#B
 
 These applications must be installed on your host machine.  They will be used to build and run a virtual machine containing Dryad.
 
-1. [Vagrant](http://vagrantup.com)
-2. [Ansible](http://ansible.com)
-3. [VirtualBox](http://virtualbox.org)
+1. [Vagrant](http://vagrantup.com) (version 2.0 or higher)
+2. [Ansible](http://ansible.com) (version 2.0 or higher)
+3. [VirtualBox](http://virtualbox.org) (not required if you will be hosting the VM on the Amazon AWS cloud)
 
 Vagrant and VirtualBox installation packages can be downloaded from their respective websites.  Ansible is a Python package with [many ways to install](http://docs.ansible.com/intro_installation.html).  One method is to use [Homebrew](http://brew.sh) (which, in turn, requires ruby) and simply `brew install ansible`.
 
@@ -21,34 +21,38 @@ These packages are available on many platforms, but the Dryad organization prima
 
 ## Getting started
 
-First, You will need to clone the repository:
+You will need to clone the repository that contains the Vagrant/Ansible settings:
 
     git clone git@github.com:datadryad/vagrant-dryad.git
     cd vagrant-dryad
 
-Second, you will need to copy the `ansible-dryad/group_vars/all.template` to `ansible-dryad/group_vars/all` and set a database password and repository location.
+## Creating a database
 
-    cp ansible-dryad/group_vars/all.template ansible-dryad/group_vars/all
-    edit ansible-dryad/group_vars/all
+A local database will be created, but you are welcome to use an external database instead. 
 
-When vagrant builds your Dryad VM, it uses the values in this file to setup the database.  You must replace the `## DB PASSWORD ##` and `## TEST DB PASSWORD ##` with new passwords. The passwords can be anything you like. They will only be used within the VM.
+To create a local database, obtain a copy of a Dryad sql file. When your virtual machine is running, use the `import_pg_dump.sh` script to populate your local database.
 
-    db:
-      host: 127.0.0.1
-      port: 5432
-      name: dryad_repo
-      user: dryad_app
-      password: ## DB PASSWORD ##
-    testdb:
-      host: 127.0.0.1
-      port: 5432
-      name: dryad_test_db
-      user: dryad_test_user
-      password: ## TEST DB PASSWORD ##
+To create a database using Amazon RDS, login to an existing Dryad machine, and run the utility script to create a new database:
 
-You must also provide the location of the Dryad source code. This is done by entering a git URL on the `repo` line. We recommended forking the master [datadryad/dryad-repo](https://github.com/datadryad/dryad-repo) to your personal GitHub account and using the URL of your fork.
+    dryad-utils/aws-tools/db-create-new.sh <db-hostname> <db-password>
 
-    repo: ## DRYAD-REPO GIT URL or https://github.com/datadryad/dryad-repo.git ##
+## Configuring Dryad's database and assetstore
+
+Copy the `ansible-dryad/group_vars/all.template` to `ansible-dryad/group_vars/all` and set a database password and repository location.
+
+When vagrant builds your Dryad VM, it uses the values in this file to setup the database.  You must replace the all entries in the file that are surrounded by double hash marks (`##`)
+- `repo` is the GitHub repository that will be used to download the Dryad codebase. We recommended forking the master [datadryad/dryad-repo](https://github.com/datadryad/dryad-repo) to your personal GitHub account and using the URL of your fork. 
+- IF you are doing a VirtualBox install
+  - `db.password` and `testdb.password` can be anything you like. They will only be used within the VM.
+  - `assetstoreIncoming` should be set to `0`
+- IF you are doing an AWS install
+  - `aws.accessKey` and `aws.secretKey` are the credentials that the AWS machine will use to connect with other AWS services. In most cases, these can be your personal AWS credentials.
+  - `aws.regionName` is the region that the AWS machines will be created in. 
+  - `aws.bucketName` is the name of the S3 bucket that will be used for the assetstore.
+  - `assetstoreIncoming` should be set to `1`
+  - `db.host` If you are using an Amazon RDS database that contains Dryad data, this should be set to the address of that RDS instance.
+
+## Building a local VM with VirtualBox
 
 ### Creating a base image
 
@@ -58,9 +62,9 @@ To build a base box that is large enough to handle the production database, see 
 
 Alternatively, if you have access to AWS, you can use that provider to spin up a VM on EC2.
 
-## Building a local VM
+### Bringing up the VirtualBox
 
-With Virtualbox, vagrant, and ansible installed, building the virtual machine is done with
+With VirtualBox, vagrant, and ansible installed, building the virtual machine is done with
 
     vagrant up
 
@@ -76,15 +80,15 @@ It is likely that the initial provisioning will fail, because the VM does not ha
 
 Sometimes provisioning fails with `fatal: [x.x.x.x] => SSH encountered an unknown error during the connection.`.  In this case simply retry with `vagrant provision`.
 
-## Building a VM with Amazon EC2
+## Building a cloud VM with Amazon AWS
 
 Install the Vagrant-aws plugin: `vagrant plugin install vagrant-aws`
 
 Then download the base box: `vagrant box add dummy https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box`
 
-You will need to have an access key ID and a secret access key for AWS. If you do not have one, ask Ryan to get you one.
+You will need to have an access key ID and a secret access key for AWS. This is used to give your local machine permission to create VMs on the AWS infrastructure.
 
-Then, you'll need to create a keypair for yourself. Log in to the aws.amazon.com console, then go to the EC2 dashboard. Click on "Key Pairs" on the left sidebar under "Network and Security." Then create a new key pair for yourself. The private key file `xxx.pem.txt` should automatically download. Save this file somewhere safe on your machine, and note the path.
+Then, you'll need to create a keypair for yourself. This will be used by vagrant to log in to the VMs that you create, so only you will have access to these VMs unless you explicitly grant access to others. To create the keypair, log in to the aws.amazon.com console, then go to the EC2 dashboard. Click on "Key Pairs" on the left sidebar under "Network and Security." Then create a new key pair for yourself. The private key file `xxx.pem` should automatically download. Save this file somewhere safe on your machine, and note the path.
 
 Now you'll need to set the environment variables that the Vagrantfile needs. In your `.bash_profile` (or wherever you set your environment variables), add the following values:
 
@@ -94,6 +98,7 @@ export DRYAD_AWS_ACCESS_KEY_ID=<your access key ID, in single quotes>
 export DRYAD_AWS_SECRET_ACCESS_KEY=<your secret access key, in single quotes>
 export DRYAD_AWS_KEYPAIR_NAME=<the name of your keypair, in single quotes>
 export DRYAD_AWS_PRIVATEKEY_PATH=<the full path to your .pem.txt file, (e.g. ~/.ssh/user.pem.txt) in single quotes>
+export DRYAD_AWS_VM_NAME=<the name you want the VM to have in the EC2 console>
 ```
 
 Reload your settings when you're done: `source ~/.bash_profile`.
@@ -102,7 +107,7 @@ Verify that you have the correct path specified: `more $DRYAD_AWS_PRIVATEKEY_PAT
 
 Now run `vagrant up --provider=aws` to create a vagrant VM at Amazon. You should be able to find the public IP and public DNS settings for your instance in the EC2 dashboard: find your instance by clicking on Instances in the left sidebar and selecting your instance.
 
-*DO NOT FORGET TO HALT YOUR MACHINE WHEN YOU ARE DONE.*
+*DO NOT FORGET TO HALT YOUR MACHINE WHEN YOU ARE DONE. (`vagrant halt`)*
 
 ## Accessing the Virtual Machine
 
@@ -121,7 +126,7 @@ If you wish to destroy the virtual machine
     vagrant destroy
 
 
-## Developing, Building, Testing, Deploying
+## Developing, Building, Testing, Deploying the Dryad code
 
 By default, the Dryad repo is checked out to `/home/ubuntu/dryad-repo`. This and other defaults can be changed before provisioning by editing the `ansible-dryad/group_vars/all` file.
 
@@ -130,7 +135,7 @@ When you log in with ssh, the VM will show some information about file locations
 ```
 1. Build dryad          /home/ubuntu/bin/build_dryad.sh
 2. Deploy dryad         /home/ubuntu/bin/deploy_dryad.sh
-3. Install database     /home/ubuntu/bin/install_dryad_database.sh
+3. Install database (only for VirtualBox install)     /home/ubuntu/bin/install_dryad_database.sh
 4. Start tomcat         /home/ubuntu/dryad-tomcat/bin/startup.sh
 5. Rebuild SOLR indexes /home/ubuntu/bin/build_indexes.sh
 ```

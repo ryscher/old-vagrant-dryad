@@ -51,6 +51,13 @@
         <paypal.mode>test</paypal.mode>
         <!-- Response Logging -->
         <default.solr.responselogging.server>{{ dryad.url }}/solr/responselogging</default.solr.responselogging.server>
+	<!-- Amazon AWS Settings -->
+	<default.aws.accessKey>{{ dryad.aws.accessKey }}</default.aws.accessKey>
+	<default.aws.secretKey>{{ dryad.aws.secretKey }}</default.aws.secretKey>
+	<default.aws.regionName>{{ dryad.aws.regionName }}</default.aws.regionName>
+	<default.aws.s3.bucketName>{{ dryad.aws.bucketName }}</default.aws.s3.bucketName>
+	<default.aws.s3.subfolder></default.aws.s3.subfolder>
+	<default.assetstore.incoming>{{ dryad.assetstoreIncoming }}</default.assetstore.incoming>
       </properties>
  </profile>
 </profiles>

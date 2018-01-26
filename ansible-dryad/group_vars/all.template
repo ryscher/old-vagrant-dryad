@@ -51,6 +51,12 @@ dryad:
     name: dryad_test_db
     user: dryad_test_user
     password: ## TEST DB PASSWORD ##
+  aws:
+    accessKey: ## REPLACE ##
+    secretKey: ## REPLACE ##
+    regionName: ## REPLACE ##
+    bucketName: ## REPLACE ##
+  assetstoreIncoming: ## 0 for local disk, 1 for AWS S3 ##
   paypal:
     vendor: ''
     user: ''
