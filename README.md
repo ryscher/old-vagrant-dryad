@@ -103,8 +103,6 @@ Reload your settings when you're done: `source ~/.bash_profile`.
 
 Verify that you have the correct path specified: `more $DRYAD_AWS_PRIVATEKEY_PATH` should give you a cryptic key starting with `-----BEGIN RSA PRIVATE KEY-----`. If not, double-check your path in your .bash_profile and source it again.
 
-Finally, it is good practice to provide a descriptive name for the VM to distinguish it from other VMs on the AWS system. Edit the `Vagrantfile`, and change the name within the `aws.tags` section.
-
 Now run `vagrant up --provider=aws` to create a vagrant VM at Amazon. You should be able to find the public IP and public DNS settings for your instance in the EC2 dashboard: find your instance by clicking on Instances in the left sidebar and selecting your instance.
 
 *DO NOT FORGET TO HALT YOUR MACHINE WHEN YOU ARE DONE. (`vagrant halt`)*
