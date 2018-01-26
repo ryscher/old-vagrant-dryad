@@ -38,9 +38,6 @@ To create a database using Amazon RDS, login to an existing Dryad machine, and r
 
 Copy the `ansible-dryad/group_vars/all.template` to `ansible-dryad/group_vars/all` and set a database password and repository location.
 
-    cp ansible-dryad/group_vars/all.template ansible-dryad/group_vars/all
-    edit ansible-dryad/group_vars/all
-
 When vagrant builds your Dryad VM, it uses the values in this file to setup the database.  You must replace the all entries in the file that are surrounded by double hash marks (`##`)
 - `repo` is the GitHub repository that will be used to download the Dryad codebase. We recommended forking the master [datadryad/dryad-repo](https://github.com/datadryad/dryad-repo) to your personal GitHub account and using the URL of your fork. 
 - IF you are doing a VirtualBox install
