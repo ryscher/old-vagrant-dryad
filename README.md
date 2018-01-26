@@ -28,7 +28,9 @@ You will need to clone the repository that contains the Vagrant/Ansible settings
 
 ## Creating a database
 
-An external machine with a database is required for installation on AWS. On postgres, a local database will be created, but you are welcome to use an external database instead. 
+A local database will be created, but you are welcome to use an external database instead. 
+
+To create a local database, obtain a copy of a Dryad sql file. When your virtual machine is running, use the `import_pg_dump.sh` script to populate your local database.
 
 To create a database using Amazon RDS, login to an existing Dryad machine, and run the utility script to create a new database:
 
@@ -48,7 +50,7 @@ When vagrant builds your Dryad VM, it uses the values in this file to setup the 
   - `aws.regionName` is the region that the AWS machines will be created in. 
   - `aws.bucketName` is the name of the S3 bucket that will be used for the assetstore.
   - `assetstoreIncoming` should be set to `1`
-  - `db.host` should be set to the address of an Amazon RDS database that contains Dryad data
+  - `db.host` If you are using an Amazon RDS database that contains Dryad data, this should be set to the address of that RDS instance.
 
 ## Building a local VM with VirtualBox
 
