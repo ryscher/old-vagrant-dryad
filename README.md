@@ -25,6 +25,32 @@ You will need to clone the repository that contains the Vagrant/Ansible settings
 
     git clone git@github.com:datadryad/vagrant-dryad.git
     cd vagrant-dryad
+    
+## Preparing for an AWS deployment
+
+You need to make sure that you have credentials for AWS access and ssh access.
+
+You will need to have an access key ID and a secret access key for AWS. This is used to give your local machine permission to create VMs on the AWS infrastructure.
+
+Then, you'll need to create a keypair for yourself. This will be used by vagrant to log in to the VMs that you create, so only you will have access to these VMs unless you explicitly grant access to others. To create the keypair, log in to the aws.amazon.com console, then go to the EC2 dashboard. Click on "Key Pairs" on the left sidebar under "Network and Security." Then create a new key pair for yourself. The private key file `xxx.pem` should automatically download. Save this file somewhere safe on your machine, and note the path.
+
+Now you'll need to set the environment variables that the Vagrantfile needs. In your `.bash_profile` (or wherever you set your environment variables), add the following values:
+
+```
+# Amazon credentials
+export DRYAD_AWS_ACCESS_KEY_ID=<your access key ID, in single quotes>
+export DRYAD_AWS_SECRET_ACCESS_KEY=<your secret access key, in single quotes>
+export DRYAD_AWS_KEYPAIR_NAME=<the name of your keypair, in single quotes>
+export DRYAD_AWS_PRIVATEKEY_PATH=<the full path to your .pem.txt file, (e.g. ~/.ssh/user.pem.txt) in single quotes>
+export DRYAD_AWS_VM_NAME=<the name you want the VM to have in the EC2 console>
+```
+
+`DRYAD_AWS_ACCESS_KEY_ID` and `DRYAD_AWS_SECRET_ACCESS_KEY` are the credentials that the AWS machine will use to connect with other AWS services. In most cases, these can be your personal AWS credentials.
+
+Reload your settings when you're done: `source ~/.bash_profile`.
+
+Verify that you have the correct path specified: `more $DRYAD_AWS_PRIVATEKEY_PATH` should give you a cryptic key starting with `-----BEGIN RSA PRIVATE KEY-----`. If not, double-check your path in your .bash_profile and source it again.
+
 
 ## Creating a database
 
@@ -46,7 +72,6 @@ When vagrant builds your Dryad VM, it uses the values in this file to setup the 
   - `db.password` and `testdb.password` can be anything you like. They will only be used within the VM.
   - `assetstoreIncoming` should be set to `0`
 - IF you are doing an AWS install
-  - `aws.accessKey` and `aws.secretKey` are the credentials that the AWS machine will use to connect with other AWS services. In most cases, these can be your personal AWS credentials.
   - `aws.regionName` is the region that the AWS machines will be created in. 
   - `aws.bucketName` is the name of the S3 bucket that will be used for the assetstore.
   - `assetstoreIncoming` should be set to `1`
@@ -85,23 +110,6 @@ Sometimes provisioning fails with `fatal: [x.x.x.x] => SSH encountered an unknow
 Install the Vagrant-aws plugin: `vagrant plugin install vagrant-aws`
 
 Then download the base box: `vagrant box add dummy https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box`
-
-You will need to have an access key ID and a secret access key for AWS. This is used to give your local machine permission to create VMs on the AWS infrastructure.
-
-Then, you'll need to create a keypair for yourself. This will be used by vagrant to log in to the VMs that you create, so only you will have access to these VMs unless you explicitly grant access to others. To create the keypair, log in to the aws.amazon.com console, then go to the EC2 dashboard. Click on "Key Pairs" on the left sidebar under "Network and Security." Then create a new key pair for yourself. The private key file `xxx.pem` should automatically download. Save this file somewhere safe on your machine, and note the path.
-
-Now you'll need to set the environment variables that the Vagrantfile needs. In your `.bash_profile` (or wherever you set your environment variables), add the following values:
-
-```
-# Amazon credentials
-export DRYAD_AWS_ACCESS_KEY_ID=<your access key ID, in single quotes>
-export DRYAD_AWS_SECRET_ACCESS_KEY=<your secret access key, in single quotes>
-export DRYAD_AWS_KEYPAIR_NAME=<the name of your keypair, in single quotes>
-export DRYAD_AWS_PRIVATEKEY_PATH=<the full path to your .pem.txt file, (e.g. ~/.ssh/user.pem.txt) in single quotes>
-export DRYAD_AWS_VM_NAME=<the name you want the VM to have in the EC2 console>
-```
-
-Reload your settings when you're done: `source ~/.bash_profile`.
 
 Verify that you have the correct path specified: `more $DRYAD_AWS_PRIVATEKEY_PATH` should give you a cryptic key starting with `-----BEGIN RSA PRIVATE KEY-----`. If not, double-check your path in your .bash_profile and source it again.
 
