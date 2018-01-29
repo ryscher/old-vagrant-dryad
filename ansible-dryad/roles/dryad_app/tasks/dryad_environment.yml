@@ -6,4 +6,9 @@
   with_items:
     - emacs24
     - ack-grep
+    - python-pip
+
+- name: Update awscli
+  shell: pip install awscli
+  become: no
 

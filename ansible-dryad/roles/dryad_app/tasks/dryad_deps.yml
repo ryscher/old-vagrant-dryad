@@ -15,6 +15,5 @@
     - screen
     - xvfb
     - firefox
-    - awscli
   tags:
     - packages
