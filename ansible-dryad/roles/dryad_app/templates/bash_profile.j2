@@ -1,10 +1,19 @@
-export PATH="~/bin:{{ dryad.tomcat_home }}/bin:$PATH"
+export PATH="$HOME/.local/bin:$HOME/bin:{{ dryad.tomcat_home }}/bin:$PATH"
 
+# AWS settings:
+export AWS_ACCESS_KEY_ID={{ dryad.aws.accessKey }}
+export AWS_SECRET_ACCESS_KEY={{ dryad.aws.secretKey }}
+
+# Postgres settings:
 # Requires .pgpass
 export PGHOST={{ dryad.db.host }}
 export PGPORT={{ dryad.db.port }}
 export PGUSER={{ dryad.db.user }}
 export PGDATABASE={{ dryad.db.name }}
+
+# aliases and vars for dryad-utils and 
+export DRYAD_DB_HOST={{ dryad.db.host }}
+alias psql_dryad='psql --host $DRYAD_DB_HOST -U dryad_app -d dryad_repo'
 
 if [ ! -f $HOME/.gitconfig ]; then
   echo
