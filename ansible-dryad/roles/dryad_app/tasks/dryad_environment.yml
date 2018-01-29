@@ -11,4 +11,15 @@
 - name: Update awscli
   shell: pip install awscli
   become: no
+  
+- name: Create hidden dir for AWS
+  file: path={{ dryad.user_home }}/.aws state=directory owner={{ dryad.user }} mode=0755
+  
+- name: Install AWS config file
+  template: src=aws_config.j2 dest="{{ dryad.user_home }}/.aws/config" mode=0600 owner={{ dryad.user }}
+  remote_user: "{{ dryad.user }}"
+
+- name: Install AWS credentials file
+  template: src=aws_credentials.j2 dest="{{ dryad.user_home }}/.aws/credentials" mode=0600 owner={{ dryad.user }}
+  remote_user: "{{ dryad.user }}"
 
