@@ -144,6 +144,5 @@
        accept_hostkey=yes
   become: no
 
-- name: Make empty directory for Dryad caches
-  shell: mkdir {{ dryad.install_dir }}/cached
-  become: no
+- name: Make cached directory
+  file: path={{ dryad.install_dir }}/cached state=directory owner={{ dryad.user }} mode=0755
