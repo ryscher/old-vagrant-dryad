@@ -52,8 +52,8 @@ dryad:
     user: dryad_test_user
     password: ## TEST DB PASSWORD ##
   aws:
-    accessKey: ## REPLACE ##
-    secretKey: ## REPLACE ##
+    accessKey: "{{ lookup('env', 'DRYAD_AWS_ACCESS_KEY_ID') }}"
+    secretKey: "{{ lookup('env', 'DRYAD_AWS_SECRET_ACCESS_KEY') }}"
     regionName: ## REPLACE ##
     bucketName: ## REPLACE ##
   assetstoreIncoming: ## 0 for local disk, 1 for AWS S3 ##
