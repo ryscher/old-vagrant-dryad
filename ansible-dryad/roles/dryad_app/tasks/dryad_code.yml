@@ -55,7 +55,7 @@
   become: no
 
 - name: install bash profile for path and database variables
-  template: src=.bash_profile.j2 dest="{{ dryad.user_home }}/.bash_profile" mode=0644
+  template: src=bash_profile.j2 dest="{{ dryad.user_home }}/.bash_profile" mode=0644
   become: no
 
 - name: Install build script
