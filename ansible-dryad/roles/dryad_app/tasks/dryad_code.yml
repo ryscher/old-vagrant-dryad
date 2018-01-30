@@ -89,12 +89,6 @@
 - name: Install database script
   template: src=install_dryad_database.sh.j2 dest="{{ dryad.user_home }}/bin/install_dryad_database.sh" mode=0755
 
-- name: Import database script
-  template: src=import_pg_dump.sh.j2 dest="{{ dryad.user_home }}/bin/import_pg_dump.sh" mode=0755
-
-- name: Update schemas script
-  template: src=update_schemas.sh.j2 dest="{{ dryad.user_home }}/bin/update_schemas.sh" mode=0755
-
 - name: Install database client script
   template: src=postgres_client.sh.j2 dest="{{ dryad.user_home }}/bin/postgres_client.sh" mode=0755
   become: no
