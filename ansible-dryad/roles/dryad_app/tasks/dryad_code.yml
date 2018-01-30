@@ -21,7 +21,7 @@
   become: no
 
 - name: Remove temporary newline file
-  shell: rm {{ dryad.user_home }}/newline_file.txt
+  file: path={{ dryad.user_home }}/newline_file.txt state=absent
   become: no
 
 - name: Update tomcat server.xml
