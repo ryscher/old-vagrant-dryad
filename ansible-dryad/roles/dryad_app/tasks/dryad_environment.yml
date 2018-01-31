@@ -23,6 +23,10 @@
   template: src=aws_credentials.j2 dest="{{ dryad.user_home }}/.aws/credentials" mode=0600 owner={{ dryad.user }}
   remote_user: "{{ dryad.user }}"
 
+- name: Register with AWS OpsWorks on first login
+  template: src=aws_opsworks.sh.j2 dest="{{ dryad.user_home }}/.aws/aws_opsworks.sh" mode=0755
+  become: no
+
 - name: Clone dryad-utils repo
   git: repo=https://github.com/datadryad/dryad-utils.git
        dest="{{ dryad.user_home }}/dryad-utils"
