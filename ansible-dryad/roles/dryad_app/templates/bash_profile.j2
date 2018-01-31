@@ -11,9 +11,8 @@ export PGPORT={{ dryad.db.port }}
 export PGUSER={{ dryad.db.user }}
 export PGDATABASE={{ dryad.db.name }}
 
-# aliases and vars for dryad-utils and 
+# aliases and vars for dryad-utils 
 export DRYAD_DB_HOST=$PGHOST
-alias psql_dryad='psql --host $DRYAD_DB_HOST -U dryad_app -d dryad_repo'
 
 if [ ! -f $HOME/.gitconfig ]; then
   echo
