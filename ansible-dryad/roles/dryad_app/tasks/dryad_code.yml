@@ -21,7 +21,7 @@
   become: no
 
 - name: Remove temporary newline file
-  shell: rm {{ dryad.user_home }}/newline_file.txt
+  file: path={{ dryad.user_home }}/newline_file.txt state=absent
   become: no
 
 - name: Update tomcat server.xml
@@ -55,7 +55,7 @@
   become: no
 
 - name: install bash profile for path and database variables
-  template: src=.bash_profile.j2 dest="{{ dryad.user_home }}/.bash_profile" mode=0644
+  template: src=bash_profile.j2 dest="{{ dryad.user_home }}/.bash_profile" mode=0644
   become: no
 
 - name: Install build script
@@ -88,12 +88,6 @@
 
 - name: Install database script
   template: src=install_dryad_database.sh.j2 dest="{{ dryad.user_home }}/bin/install_dryad_database.sh" mode=0755
-
-- name: Import database script
-  template: src=import_pg_dump.sh.j2 dest="{{ dryad.user_home }}/bin/import_pg_dump.sh" mode=0755
-
-- name: Update schemas script
-  template: src=update_schemas.sh.j2 dest="{{ dryad.user_home }}/bin/update_schemas.sh" mode=0755
 
 - name: Install database client script
   template: src=postgres_client.sh.j2 dest="{{ dryad.user_home }}/bin/postgres_client.sh" mode=0755
@@ -144,6 +138,5 @@
        accept_hostkey=yes
   become: no
 
-- name: Make empty directory for Dryad caches
-  shell: mkdir {{ dryad.install_dir }}/cached
-  become: no
+- name: Make cached directory
+  file: path={{ dryad.install_dir }}/cached state=directory owner={{ dryad.user }} mode=0755
