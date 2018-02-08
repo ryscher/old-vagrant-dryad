@@ -23,7 +23,7 @@ These packages are available on many platforms, but the Dryad organization prima
 
 You will need to clone the repository that contains the Vagrant/Ansible settings:
 
-    git clone git@github.com:datadryad/vagrant-dryad.git
+    git clone https://github.com/datadryad/vagrant-dryad.git
     cd vagrant-dryad
     
 ## Preparing for an AWS deployment
