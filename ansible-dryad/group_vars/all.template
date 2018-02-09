@@ -61,4 +61,6 @@ dryad:
     vendor: ''
     user: ''
     password: ''
-
+  orcid:
+    application_client_id: "{{ lookup('env', 'ORCID_API_CLIENT_ID') }}"
+    application_client_secret: "{{ lookup('env', 'ORCID_API_CLIENT_SECRET') }}"    

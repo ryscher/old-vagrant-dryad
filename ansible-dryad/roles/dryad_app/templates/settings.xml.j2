@@ -49,6 +49,12 @@
 				<paypal.verbosity>HIGH</paypal.verbosity>
 				<paypal.slienttran>TRUE</paypal.slienttran>
 				<paypal.mode>test</paypal.mode>
+				<!-- ORCID Integration -->
+				<default.orcid.api.URL>https://api.orcid.org/v1.2</default.orcid.api.URL>
+				<authentication-oauth.authorize.URL>https://orcid.org/oauth/authorize</authentication-oauth.authorize.URL>
+				<authentication-oauth.application-token.URL>https://api.orcid.org/oauth/token</authentication-oauth.application-token.URL>
+				<authentication-oauth.application-client-id>{{ dryad.orcid.application_client_id }}</authentication-oauth.application-client-id>
+				<authentication-oauth.application-client-secret>{{ dryad.orcid.application_client_secret }}</authentication-oauth.application-client-secret>
 				<!-- Response Logging -->
 				<default.solr.responselogging.server>{{ dryad.url }}/solr/responselogging</default.solr.responselogging.server>
 				<!-- Amazon AWS Settings -->
