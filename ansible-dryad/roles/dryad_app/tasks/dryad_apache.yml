@@ -13,5 +13,12 @@
   become: yes
 
 - name: Copy apache proxy config
-  template: src=apache_proxy.conf.j2 dest="/etc/apache2/mods-available/proxy.conf"
+  template: src=apache_proxy.conf.j2 dest="/etc/apache2/mods-enabled/proxy.conf"
   become: yes
+
+- name: Copy apache virtualhost config with redirects
+  template: src=apache_default_virtualhost.j2 dest="/etc/apache2/sites-enabled/000-default.conf"
+  become: yes
+
+
+
