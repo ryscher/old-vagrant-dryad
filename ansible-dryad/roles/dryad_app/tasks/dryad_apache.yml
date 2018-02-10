@@ -20,5 +20,6 @@
   template: src=apache_default_virtualhost.j2 dest="/etc/apache2/sites-enabled/000-default.conf"
   become: yes
 
-
-
+- name: Restart apache to pick up the new config settings
+  shell: service apache2 restart
+  become: yes
