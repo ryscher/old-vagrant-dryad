@@ -1,0 +1,17 @@
+---
+- name: Install useful command-line tools
+  apt: pkg={{ item }} state=installed update-cache=yes
+  with_items:
+    - apache2
+
+- name: Install apache modules
+  shell: a2enmod {{ item }}
+  with_items:
+    - proxy
+    - proxy_ajp
+    - rewrite
+  become: yes
+
+- name: Copy apache proxy config
+  template: src=apache_proxy.conf.j2 dest="/etc/apache2/mods-available/proxy.conf"
+  become: yes
