@@ -31,7 +31,7 @@ dryad:
   install_dir: /opt/dryad
   admin_email: root@localhost
   host: 192.168.111.223
-  hostname: localhost
+  hostname: localhost ## This must match the machine's public DNS name, or some links will fail. ##
   port: 9999
   url: http://localhost:9999
   jmx:
