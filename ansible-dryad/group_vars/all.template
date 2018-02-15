@@ -1,5 +1,5 @@
 postgresql:
-  version: 9.5
+  version: 9.6
   repo: 'deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main'
   install_development_headers: true
 
@@ -24,7 +24,7 @@ dryad:
   java:
     deb: deb http://ppa.launchpad.net/webupd8team/java/ubuntu precise main
     deb_src: deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu precise main
-  repo: ## DRYAD-REPO GIT URL or https://github.com/datadryad/dryad-repo.git ##
+  github_user: datadryad ## or YOUR USERNAME ## 
   repo_path: /home/ubuntu/dryad-repo
   tomcat_home: /home/ubuntu/dryad-tomcat
   dryad_home: vagrant-dryad
@@ -61,4 +61,6 @@ dryad:
     vendor: ''
     user: ''
     password: ''
-
+  orcid:
+    application_client_id: "{{ lookup('env', 'ORCID_API_CLIENT_ID') }}"
+    application_client_secret: "{{ lookup('env', 'ORCID_API_CLIENT_SECRET') }}"    
