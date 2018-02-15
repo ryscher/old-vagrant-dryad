@@ -1,4 +1,13 @@
 ---
+- name: Purge the apache webserver
+  apt: pkg={{ item }} state=absent purge=yes
+  with_items:
+    - apache2
+
+- name: Remove any previous apache config
+  file: path=/etc/apache2 state=absent
+  become: yes
+
 - name: Install the apache webserver
   apt: pkg={{ item }} state=installed update-cache=yes
   with_items:
@@ -21,5 +30,5 @@
   become: yes
 
 - name: Restart apache to pick up the new config settings
-  shell: service apache2 restart
+  service: name=apache2 state=restarted
   become: yes
