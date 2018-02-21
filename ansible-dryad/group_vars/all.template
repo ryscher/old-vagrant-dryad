@@ -30,7 +30,11 @@ dryad:
   dryad_home: vagrant-dryad
   install_dir: /opt/dryad
   admin_email: root@localhost
+  curator_internal_email: root@localhost
+  automated_email: root@localhost
+  curator_apu_email: root@localhost
   mail_disabled: true ## set to false if this is to be a production server
+  apu_token: ''
   host: 192.168.111.223
   hostname: localhost ## This must match the machine's public DNS name, or some links will fail. ##
   port: 9999
@@ -62,6 +66,11 @@ dryad:
     vendor: ''
     user: ''
     password: ''
+    mode: 'test'
   orcid:
     application_client_id: "{{ lookup('env', 'ORCID_API_CLIENT_ID') }}"
     application_client_secret: "{{ lookup('env', 'ORCID_API_CLIENT_SECRET') }}"    
+  journal:
+    clientsecret: ''
+  dataone:
+    contact: ''
