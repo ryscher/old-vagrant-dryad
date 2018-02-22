@@ -45,23 +45,23 @@ dryad:
     username: dryad
     password: 
   db:
-    host: ryan-db6.co33oyzjqasf.us-east-1.rds.amazonaws.com
+    host: 127.0.0.1
     port: 5432
     name: dryad_repo
     user: dryad_app
-    password: stupidpass
+    password: ## DB_PASSWORD ##
   testdb:
     host: 127.0.0.1
     port: 5432
     name: dryad_test_db
     user: dryad_test_user
-    password: test
+    password: ## TEST_DB_PASSWORD ##
   aws:
     accessKey: "{{ lookup('env', 'DRYAD_AWS_ACCESS_KEY_ID') }}"
     secretKey: "{{ lookup('env', 'DRYAD_AWS_SECRET_ACCESS_KEY') }}"
-    regionName: us-east-1
-    bucketName: dryad-ryan-devbucket
-  assetstoreIncoming: 1
+    regionName: ## REPLACE ##
+    bucketName: ## REPLACE ##
+  assetstoreIncoming: ## 0 for local disk, 1 for AWS S3 ##
   paypal:
     vendor: ''
     user: ''
