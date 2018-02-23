@@ -19,6 +19,7 @@ postgresql:
     effective_cache_size: 128MB
 
 dryad:
+  is_production: false
   user: ubuntu
   user_home: /home/ubuntu
   java:
