@@ -112,7 +112,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	   'Name' => ENV["DRYAD_AWS_VM_NAME"]
     }	   
     # From http://cloud-images.ubuntu.com/locator/ec2/
-    # us-east-1	precise	12.04 LTS	amd64	ebs	20140606	ami-a49665cc	aki-919dcaf8
+    # us-east-1	xenial	16.04 LTS	amd64	hvm-ssd	20180109	ami-41e0b93b
     aws.ami = "ami-41e0b93b"
     aws.instance_type = "t2.small"
     aws.security_groups = ['AWS-OpsWorks-Default-Server', 'default']
