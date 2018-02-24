@@ -78,6 +78,9 @@
   template: src=tomcat_stop.sh.j2 dest="{{ dryad.user_home }}/bin/tomcat_stop.sh" mode=0755
   become: no
 
+- name: Install apache restart script
+  template: src=apache_restart.sh.j2 dest="{{ dryad.user_home }}/bin/apache_restart.sh" mode=0755
+
 - name: Install build indexes script
   template: src=build_indexes.sh.j2 dest="{{ dryad.user_home }}/bin/build_indexes.sh" mode=0755
   become: no
