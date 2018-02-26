@@ -6,6 +6,7 @@ aws opsworks register --region {{ dryad.aws.regionName }} --infrastructure-class
 echo "Waiting for instance to register..."
 sleep 5
 INSTANCE_ID=$(sudo opsworks-agent-cli stack_state | sed -n 's/\"instance_id\"\://p' | sed -n 's/\s//pg' | sed -n 's/"//pg' | sed -n 's/,//pg')
+EC2_INSTANCE_ID=$(sudo opsworks-agent-cli stack_state | sed -n 's/\"ec2_instance_id\"\://p' | sed -n 's/\s//pg' | sed -n 's/"//pg' | sed -n 's/,//pg')
 
 while [ $INSTANCE_ID == "" ]; do
 	echo "still waiting for instance to register..."
@@ -22,3 +23,7 @@ if [ {{ dryad.is_production }} != True ]; then
 	echo "Assigning instance to Test Machines layer"
 	aws opsworks update-instance --instance-id $INSTANCE_ID --layer-ids ecff7e23-92f9-479a-805d-024673631a19
 fi
+
+EC2_INSTANCE_ID=$(sudo opsworks-agent-cli stack_state | sed -n 's/\"ec2_instance_id\"\://p' | sed -n 's/\s//pg' | sed -n 's/"//pg' | sed -n 's/,//pg')
+echo "Adding EC2 name to $EC2_INSTANCE_ID"
+aws ec2 create-tags --resources $EC2_INSTANCE_ID --tags Key=Name,Value={{ dryad.instance_name }}
