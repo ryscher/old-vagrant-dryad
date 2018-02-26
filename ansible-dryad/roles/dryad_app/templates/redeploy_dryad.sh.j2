@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# clean up old copies:
+rm /opt/dryad/config/*.old
+rm /opt/dryad/config/modules/*.old
+
 {{ dryad.user_home }}/bin/tomcat_stop.sh
 
 # Stop if there is an error (so we can see the error message)
