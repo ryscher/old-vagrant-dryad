@@ -9,8 +9,11 @@
     - python-pip
     - mailutils
 
-- name: Update awscli
-  shell: pip install awscli
+- name: Install python packages
+  pip: 
+    name:
+      - awscli
+      - boto3
   become: no
   
 - name: Create hidden dir for AWS
