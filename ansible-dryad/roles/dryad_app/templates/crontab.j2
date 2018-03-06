@@ -1,0 +1,8 @@
+# Backup crontab daily
+0 0 * * * crontab -l > /home/ubuntu/crontab.txt; /home/ubuntu/.local/bin/aws s3 cp /home/ubuntu/crontab.txt s3://dryad-backup/crontabs/{{ dryad.instance_name }}.txt
+
+# Export database for backup purposes
+0,30 * * * * /home/ubuntu/dryad-utils/database-export.sh -q
+
+# Export daily backup to dryad-backup at AWS
+15 1 * * * /home/ubuntu/dryad-utils/aws-tools/backup-sql-solr.sh
