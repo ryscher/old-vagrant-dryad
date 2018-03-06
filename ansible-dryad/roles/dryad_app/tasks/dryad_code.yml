@@ -63,6 +63,16 @@
   template: src=crontab.j2 dest="{{ dryad.user_home }}/crontab.txt" mode=0644
   become: no
 
+- name: Look for crontab backup
+  when: dryad.is_production
+  aws_s3:
+    bucket: dryad-backup
+    object: crontabs/{{ dryad.instance_name }}.txt
+    dest: "{{ dryad.user_home }}/crontab.txt"
+    mode: get
+  become: no
+  ignore_errors: yes
+  
 - name: Load crontab
   when: dryad.is_production
   shell: /usr/bin/crontab {{ dryad.user_home }}/crontab.txt
