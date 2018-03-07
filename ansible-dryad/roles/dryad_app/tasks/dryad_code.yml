@@ -54,8 +54,28 @@
   file: path={{ dryad.user_home }}/bin state=directory owner={{ dryad.user }} mode=0755
   become: no
 
-- name: install bash profile for path and database variables
+- name: Install bash profile for path and database variables
   template: src=bash_profile.j2 dest="{{ dryad.user_home }}/.bash_profile" mode=0644
+  become: no
+
+- name: Install crontab template
+  when: dryad.is_production
+  template: src=crontab.j2 dest="{{ dryad.user_home }}/crontab.txt" mode=0644
+  become: no
+
+- name: Look for crontab backup
+  when: dryad.is_production
+  aws_s3:
+    bucket: dryad-backup
+    object: crontabs/{{ dryad.instance_name }}.txt
+    dest: "{{ dryad.user_home }}/crontab.txt"
+    mode: get
+  become: no
+  ignore_errors: yes
+  
+- name: Load crontab
+  when: dryad.is_production
+  shell: /usr/bin/crontab {{ dryad.user_home }}/crontab.txt
   become: no
 
 - name: Install build script
