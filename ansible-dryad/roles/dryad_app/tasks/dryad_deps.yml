@@ -15,5 +15,6 @@
     - screen
     - xvfb
     - firefox
+    - xsltproc
   tags:
     - packages
