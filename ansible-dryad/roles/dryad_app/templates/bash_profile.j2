@@ -14,9 +14,9 @@ export PGDATABASE={{ dryad.db.name }}
 # aliases and vars for dryad-utils 
 export DRYAD_DB_HOST=$PGHOST
 
-# EZID credentials
-export EZID_USER={{ dryad.doi.username }}
-export EZID_PASS={{ dryad.doi.password }}
+# DOI credentials
+export DOI_USER={{ dryad.doi.username }}
+export DOI_PASS={{ dryad.doi.password }}
 
 if [ ! -f $HOME/.gitconfig ]; then
   echo
