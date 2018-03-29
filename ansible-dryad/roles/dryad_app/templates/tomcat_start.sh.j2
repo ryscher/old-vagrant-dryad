@@ -1,3 +1,7 @@
 #!/bin/bash
 
+# Tomcat JMX settings
+export JMXPORT={{dryad.jmx.port}}
+export JMXHOST={{dryad.host}}
+
 {{ dryad.tomcat_home }}/bin/startup.sh
