@@ -44,7 +44,7 @@ dryad:
   jmx:
     port: 6969
   doi:
-  	server: https://ezid.cdlib.org
+    server: https://ezid.cdlib.org
     username: dryad
     password: 
   db:
