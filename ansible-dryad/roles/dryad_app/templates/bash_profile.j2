@@ -13,8 +13,10 @@ export PGDATABASE={{ dryad.db.name }}
 
 # aliases and vars for dryad-utils 
 export DRYAD_DB_HOST=$PGHOST
+export DRYAD_URL={{ dryad.url }}
 
 # DOI credentials
+export DOI_SERVER={{ dryad.doi.host }}
 export DOI_USER={{ dryad.doi.username }}
 export DOI_PASS={{ dryad.doi.password }}
 
