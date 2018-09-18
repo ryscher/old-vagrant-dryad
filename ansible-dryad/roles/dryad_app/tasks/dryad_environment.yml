@@ -4,7 +4,7 @@
 #  async: 60
 #  poll: 60
   with_items:
-    - emacs24
+    - emacs
     - ack-grep
     - python-pip
     - mailutils
