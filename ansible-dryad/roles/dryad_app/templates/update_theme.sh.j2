@@ -9,4 +9,4 @@ cp -r {{ dryad.user_home }}/dryad-repo/dspace-xmlui/dspace-xmlui-webapp/src/main
 cp -r {{ dryad.user_home }}/dryad-repo/dspace/modules/xmlui/src/main/webapp/themes/Mirage/images /opt/dryad/webapps/xmlui/themes/Mirage
 rm -rf /opt/dryad/webapps/xmlui/themes/Mirage/docs
 cp -r {{ dryad.user_home }}/dryad-repo/dspace/modules/xmlui/src/main/webapp/themes/Mirage/docs /opt/dryad/webapps/xmlui/themes/Mirage
-cp {{ dryad.user_home }}/dryad-repo/dspace/modules/xmlui/src/main/webapp/themes/Mirage/Mirage.xsl /opt/dryad/webapps/xmlui/themes/Mirage/Mirage.xsl
+cp {{ dryad.user_home }}/dryad-repo/dspace/modules/xmlui/src/main/webapp/themes/Mirage/*.xsl /opt/dryad/webapps/xmlui/themes/Mirage

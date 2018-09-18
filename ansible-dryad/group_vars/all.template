@@ -44,6 +44,7 @@ dryad:
   jmx:
     port: 6969
   doi:
+    host: https://ez.datacite.org
     username: dryad
     password: 
   db:

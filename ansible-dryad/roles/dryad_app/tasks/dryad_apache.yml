@@ -88,6 +88,10 @@
 - name: Create symlink for access to apache logs
   file: src=/var/log/apache2 dest={{ dryad.user_home }}/apache/log state=link owner={{ dryad.user }}
 
+- name: Install utility script to restart apache
+  template: src=apache_restart.sh.j2 dest="{{ dryad.user_home }}/bin/apache_restart.sh" mode=0755
+  become: no
+
 - name: Restart apache to pick up the new config settings
   service: name=apache2 state=restarted
   become: yes
