@@ -34,6 +34,51 @@
   template: src=apache_default_virtualhost.j2 dest="/etc/apache2/sites-enabled/000-default.conf"
   become: yes
 
+- name: Copy apache SSL config with redirects
+  when: dryad.is_production
+  template: src=apache_ssl_virtualhost.j2 dest="/etc/apache2/sites-enabled/ssl.conf"
+  become: yes
+
+- name: Get SSL cert main
+  when: dryad.is_production
+  aws_s3:
+    bucket: dryad-backup
+    object: apache/2017.datadryad.org.crt
+    dest: "/etc/apache2/certs/2017.datadryad.org.crt"
+    mode: get
+  become: no
+  ignore_errors: yes
+
+- name: Get SSL cert CA
+  when: dryad.is_production
+  aws_s3:
+    bucket: dryad-backup
+    object: apache/2017.datadryad.org.ca-bundle
+    dest: "/etc/apache2/certs/2017.datadryad.org.ca-bundle"
+    mode: get
+  become: no
+  ignore_errors: yes
+
+- name: Get SSL cert key
+  when: dryad.is_production
+  aws_s3:
+    bucket: dryad-backup
+    object: apache/2017.datadryad.org.key
+    dest: "/etc/apache2/certs/2017.datadryad.org.key"
+    mode: get
+  become: no
+  ignore_errors: yes
+
+- name: Get SSL cert DataONE
+  when: dryad.is_production
+  aws_s3:
+    bucket: dryad-backup
+    object: apache/DataONECAChain.crt
+    dest: "/etc/apache2/certs/DataONECAChain.crt"
+    mode: get
+  become: no
+  ignore_errors: yes
+
 - name: Create apache convenience directory
   file: path={{ dryad.user_home }}/apache state=directory owner={{ dryad.user }} mode=0755
 
