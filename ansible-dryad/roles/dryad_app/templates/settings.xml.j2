@@ -35,9 +35,9 @@
 				<default.doi.prefix>10.5061</default.doi.prefix>
 				<default.doi.testprefix>10.5072</default.doi.testprefix>
 				<default.doi.localpart.testsuffix>FK2dryad.</default.doi.localpart.testsuffix>
-				<default.doi.testmode>true</default.doi.testmode>
+				<default.doi.testmode>{% if dryad.is_production %}false{% else %}true{% endif %}</default.doi.testmode>
 				<default.dryad.localize>true</default.dryad.localize>
-				<default.doi.datacite.connected>false</default.doi.datacite.connected>
+				<default.doi.datacite.connected>{% if dryad.is_production %}true{% else %}false{% endif %}</default.doi.datacite.connected>
 				<default.doi.service>{{ dryad.url }}/doi</default.doi.service>
 
 				<!-- Email -->
@@ -46,10 +46,10 @@
 				<default.mail.server.password></default.mail.server.password>
 				<default.mail.server.disabled>{% if dryad.is_production %}false{% else %}true{% endif %}</default.mail.server.disabled>
 				<default.mail.extraproperties>mail.smtp.socketFactory.port=1025</default.mail.extraproperties>
-				<default.mail.admin>{{ dryad.admin_email }}</default.mail.admin>
-				<default.mail.help>{{ dryad.admin_email }}</default.mail.help>
-				<default.subscribe_mailinglist.recipient>{{ dryad.admin_email }}</default.subscribe_mailinglist.recipient>
-				<default.membership.recipient>{{ dryad.admin_email }}</default.membership.recipient>
+				<default.mail.admin>{% if dryad.is_production %}help@datadryad.org{% else %}{{ dryad.admin_email }}{% endif %}</default.mail.admin>
+				<default.mail.help>{% if dryad.is_production %}help@datadryad.org{% else %}{{ dryad.admin_email }}{% endif %}</default.mail.help>
+				<default.subscribe_mailinglist.recipient>{% if dryad.is_production %}help@datadryad.org{% else %}{{ dryad.admin_email }}{% endif %}</default.subscribe_mailinglist.recipient>
+				<default.membership.recipient>{% if dryad.is_production %}help@datadryad.org{% else %}{{ dryad.admin_email }}{% endif %}</default.membership.recipient>
 				<default.curator_errors.recipient>{{ dryad.curator_internal_email }}</default.curator_errors.recipient>
 				<default.automated.email.recipient>{{ dryad.automated_email }}</default.automated.email.recipient>
 
@@ -73,7 +73,7 @@
 				<paypal.vendor>{{ dryad.paypal.vendor }}</paypal.vendor>
 				<paypal.user>{{ dryad.paypal.user }}</paypal.user>
 				<paypal.pwd>{{ dryad.paypal.password }}</paypal.pwd>
-				<paypal.payflow.link>https://pilot-payflowpro.paypal.com/</paypal.payflow.link>
+				<paypal.payflow.link>{% if dryad.is_production %}https://payflowpro.paypal.com/{% else %}https://pilot-payflowpro.paypal.com/{% endif %}</paypal.payflow.link>
 				<paypal.link>https://payflowlink.paypal.com</paypal.link>
 				<paypal.partner>PayPal</paypal.partner>
 				<paypal.verbosity>HIGH</paypal.verbosity>
