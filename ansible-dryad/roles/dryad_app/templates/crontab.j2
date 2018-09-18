@@ -1,6 +1,11 @@
 # Backup crontab daily
 0 0 * * * /home/ubuntu/dryad-utils/backup_crontab.sh {{ dryad.instance_name }} &>/dev/null
+
 # Export database for backup purposes
+PGPORT={{ dryad.db.port }}
+PGUSER={{ dryad.db.user }}
+PGDATABASE={{ dryad.db.name }}
+DRYAD_DB_HOST={{ dryad.db.host }}
 0,30 * * * * /home/ubuntu/dryad-utils/database-export.sh -q
 
 # Export daily backup to dryad-backup at AWS
