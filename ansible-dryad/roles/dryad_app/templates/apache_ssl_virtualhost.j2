@@ -53,13 +53,6 @@ Listen 443
     ProxyPass /dryadlab http://datadryad.org/pages/dryadlab
     ProxyPassReverse /dryadlab http://datadryad.org/pages/dryadlab               
 
-    # Rewrites for datadryad.org metadata profile -- linked to from XML docs; don't delete!!
-    RewriteRule ^/profile/v3/dryad.xsd$ http://dryad.googlecode.com/svn/trunk/dryad/dspace/modules/xmlui/src/main/webapp/themes/Dryad/meta/schema/v3/dryad.xsd [R,L]
-    RewriteRule ^/profile/v3/dc.xsd$ http://dryad.googlecode.com/svn/trunk/dryad/dspace/modules/xmlui/src/main/webapp/themes/Dryad/meta/schema/v3/dc.xsd [R,L]
-    RewriteRule ^/profile/v3/dcterms.xsd$ http://dryad.googlecode.com/svn/trunk/dryad/dspace/modules/xmlui/src/main/webapp/themes/Dryad/meta/schema/v3/dcterms.xsd [R,L]
-    RewriteRule ^/profile/v3/dcmitype.xsd$ http://dryad.googlecode.com/svn/trunk/dryad/dspace/modules/xmlui/src/main/webapp/themes/Dryad/meta/schema/v3/dcmitype.xsd [R,L]
-    RewriteRule ^/profile/v3/bibo.xsd$ http://dryad.googlecode.com/svn/trunk/dryad/dspace/modules/xmlui/src/main/webapp/themes/Dryad/meta/schema/v3/bib.xsd [R,L]
-
     # Prevent external systems from writing to the SOLR index
     ProxyPass /solr/search/update !
     ProxyPassReverse /solr/search/update !
