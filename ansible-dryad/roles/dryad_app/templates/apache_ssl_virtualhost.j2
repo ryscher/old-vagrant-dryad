@@ -52,9 +52,15 @@ Listen 443
   RewriteCond %{HTTP_USER_AGENT} ^.*Ephorusbot.* [NC,OR]
   RewriteCond %{HTTP_USER_AGENT} ^.*YandexMedia.* [NC]
   RewriteRule .* - [F,L]
+
+  # remove dot and comma from the end of query strings
+  RewriteCond %{QUERY_STRING} ^(.*)[.,]$
+  RewriteRule (.*) http://datadryad.org$1?%1 [P]
   
 {% if dryad.is_production %}
   # Send API requests to API server
+  RewriteRule ^/oai$ http://api.datadryad.org/oai/request?verb=Identify [R,L]
+  RewriteRule ^/oai/$ http://api.datadryad.org/oai/request?verb=Identify [R,L]
   RewriteRule ^/(oai.*)$ http://api.datadryad.org/$1 [R=permanent]
   RewriteRule ^/(widget.*)$ http://api.datadryad.org/$1 [R=permanent]
   RewriteRule ^/(mn.*)$ http://api.datadryad.org/$1 [R=permanent]
@@ -64,6 +70,10 @@ Listen 443
   # This redirects all vulnerable URLs to /error
   # (which doesn't exist and throws a 404 response)
   RewriteRule ^/+themes/.*:.*$ /error [R=permanent,L]
+
+  # Force solr accesses to only search over archived items
+  RewriteCond %{QUERY_STRING} !DSpaceStatus:Archived
+  RewriteRule ^/solr/search/select(.*) /solr/search/select/?%{QUERY_STRING}+DSpaceStatus:Archived [R,L,NE]
   
   # General rewrites for convenient URLs
   RewriteRule ^/docs$ /themes/Mirage/docs [R=301]
@@ -87,7 +97,13 @@ Listen 443
   ProxyPassReverse /solr/search/update !
   ProxyPass /solr/statistics/update !
   ProxyPassReverse /solr/statistics/update !
-  
+
+  # Rewrites for datadryad.org metadata profile -- linked to from XML docs; don't delete!!
+  RewriteRule ^/profile/v3.1/dryad.xsd$ https://raw.github.com/datadryad/dryad-repo/dryad-master/dspace/modules/xmlui/src/main/webapp/themes/Dryad/meta/schema/v3.1/dryad.xsd
+  RewriteRule ^/profile/v3.1/dcterms.xsd$ https://raw.github.com/datadryad/dryad-repo/dryad-master/dspace/modules/xmlui/src/main/webapp/themes/Dryad/meta/schema/v3.1/dcterms.xsd
+  RewriteRule ^/profile/v3.1/bibo.xsd$ https://raw.github.com/datadryad/dryad-repo/dryad-master/dspace/modules/xmlui/src/main/webapp/themes/Dryad/meta/schema/v3.1/bibo.xsd
+  RewriteRule ^/profile/v3.1$ https://raw.github.com/datadryad/dryad-repo/dryad-master/dspace/modules/xmlui/src/main/webapp/themes/Dryad/meta/schema/v3.1/dryad.xsd
+
   # Rewrite "&amp;" to "&" in query strings to fix the incorrectly encoded ampersand
   # for Journal of Fish and Wildlife
   RewriteCond %{QUERY_STRING} ^([^\?]*)\&amp;(.*)$
