@@ -1,79 +1,80 @@
 <VirtualHost *:80>
 
-	ServerAdmin  help@datadryad.org  
-	DocumentRoot /var/www/html
+  ServerAdmin  help@datadryad.org  
+  DocumentRoot /var/www/html
+  
+  ErrorLog ${APACHE_LOG_DIR}/datadryad.org-error_log
+  CustomLog ${APACHE_LOG_DIR}/datadryad.org-access_log combined
+  
+  AllowEncodedSlashes On
+  AcceptPathInfo On
+  AddDefaultCharset UTF-8
+  ProxyPreserveHost On
 
-	ErrorLog ${APACHE_LOG_DIR}/datadryad.org-error_log
-	CustomLog ${APACHE_LOG_DIR}/datadryad.org-access_log combined
-
-	AllowEncodedSlashes On
-        AcceptPathInfo On
-	AddDefaultCharset UTF-8
-	ProxyPreserveHost On
+  RewriteEngine On
 
 {% if dryad.is_readonly %}
-        # Disable submission, since this is a readonly server
-        <Location "/">
-           SetOutputFilter SUBSTITUTE;DEFLATE
-           AddOutputFilterByType SUBSTITUTE text/html
-           Substitute "s|<a class=\"submitnowbutton.*</a>|Submissions have been temporarily disabled.|i"
-           Substitute "s|span\ id=\"login-item\">Log in</span>|span></span>|i"
-           Substitute "s|span\ id=\"sign-up-item\">Sign up</span>|span></span>|i"
-           Substitute "s|Sign up||i"
-           Substitute "s|How and why\?||i"
-        </Location>
-        RewriteRule ^/login /error
-        RewriteRule ^/password-login /error
-{% endif %}
+  # Disable submission, since this is a readonly server
+  <Location "/">
+    SetOutputFilter SUBSTITUTE;DEFLATE
+    AddOutputFilterByType SUBSTITUTE text/html
+    Substitute "s|<a class=\"submitnowbutton.*</a>|Submissions have been temporarily disabled.|i"
+    Substitute "s|span\ id=\"login-item\">Log in</span>|span></span>|i"
+    Substitute "s|span\ id=\"sign-up-item\">Sign up</span>|span></span>|i"
+    Substitute "s|Sign up||i"
+    Substitute "s|How and why\?||i"
+  </Location>
 
-        RewriteEngine On
+  RewriteRule ^/login /error
+  RewriteRule ^/password-login /error
+{% endif %}
 
 {% if dryad.is_production %}
-	# Force all major requests to https
-	RewriteRule ^/(login.*)$ https://datadryad.org/$1 [R=permanent]
-	RewriteRule ^/(resource.*)$ https://datadryad.org/$1 [R=permanent]
-	RewriteRule ^/(theme.*)$ https://datadryad.org/$1 [R=permanent]
-	RewriteRule ^/(discover.*)$ https://datadryad.org/$1 [R=permanent]
-	RewriteRule ^/(admin.*)$ https://datadryad.org/$1 [R=permanent]
-	RewriteRule ^/(submit.*)$ https://datadryad.org/$1 [R=permanent]
-	RewriteRule ^/(internal.*)$ https://datadryad.org/$1 [R=permanent]
+  # Force all major requests to https
+  RewriteRule ^/(login.*)$ https://datadryad.org/$1 [R=permanent]
+  RewriteRule ^/(resource.*)$ https://datadryad.org/$1 [R=permanent]
+  RewriteRule ^/(theme.*)$ https://datadryad.org/$1 [R=permanent]
+  RewriteRule ^/(discover.*)$ https://datadryad.org/$1 [R=permanent]
+  RewriteRule ^/(admin.*)$ https://datadryad.org/$1 [R=permanent]
+  RewriteRule ^/(submit.*)$ https://datadryad.org/$1 [R=permanent]
+  RewriteRule ^/(internal.*)$ https://datadryad.org/$1 [R=permanent]
 
-	# Send API requests to API server
-	RewriteRule ^/(oai.*)$ http://api.datadryad.org/$1 [R=permanent]
-	RewriteRule ^/(widget.*)$ http://api.datadryad.org/$1 [R=permanent]
-	RewriteRule ^/(mn.*)$ http://api.datadryad.org/$1 [R=permanent]
+  # Send API requests to API server
+  RewriteRule ^/(oai.*)$ http://api.datadryad.org/$1 [R=permanent]
+  RewriteRule ^/(widget.*)$ http://api.datadryad.org/$1 [R=permanent]
+  RewriteRule ^/(mn.*)$ http://api.datadryad.org/$1 [R=permanent]
 {% endif %}
 
-	# Block DSpace security hole
-	# This redirects all vulnerable URLs to /error
-	# (which doesn't exist and throws a 404 response)
-	RewriteRule ^/+themes/.*:.*$ /error [R=permanent,L]
+  # Block DSpace security hole
+  # This redirects all vulnerable URLs to /error
+  # (which doesn't exist and throws a 404 response)
+  RewriteRule ^/+themes/.*:.*$ /error [R=permanent,L]
 
- 	# General rewrites for convenient URLs
-	RewriteRule ^/docs$ /themes/Mirage/docs [R=301]
-	RewriteRule ^/submit$ /handle/10255/3/submit [R]
-	RewriteRule ^/repo(.*)$ http://www.datadryad.org$1 [P,R=301]
-	RewriteRule ^/about$ /pages/organization [R=301]
-	RewriteRule ^/members$ /pages/membershipOverview [R=301]
-	RewriteRule ^/jdap$ /pages/jdap [R=301]
-	RewriteRule ^/policies$ /pages/policies [R=301]
-	RewriteRule ^/searching$ /pages/searching [R=301]
-	RewriteRule ^/depositing$ /pages/faq#depositing [NE,R=301]
-	RewriteRule ^/using$ /pages/faq#using [NE,R=301]
-	RewriteRule ^/publicationBlackout$ /pages/publicationBlackout [R=301]
-	RewriteRule ^/dans-news$ http://wiki.datadryad.org/images/2/29/Dryad-DANS_Announcement.pdf
-	ProxyPass /dryadlab http://datadryad.org/pages/dryadlab
-	ProxyPassReverse /dryadlab http://datadryad.org/pages/dryadlab               
+  # General rewrites for convenient URLs
+  RewriteRule ^/docs$ /themes/Mirage/docs [R=301]
+  RewriteRule ^/submit$ /handle/10255/3/submit [R]
+  RewriteRule ^/repo(.*)$ http://www.datadryad.org$1 [P,R=301]
+  RewriteRule ^/about$ /pages/organization [R=301]
+  RewriteRule ^/members$ /pages/membershipOverview [R=301]
+  RewriteRule ^/jdap$ /pages/jdap [R=301]
+  RewriteRule ^/policies$ /pages/policies [R=301]
+  RewriteRule ^/searching$ /pages/searching [R=301]
+  RewriteRule ^/depositing$ /pages/faq#depositing [NE,R=301]
+  RewriteRule ^/using$ /pages/faq#using [NE,R=301]
+  RewriteRule ^/publicationBlackout$ /pages/publicationBlackout [R=301]
+  RewriteRule ^/dans-news$ http://wiki.datadryad.org/images/2/29/Dryad-DANS_Announcement.pdf
+  ProxyPass /dryadlab http://datadryad.org/pages/dryadlab
+  ProxyPassReverse /dryadlab http://datadryad.org/pages/dryadlab               
 
-	# Rewrite "&amp;" to "&" in query strings to fix the incorrectly encoded ampersand
-    	# for Journal of Fish and Wildlife
-    	RewriteCond %{QUERY_STRING} ^([^\?]*)\&amp;(.*)$
-    	RewriteRule ^(.*)$ $1\?%1&%2 [R]
+  # Rewrite "&amp;" to "&" in query strings to fix the incorrectly encoded ampersand
+  # for Journal of Fish and Wildlife
+  RewriteCond %{QUERY_STRING} ^([^\?]*)\&amp;(.*)$
+  RewriteRule ^(.*)$ $1\?%1&%2 [R]
 
 
-	# Prevent external systems from writing to the SOLR index
-	ProxyPass /solr/search/update !
-	ProxyPassReverse /solr/search/update !
-	ProxyPass /solr/statistics/update !
-	ProxyPassReverse /solr/statistics/update !
+  # Prevent external systems from writing to the SOLR index
+  ProxyPass /solr/search/update !
+  ProxyPassReverse /solr/search/update !
+  ProxyPass /solr/statistics/update !
+  ProxyPassReverse /solr/statistics/update !
 </VirtualHost>
