@@ -28,6 +28,22 @@
 
         RewriteEngine On
 
+{% if dryad.is_production %}
+	# Force all major requests to https
+	RewriteRule ^/(login.*)$ https://datadryad.org/$1 [R=permanent]
+	RewriteRule ^/(resource.*)$ https://datadryad.org/$1 [R=permanent]
+	RewriteRule ^/(theme.*)$ https://datadryad.org/$1 [R=permanent]
+	RewriteRule ^/(discover.*)$ https://datadryad.org/$1 [R=permanent]
+	RewriteRule ^/(admin.*)$ https://datadryad.org/$1 [R=permanent]
+	RewriteRule ^/(submit.*)$ https://datadryad.org/$1 [R=permanent]
+	RewriteRule ^/(internal.*)$ https://datadryad.org/$1 [R=permanent]
+
+	# Send API requests to API server
+	RewriteRule ^/(oai.*)$ http://api.datadryad.org/$1 [R=permanent]
+	RewriteRule ^/(widget.*)$ http://api.datadryad.org/$1 [R=permanent]
+	RewriteRule ^/(mn.*)$ http://api.datadryad.org/$1 [R=permanent]
+{% endif %}
+
 	# Block DSpace security hole
 	# This redirects all vulnerable URLs to /error
 	# (which doesn't exist and throws a 404 response)
@@ -48,4 +64,23 @@
 	RewriteRule ^/dans-news$ http://wiki.datadryad.org/images/2/29/Dryad-DANS_Announcement.pdf
 	ProxyPass /dryadlab http://datadryad.org/pages/dryadlab
 	ProxyPassReverse /dryadlab http://datadryad.org/pages/dryadlab               
+
+	# Rewrite "&amp;" to "&" in query strings to fix the incorrectly encoded ampersand
+    	# for Journal of Fish and Wildlife
+    	RewriteCond %{QUERY_STRING} ^([^\?]*)\&amp;(.*)$
+    	RewriteRule ^(.*)$ $1\?%1&%2 [R]
+
+
+	# Rewrites for datadryad.org metadata profile -- linked to from XML docs; don't delete!!
+        RewriteRule ^/profile/v3/dryad.xsd$ http://dryad.googlecode.com/svn/trunk/dryad/dspace/modules/xmlui/src/main/webapp/themes/Dryad/meta/schema/v3/dryad.xsd [R,L]
+	RewriteRule ^/profile/v3/dc.xsd$ http://dryad.googlecode.com/svn/trunk/dryad/dspace/modules/xmlui/src/main/webapp/themes/Dryad/meta/schema/v3/dc.xsd [R,L]
+	RewriteRule ^/profile/v3/dcterms.xsd$ http://dryad.googlecode.com/svn/trunk/dryad/dspace/modules/xmlui/src/main/webapp/themes/Dryad/meta/schema/v3/dcterms.xsd [R,L]
+	RewriteRule ^/profile/v3/dcmitype.xsd$ http://dryad.googlecode.com/svn/trunk/dryad/dspace/modules/xmlui/src/main/webapp/themes/Dryad/meta/schema/v3/dcmitype.xsd [R,L]
+	RewriteRule ^/profile/v3/bibo.xsd$ http://dryad.googlecode.com/svn/trunk/dryad/dspace/modules/xmlui/src/main/webapp/themes/Dryad/meta/schema/v3/bib.xsd [R,L]
+
+	# Prevent external systems from writing to the SOLR index
+	ProxyPass /solr/search/update !
+	ProxyPassReverse /solr/search/update !
+	ProxyPass /solr/statistics/update !
+	ProxyPassReverse /solr/statistics/update !
 </VirtualHost>
