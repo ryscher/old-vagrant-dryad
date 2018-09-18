@@ -23,6 +23,35 @@ Listen 443
   SSLProxyEngine On
   
   RewriteEngine On
+
+  # Block IP addresses that don't respect our servers
+  #   -- The last one on the list must *not* have the OR option
+  # This is HighWire -- RewriteCond %{REMOTE_ADDR} ^104\.232\.31\.177 [NC,OR]
+  RewriteCond %{REMOTE_ADDR} ^123\.456\.789\.1 [NC,OR]
+  RewriteCond %{REMOTE_ADDR} ^52\.51\.235\.75 [NC,OR]
+  RewriteCond %{REMOTE_ADDR} ^192\.107\.175\.11 [NC,OR]
+  RewriteCond %{REMOTE_ADDR} ^158\.69\.26\.33 [NC,OR]
+  RewriteCond %{REMOTE_ADDR} ^122\.233\.114\.84 [NC,OR]
+  RewriteCond %{REMOTE_ADDR} ^180\.126\.232\.200 [NC,OR]
+  RewriteCond %{REMOTE_ADDR} ^202\.46(.*) [NC]
+  RewriteRule ^(.*)$ - [F,L]
+
+  # block spiders that don't read the robots.txt and spiral out of control
+  #   -- The last one on the list must *not* have the OR option 
+  RewriteCond %{HTTP_USER_AGENT} ^.*Baiduspider.* [NC,OR]
+  RewriteCond %{HTTP_USER_AGENT} ^.*Ezooms.* [NC,OR]
+  RewriteCond %{HTTP_USER_AGENT} ^HuaweiSymantecSpider [NC,OR]
+  RewriteCond %{HTTP_USER_AGENT} ^Localbot [NC,OR]
+  RewriteCond %{HTTP_USER_AGENT} ^.*MJ12bot.* [NC,OR]
+  RewriteCond %{HTTP_USER_AGENT} ^Sosospider [NC,OR]
+  RewriteCond %{HTTP_USER_AGENT} ^.*Vagabondo.* [NC,OR]
+  RewriteCond %{HTTP_USER_AGENT} ^.*YandexBot.* [NC,OR]
+  RewriteCond %{HTTP_USER_AGENT} ^.*JikeSpider.* [NC,OR]
+  RewriteCond %{HTTP_USER_AGENT} ^.*ichiro.* [NC,OR]
+  RewriteCond %{HTTP_USER_AGENT} ^.*AhrefsBot.* [NC,OR]
+  RewriteCond %{HTTP_USER_AGENT} ^.*Ephorusbot.* [NC,OR]
+  RewriteCond %{HTTP_USER_AGENT} ^.*YandexMedia.* [NC]
+  RewriteRule .* - [F,L]
   
 {% if dryad.is_production %}
   # Send API requests to API server
