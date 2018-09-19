@@ -66,6 +66,22 @@ Listen 443
   RewriteRule ^/(mn.*)$ http://api.datadryad.org/$1 [R=permanent]
 {% endif %}
 
+{% if dryad.is_readonly %}
+  # Disable submission, since this is a readonly server
+  <Location "/">
+    SetOutputFilter SUBSTITUTE;DEFLATE
+    AddOutputFilterByType SUBSTITUTE text/html
+    Substitute "s|<a class=\"submitnowbutton.*</a>|Submissions have been temporarily disabled.|i"
+    Substitute "s|span\ id=\"login-item\">Log in</span>|span></span>|i"
+    Substitute "s|span\ id=\"sign-up-item\">Sign up</span>|span></span>|i"
+    Substitute "s|Sign up||i"
+    Substitute "s|How and why\?||i"
+  </Location>
+
+  RewriteRule ^/login /error
+  RewriteRule ^/password-login /error
+{% endif %}
+
   # Block DSpace security hole
   # This redirects all vulnerable URLs to /error
   # (which doesn't exist and throws a 404 response)
