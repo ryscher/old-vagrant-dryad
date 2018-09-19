@@ -1,3 +1,6 @@
 #!/bin/bash
 
+LOGFILE="/opt/dryad/log/rsync-solr-stats-last.log"
+
 sudo pkill -o -f 'ubuntu/dryad-tomcat'
+rsync -rltgoWvO --delete /opt/dryad/solr/statistics $HOME/solrBackups >$LOGFILE
