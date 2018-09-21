@@ -33,6 +33,7 @@ dryad:
   dryad_home: vagrant-dryad
   install_dir: /opt/dryad
   admin_email: root@localhost
+  help_email: root@localhost
   curator_internal_email: root@localhost
   automated_email: root@localhost
   curator_apu_email: root@localhost
