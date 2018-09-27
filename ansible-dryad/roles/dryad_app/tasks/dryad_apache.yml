@@ -39,6 +39,10 @@
   template: src=apache_ssl_virtualhost.j2 dest="/etc/apache2/sites-enabled/ssl.conf"
   become: yes
 
+- name: Ensure certs directory is present and writable
+  when: dryad.is_production
+  file: path=/etc/apache2/certs state=directory owner={{ dryad.user }} mode=0755
+
 - name: Get SSL cert main
   when: dryad.is_production
   aws_s3:
