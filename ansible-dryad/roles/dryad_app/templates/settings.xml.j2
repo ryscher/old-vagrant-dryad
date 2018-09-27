@@ -46,10 +46,10 @@
 				<default.mail.server.password></default.mail.server.password>
 				<default.mail.server.disabled>{% if dryad.is_production %}false{% else %}true{% endif %}</default.mail.server.disabled>
 				<default.mail.extraproperties>mail.smtp.socketFactory.port=1025</default.mail.extraproperties>
-				<default.mail.admin>{% if dryad.is_production %}help@datadryad.org{% else %}{{ dryad.admin_email }}{% endif %}</default.mail.admin>
-				<default.mail.help>{% if dryad.is_production %}help@datadryad.org{% else %}{{ dryad.admin_email }}{% endif %}</default.mail.help>
-				<default.subscribe_mailinglist.recipient>{% if dryad.is_production %}help@datadryad.org{% else %}{{ dryad.admin_email }}{% endif %}</default.subscribe_mailinglist.recipient>
-				<default.membership.recipient>{% if dryad.is_production %}help@datadryad.org{% else %}{{ dryad.admin_email }}{% endif %}</default.membership.recipient>
+				<default.mail.admin>{{ dryad.admin_email }}</default.mail.admin>
+				<default.mail.help>{{ dryad.help_email }}</default.mail.help>
+				<default.subscribe_mailinglist.recipient>{{ dryad.help_email }}</default.subscribe_mailinglist.recipient>
+				<default.membership.recipient>{{ dryad.help_email }}</default.membership.recipient>
 				<default.curator_errors.recipient>{{ dryad.curator_internal_email }}</default.curator_errors.recipient>
 				<default.automated.email.recipient>{{ dryad.automated_email }}</default.automated.email.recipient>
 
