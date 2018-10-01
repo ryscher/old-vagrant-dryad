@@ -1,7 +1,7 @@
 ---
 - include_tasks: repository.yml
-- include_tasks: dryad_environment.yml
 - include_tasks: dryad_deps.yml
+- include_tasks: dryad_environment.yml
 - include_tasks: dryad_setupdb.yml
 - include_tasks: dryad_code.yml
 - include_tasks: dryad_apache.yml

@@ -21,13 +21,13 @@
 				<default.harvester.eperson>{{ dryad.admin_email }}</default.harvester.eperson>
 
 				<!-- SOLR indexes -->
-				<default.solr.search.server>{{ dryad.url }}/solr/search/</default.solr.search.server>
-				<default.solr.stats.server>{{ dryad.url }}/solr/statistics</default.solr.stats.server>
-				<default.solr.dryad.server>{{ dryad.url }}/solr/dryad</default.solr.dryad.server>
-				<default.solr.authority.server>{{ dryad.url }}/solr/authority</default.solr.authority.server>
-				<default.solr.log.dataonemn.server>{{ dryad.url }}/solr/dataoneMNlog</default.solr.log.dataonemn.server>
-				<default.solr.responselogging.server>{{ dryad.url }}/solr/responselogging</default.solr.responselogging.server>
-				<default.solr.xoai.server>{{ dryad.url }}/solr/xoai</default.solr.xoai.server>
+				<default.solr.search.server>http://localhost/solr/search/</default.solr.search.server>
+				<default.solr.stats.server>http://localhost/solr/statistics</default.solr.stats.server>
+				<default.solr.dryad.server>http://localhost/solr/dryad</default.solr.dryad.server>
+				<default.solr.authority.server>http://localhost/solr/authority</default.solr.authority.server>
+				<default.solr.log.dataonemn.server>http://localhost/solr/dataoneMNlog</default.solr.log.dataonemn.server>
+				<default.solr.responselogging.server>http://localhost/solr/responselogging</default.solr.responselogging.server>
+				<default.solr.xoai.server>http://localhost/solr/xoai</default.solr.xoai.server>
 
 				<!-- DOI -->
 				<default.doi.username>{{ dryad.doi.username }}</default.doi.username>
@@ -35,9 +35,9 @@
 				<default.doi.prefix>10.5061</default.doi.prefix>
 				<default.doi.testprefix>10.5072</default.doi.testprefix>
 				<default.doi.localpart.testsuffix>FK2dryad.</default.doi.localpart.testsuffix>
-				<default.doi.testmode>true</default.doi.testmode>
+				<default.doi.testmode>{% if dryad.is_production %}false{% else %}true{% endif %}</default.doi.testmode>
 				<default.dryad.localize>true</default.dryad.localize>
-				<default.doi.datacite.connected>false</default.doi.datacite.connected>
+				<default.doi.datacite.connected>{% if dryad.is_production %}true{% else %}false{% endif %}</default.doi.datacite.connected>
 				<default.doi.service>{{ dryad.url }}/doi</default.doi.service>
 
 				<!-- Email -->
@@ -73,7 +73,7 @@
 				<paypal.vendor>{{ dryad.paypal.vendor }}</paypal.vendor>
 				<paypal.user>{{ dryad.paypal.user }}</paypal.user>
 				<paypal.pwd>{{ dryad.paypal.password }}</paypal.pwd>
-				<paypal.payflow.link>https://pilot-payflowpro.paypal.com/</paypal.payflow.link>
+				<paypal.payflow.link>{% if dryad.is_production %}https://payflowpro.paypal.com/{% else %}https://pilot-payflowpro.paypal.com/{% endif %}</paypal.payflow.link>
 				<paypal.link>https://payflowlink.paypal.com</paypal.link>
 				<paypal.partner>PayPal</paypal.partner>
 				<paypal.verbosity>HIGH</paypal.verbosity>

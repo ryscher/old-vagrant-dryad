@@ -4,20 +4,27 @@
 #  async: 60
 #  poll: 60
   with_items:
-    - emacs24
+    - emacs
     - ack-grep
+    - libffi-dev 
+    - libssl-dev
     - python-pip
     - mailutils
+    - python-dev 
+
+- name: Copy pip requirements into place
+  template: src=requirements.txt.j2 dest="{{ dryad.user_home }}/requirements.txt" mode=0600 owner={{ dryad.user }}
+  remote_user: "{{ dryad.user }}"
+
+- name: Install python packages
+  pip: 
+    requirements: "{{ dryad.user_home }}/requirements.txt"
+  become: yes
 
 - name: Clone dryad-utils repo
   git: repo=https://github.com/{{ dryad.github_user }}/dryad-utils.git
        dest="{{ dryad.user_home }}/dryad-utils"
        accept_hostkey=yes
-  become: no
-
-- name: Install python packages
-  pip: 
-    requirements: "{{ dryad.user_home }}/dryad-utils/requirements.txt"
   become: no
   
 - name: Create hidden dir for AWS

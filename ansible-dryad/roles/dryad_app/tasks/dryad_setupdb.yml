@@ -7,9 +7,10 @@
   become: yes
 
 - name: Create Postgres user for dryad
-  postgresql_user: name={{ dryad.db.user }} role_attr_flags=CREATEDB password={{ dryad.db.password }}
   become: yes
   become_user: postgres
+  postgresql_user: name={{ dryad.db.user }} role_attr_flags=CREATEDB password={{ dryad.db.password }}
+  
 
 - name: Create Postgres database for dryad
   postgresql_db: owner={{ dryad.db.user }} name={{ dryad.db.name }} login_user={{ dryad.db.user }} login_password={{ dryad.db.password }} login_host={{ dryad.db.host }} port={{ dryad.db.port }} encoding={{ postgresql.encoding }} lc_ctype='{{ postgresql.locale }}.{{ postgresql.encoding }}' lc_collate='{{ postgresql.locale }}.{{ postgresql.encoding }}'

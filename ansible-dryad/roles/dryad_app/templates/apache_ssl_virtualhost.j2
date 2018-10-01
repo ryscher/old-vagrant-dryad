@@ -1,8 +1,10 @@
-<VirtualHost *:80>
+LoadModule ssl_module /usr/lib/apache2/modules/mod_ssl.so
 
-  ServerAdmin  help@datadryad.org  
-  DocumentRoot /var/www/html
-  
+Listen 443
+<VirtualHost *:443>
+  ServerName datadryad.org
+  ServerAlias www.datadryad.org
+  ServerAlias prod.datadryad.org
   ErrorLog ${APACHE_LOG_DIR}/datadryad.org-error_log
   CustomLog ${APACHE_LOG_DIR}/datadryad.org-access_log combined
   
@@ -10,7 +12,16 @@
   AcceptPathInfo On
   AddDefaultCharset UTF-8
   ProxyPreserveHost On
-
+  
+  SSLEngine on
+  
+  SSLCertificateKeyFile "/etc/apache2/certs/2017.datadryad.org.key"
+  SSLCertificateFile "/etc/apache2/certs/2017.datadryad.org.crt"
+  SSLCertificateChainFile "/etc/apache2/certs/2017.datadryad.org.ca-bundle"
+  SSLCipherSuite "ALL:!ADH:RC4+RSA:+HIGH:+MEDIUM:+LOW:!SSLv2:+EXP:+eNULL"
+  SSLCACertificateFile "/etc/apache2/certs/DataONECAChain.crt"
+  SSLProxyEngine On
+  
   RewriteEngine On
 
   # Block IP addresses that don't respect our servers
@@ -45,6 +56,15 @@
   # remove dot and comma from the end of query strings
   RewriteCond %{QUERY_STRING} ^(.*)[.,]$
   RewriteRule (.*) http://datadryad.org$1?%1 [P]
+  
+{% if dryad.is_production %}
+  # Send API requests to API server
+  RewriteRule ^/oai$ http://api.datadryad.org/oai/request?verb=Identify [R,L]
+  RewriteRule ^/oai/$ http://api.datadryad.org/oai/request?verb=Identify [R,L]
+  RewriteRule ^/(oai.*)$ http://api.datadryad.org/$1 [R=permanent]
+  RewriteRule ^/(widget.*)$ http://api.datadryad.org/$1 [R=permanent]
+  RewriteRule ^/(mn.*)$ http://api.datadryad.org/$1 [R=permanent]
+{% endif %}
 
 {% if dryad.is_readonly %}
   # Disable submission, since this is a readonly server
@@ -62,37 +82,20 @@
   RewriteRule ^/password-login /error
 {% endif %}
 
-{% if dryad.is_production %}
-  # Force all major requests to https
-  RewriteRule ^/(login.*)$ https://datadryad.org/$1 [R=permanent]
-  RewriteRule ^/(resource.*)$ https://datadryad.org/$1 [R=permanent]
-  RewriteRule ^/(theme.*)$ https://datadryad.org/$1 [R=permanent]
-  RewriteRule ^/(discover.*)$ https://datadryad.org/$1 [R=permanent]
-  RewriteRule ^/(admin.*)$ https://datadryad.org/$1 [R=permanent]
-  RewriteRule ^/(submit.*)$ https://datadryad.org/$1 [R=permanent]
-  RewriteRule ^/(internal.*)$ https://datadryad.org/$1 [R=permanent]
-
-  # Send API requests to API server
-  RewriteRule ^/oai$ http://api.datadryad.org/oai/request?verb=Identify [R,L]
-  RewriteRule ^/oai/$ http://api.datadryad.org/oai/request?verb=Identify [R,L]
-  RewriteRule ^/(oai/.+)$ http://api.datadryad.org/$1 [R=permanent]
-  RewriteRule ^/(widget.*)$ http://api.datadryad.org/$1 [R=permanent]
-  RewriteRule ^/(mn.*)$ http://api.datadryad.org/$1 [R=permanent]
-{% endif %}
-
-  # remove dot and comma from the end of query strings
-  RewriteCond %{QUERY_STRING} ^(.*)[.,]$
-  RewriteRule (.*) http://datadryad.org$1?%1 [P]
-
   # Block DSpace security hole
   # This redirects all vulnerable URLs to /error
   # (which doesn't exist and throws a 404 response)
   RewriteRule ^/+themes/.*:.*$ /error [R=permanent,L]
 
+  # Force solr accesses to only search over archived items
+  RewriteCond %{QUERY_STRING} !DSpaceStatus:Archived
+  RewriteRule ^/solr/search/select(.*) /solr/search/select/?%{QUERY_STRING}+DSpaceStatus:Archived [R,L,NE]
+  
   # General rewrites for convenient URLs
   RewriteRule ^/docs$ /themes/Mirage/docs [R=301]
   RewriteRule ^/submit$ /handle/10255/3/submit [R]
   RewriteRule ^/repo(.*)$ http://www.datadryad.org$1 [P,R=301]
+  RewriteRule ^/dryadLogo.png$ /themes/Dryad/images/dryadLogo.png [R=301]
   RewriteRule ^/about$ /pages/organization [R=301]
   RewriteRule ^/members$ /pages/membershipOverview [R=301]
   RewriteRule ^/jdap$ /pages/jdap [R=301]
@@ -104,7 +107,12 @@
   RewriteRule ^/dans-news$ http://wiki.datadryad.org/images/2/29/Dryad-DANS_Announcement.pdf
   ProxyPass /dryadlab http://datadryad.org/pages/dryadlab
   ProxyPassReverse /dryadlab http://datadryad.org/pages/dryadlab               
-
+  
+  # Prevent external systems from writing to the SOLR index
+  ProxyPass /solr/search/update !
+  ProxyPassReverse /solr/search/update !
+  ProxyPass /solr/statistics/update !
+  ProxyPassReverse /solr/statistics/update !
 
   # Rewrites for datadryad.org metadata profile -- linked to from XML docs; don't delete!!
   RewriteRule ^/profile/v3.1/dryad.xsd$ https://raw.github.com/datadryad/dryad-repo/dryad-master/dspace/modules/xmlui/src/main/webapp/themes/Dryad/meta/schema/v3.1/dryad.xsd
@@ -116,12 +124,5 @@
   # for Journal of Fish and Wildlife
   RewriteCond %{QUERY_STRING} ^([^\?]*)\&amp;(.*)$
   RewriteRule ^(.*)$ $1\?%1&%2 [R]
-
-
-  # Prevent external systems from writing to the SOLR index
-  ProxyPass /solr/search/update !
-  ProxyPassReverse /solr/search/update !
-  ProxyPass /solr/statistics/update !
-  ProxyPassReverse /solr/statistics/update !
-
+  
 </VirtualHost>
