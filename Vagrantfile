@@ -72,18 +72,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Java JMX management on port 6969
   config.vm.network "forwarded_port", guest: 6969, host: 6969
 
-  # Create a private network, which allows host-only access to the machine
-  # using a specific IP.
-  config.vm.network "private_network", ip: "192.168.111.223"
-  # If true, then any SSH connections made will enable agent forwarding.
-  # Default value: false
-  config.ssh.forward_agent = true
-
-  # Configure the settings to use the username specified in the group vars 
-  config.ssh.username = dryad_user
-  config.ssh.private_key_path = "packer-templates/ubuntu-12.04/ubuntu"
-  config.ssh.insert_key = false
-
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
   config.vm.provider :aws do |aws, override|
